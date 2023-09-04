@@ -135,7 +135,7 @@ export default async function Home() {
           {/* Projects */}
           <div className="flex flex-col gap-4">
             <HeadingWithMore title="Recent projects" href="/projects/" />
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-x-3 gap-y-4">
               <div className="flex gap-4 flex-wrap">
                 {isThereDsProject && (
                   <div className="flex gap-2 items-center">
