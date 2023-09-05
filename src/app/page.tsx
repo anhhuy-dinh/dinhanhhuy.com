@@ -35,10 +35,15 @@ export const metadata = getMetadata({
 })
 
 const HeadingWithMore = ({ title, href }: { title: string; href: string }) => (
-  <h2 id="notes" className="font-heading text-3xl font-semibold text-slate-700">
+  <h2
+    id="notes"
+    className={cn(
+      'font-heading text-3xl font-semibold text-slate-700 flex flex-wrap gap-y-0 gap-x-4'
+    )}
+  >
     <span>{title}</span>
     <Link
-      className="text-[60%] ml-4 italic text-slate-600 hover:m2it-link-hover font-normal"
+      className="text-[60%] italic text-slate-600 hover:m2it-link-hover font-normal"
       href={href}
     >
       ...more
@@ -52,6 +57,11 @@ export default async function Home() {
     pageSize: 10,
     getFull: true
   })
+
+  const projectsToShow = projects.slice(0, 6)
+  const isThereDsProject = projectsToShow.some(project => project.type.includes('ds'))
+  const isThereWebProject = projectsToShow.some(project => project.type.includes('web'))
+  const isThereOtherProject = projectsToShow.some(project => project.type.includes('other'))
 
   return (
     <div className="thi-bg-stone">
@@ -125,12 +135,42 @@ export default async function Home() {
           {/* Projects */}
           <div className="flex flex-col gap-4">
             <HeadingWithMore title="Recent projects" href="/projects/" />
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:gap-3 xl:grid-cols-3">
-              {projects.slice(0, 6).map((project: Project) => (
-                <Suspense key={project.id} fallback={<SkeletonProjectItem />}>
-                  <ProjectItem key={project.id} project={project} grayScale={true} />
-                </Suspense>
-              ))}
+            <div className="flex flex-col gap-x-3 gap-y-4">
+              <div className="flex gap-4 flex-wrap">
+                {isThereDsProject && (
+                  <div className="flex gap-2 items-center">
+                    <div className="h-1 rounded-xl w-8 sm:w-16 bg-sky-600"></div>
+                    <div className="text-slate-600 text-sm">
+                      <span className="hidden sm:inline whitespace-nowrap">Data Science</span>
+                      <span className="sm:hidden">DS</span>
+                    </div>
+                  </div>
+                )}
+
+                {isThereWebProject && (
+                  <div className="flex gap-2 items-center">
+                    <div className="h-1 rounded-xl w-8 sm:w-16 bg-amber-500"></div>
+                    <div className="text-slate-600 text-sm">
+                      <span className="hidden sm:inline whitespace-nowrap">Web Development</span>
+                      <span className="sm:hidden">Web</span>
+                    </div>
+                  </div>
+                )}
+
+                {isThereOtherProject && (
+                  <div className="flex gap-2 items-center">
+                    <div className="h-1 rounded-xl w-8 sm:w-16 bg-emerald-600"></div>
+                    <div className="text-slate-600 text-sm whitespace-nowrap">Others</div>
+                  </div>
+                )}
+              </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:gap-3 xl:grid-cols-3">
+                {projects.slice(0, 6).map((project: Project) => (
+                  <Suspense key={project.id} fallback={<SkeletonProjectItem />}>
+                    <ProjectItem key={project.id} project={project} grayScale={true} />
+                  </Suspense>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -51,16 +51,16 @@ export default function ProjectPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex items-center gap-4">
-        <div className="text-slate-600">Show only</div>
+      <div className="flex items-center gap-x-4 gap-y-2 flex-wrap justify-center sm:justify-start">
+        <div className="text-slate-600 whitespace-nowrap">Show only?</div>
         <div className="flex gap-4">
           <button onClick={() => toggleTypeToShow('ds')} className={buttonClassName('ds')}>
-            <span className="hidden md:inline">Data Science</span>
+            <span className="hidden md:inline whitespace-nowrap">Data Science</span>
             <span className="md:hidden">DS</span>
             <span className={numClass('ds')}>{numDSProjects}</span>
           </button>
           <button onClick={() => toggleTypeToShow('web')} className={buttonClassName('web')}>
-            <span className="hidden md:inline">Web Development</span>
+            <span className="hidden md:inline whitespace-nowrap">Web Development</span>
             <span className="md:hidden">Web</span>
             <span className={numClass('web')}>{numWebProjects}</span>
           </button>
