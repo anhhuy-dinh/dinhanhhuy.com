@@ -31,16 +31,16 @@ export const MENUS: MenuType[] = [
   //   uri: '/blogs/',
   //   icon: FaPenNib
   // },
-  {
-    name: 'Notes',
-    uri: '/notes/',
-    icon: ImPencil2
-  },
-  {
-    name: 'Topics',
-    uri: '/tags/',
-    icon: TiTag
-  },
+  // {
+  //   name: 'Notes',
+  //   uri: '/notes/',
+  //   icon: ImPencil2
+  // },
+  // {
+  //   name: 'Topics',
+  //   uri: '/tags/',
+  //   icon: TiTag
+  // },
   {
     name: 'Projects',
     uri: '/projects/',
