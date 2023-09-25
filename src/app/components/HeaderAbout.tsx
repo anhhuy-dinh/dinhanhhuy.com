@@ -1,7 +1,7 @@
-import VictoryHand from '@root/public/victory_hand.webp'
+import VictoryHand from '@/public/victory_hand.webp'
+import BadgeInfos from '@notion-x/components/BadgeInfos'
 import cn from 'classnames'
 import Image from 'next/image'
-import BadgeInfos from 'notion-nextjs-lib/dist/components/BadgeInfos'
 
 import inforLinks from '../../data/inforLinks'
 import me from '../../data/me'

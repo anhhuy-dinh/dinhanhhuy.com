@@ -1,10 +1,10 @@
-import FaGithub from 'notion-nextjs-lib/dist/icons/FaGithub'
-// import FaPenNib from 'notion-nextjs-lib/dist/icons/FaPenNib'
-import GrCircleInformation from 'notion-nextjs-lib/dist/icons/GrCircleInformation'
-import ImPencil2 from 'notion-nextjs-lib/dist/icons/ImPencil2'
-import RiHome2Line from 'notion-nextjs-lib/dist/icons/RiHome2Line'
-import TiTag from 'notion-nextjs-lib/dist/icons/TiTag'
+import FaGithub from '@notion-x/icons/FaGithub'
+// import FaPenNib from '@notion-x/icons/FaPenNib'
+import GrCircleInformation from '@notion-x/icons/GrCircleInformation'
+// import ImPencil2 from '@notion-x/icons/ImPencil2'
+import RiHome2Line from '@notion-x/icons/RiHome2Line'
 
+// import TiTag from '@notion-x/icons/TiTag'
 import me from './me'
 
 export type MenuType = {

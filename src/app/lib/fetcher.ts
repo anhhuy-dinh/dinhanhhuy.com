@@ -1,23 +1,21 @@
 import {
+  getBlocks as getNotionBlocks,
+  getNotionPageWithoutCache,
+  getPostsWithoutCache,
+  retrieveNotionDatabaseWithoutCache
+} from '@notion-x/db'
+import { getJoinedRichText, makeSlugText } from '@notion-x/helpers'
+import { NotionSorts, Post, Tag } from '@notion-x/interface'
+import {
   ListBlockChildrenResponse,
   QueryDatabaseParameters
 } from '@notionhq/client/build/src/api-endpoints'
 import { get } from 'lodash'
-import { getJoinedRichText } from 'notion-nextjs-lib/dist/helpers/block-helpers'
-import { makeSlugText } from 'notion-nextjs-lib/dist/helpers/helpers'
-import { ImageType, NotionSorts, Post, PostHeaderType, Tag } from 'notion-nextjs-lib/dist/interface'
-import {
-  getBlocks as getNotionBlocks,
-  getNotionPageWithoutCache,
-  getPlaceholderImage,
-  getPostsWithoutCache,
-  retrieveNotionDatabaseWithoutCache
-} from 'notion-nextjs-lib/dist/lib/db'
 import { cache } from 'react'
 
 import { NotionPost, NotionTagData } from '../../interface'
 import { SINGLE_PAGE_SLUGS, defaultPostDate, defaultPostTitle } from './config'
-import { getFilter, getUri, parseImgurUrl, parseNotionImageUrl } from './helpers'
+import { getFilter, getUri, parseImgurUrl } from './helpers'
 
 export async function getPosts(options: {
   dbId: string
@@ -38,6 +36,16 @@ export async function getPosts(options: {
     const sortsToUse: any = sorts?.length ? sorts.push(defaultSort) : [defaultSort]
     const filterToUse = getFilter(filter, getFull)
 
+    // console.debug(
+    //   `input of getPostsFromNotion: ${JSON.stringify({
+    //     dbId,
+    //     filterToUse,
+    //     startCursor,
+    //     pageSize,
+    //     sortsToUse
+    //   })}`
+    // )
+
     const postsList: NotionPost[] = await getPostsFromNotion(
       dbId,
       filterToUse,
@@ -45,6 +53,8 @@ export async function getPosts(options: {
       pageSize,
       sortsToUse
     )
+
+    // console.debug(`👉 Before transformNotionPostsData with postsList length: ${postsList.length}`)
 
     const posts = await transformNotionPostsData({
       data: postsList
@@ -101,91 +111,92 @@ function mapTag(tag: NotionTagData): Tag {
   }
 }
 
-export async function getPostHeader(pageId: string): Promise<PostHeaderType> {
-  try {
-    const pageData = await getNotionPage(pageId)
-    const properties = pageData?.properties
+// ARCHIVED: We use the information in the recordMap instead of this method
+// export async function getPostHeader(pageId: string): Promise<PostHeaderType> {
+//   try {
+//     const pageData = await getNotionPage(pageId)
+//     const properties = pageData?.properties
 
-    // title
-    const title = getJoinedRichText(properties?.Name?.title as any) || defaultPostTitle
+//     // title
+//     const title = getJoinedRichText(properties?.Name?.title as any) || defaultPostTitle
 
-    // date
-    const gotDate = get(
-      pageData,
-      'properties.finalModified.formula.date.start',
-      get(pageData, 'last_edited_time', defaultPostDate)
-    )
-    const date = new Date(gotDate).toISOString()
+//     // date
+//     const gotDate = get(
+//       pageData,
+//       'properties.finalModified.formula.date.start',
+//       get(pageData, 'last_edited_time', defaultPostDate)
+//     )
+//     const date = new Date(gotDate).toISOString()
 
-    // createdDate
-    const createdDate = new Date(
-      get(
-        pageData,
-        'properties.createdDate.date.start',
-        get(pageData, 'created_time', defaultPostDate)
-      )
-    ).toISOString()
+//     // createdDate
+//     const createdDate = new Date(
+//       get(
+//         pageData,
+//         'properties.createdDate.date.start',
+//         get(pageData, 'created_time', defaultPostDate)
+//       )
+//     ).toISOString()
 
-    // tags
-    const tags = properties?.tags?.multi_select?.map((tag: NotionTagData) => mapTag(tag)) || []
+//     // tags
+//     const tags = properties?.tags?.multi_select?.map((tag: NotionTagData) => mapTag(tag)) || []
 
-    // icon
-    const icon = pageData.icon
-      ? {
-          emoji: pageData.icon.emoji,
-          img:
-            pageData.icon.external?.url || pageData.icon.file?.url
-              ? await parseImage({
-                  sourceUrl: pageData.icon.external?.url || pageData.icon.file?.url,
-                  altText: `Icon for "${title}"`
-                })
-              : undefined
-        }
-      : undefined
+//     // icon
+//     const icon = pageData.icon
+//       ? {
+//           emoji: pageData.icon.emoji,
+//           img:
+//             pageData.icon.external?.url || pageData.icon.file?.url
+//               ? await parseImage({
+//                   sourceUrl: pageData.icon.external?.url || pageData.icon.file?.url,
+//                   altText: `Icon for "${title}"`
+//                 })
+//               : undefined
+//         }
+//       : undefined
 
-    // featured image
-    const sourceUrl = pageData?.cover?.external?.url || pageData?.cover?.file?.url
-    const featuredImage = await parseImage({
-      sourceUrl,
-      altText: `Ảnh đại diện cho bài viết "${title}"`
-    })
+//     // featured image
+//     const sourceUrl = pageData?.cover?.external?.url || pageData?.cover?.file?.url
+//     const featuredImage = await parseImage({
+//       sourceUrl,
+//       altText: `Ảnh đại diện cho bài viết "${title}"`
+//     })
 
-    return {
-      title,
-      date,
-      createdDate,
-      tags,
-      icon,
-      featuredImage
-    }
-  } catch (error) {
-    console.error('🐞🐞🐞 Error in getPostHeader()', error)
-    return {
-      title: '',
-      date: '',
-      createdDate: '',
-      tags: [],
-      icon: undefined,
-      featuredImage: undefined
-    }
-  }
-}
+//     return {
+//       title,
+//       date,
+//       createdDate,
+//       tags,
+//       icon,
+//       featuredImage
+//     }
+//   } catch (error) {
+//     console.error('🐞🐞🐞 Error in getPostHeader()', error)
+//     return {
+//       title: '',
+//       date: '',
+//       createdDate: '',
+//       tags: [],
+//       icon: undefined,
+//       featuredImage: undefined
+//     }
+//   }
+// }
 
 /**
  * Make sure that the return of this method is always an image (from Notion or from the default image)
  */
-async function parseImage(options: { sourceUrl: string; altText?: string }): Promise<ImageType> {
-  const { sourceUrl, altText } = options
-  if (!sourceUrl) return null
-  const image: ImageType = { altText, sourceUrl }
-  const imgUrl = parseNotionImageUrl(sourceUrl)
-  const { base64, width, height } = await getPlaceholderImage(imgUrl)
-  image.blurDataURL = base64
-  image.width = width
-  image.height = height
+// async function parseImage(options: { sourceUrl: string; altText?: string }): Promise<ImageType> {
+//   const { sourceUrl, altText } = options
+//   if (!sourceUrl) return null
+//   const image: ImageType = { altText, sourceUrl }
+//   const imgUrl = parseNotionImageUrl(sourceUrl)
+//   const { base64, width, height } = await getPlaceholderImage(imgUrl)
+//   image.blurDataURL = base64
+//   image.width = width
+//   image.height = height
 
-  return image
-}
+//   return image
+// }
 
 async function transformNotionPostsData(options: { data: NotionPost[] }): Promise<Post[]> {
   const { data } = options

@@ -1,14 +1,10 @@
+import { getBlocks, getNotionDatabaseWithoutCache } from '@notion-x/db'
+import { makeSlugText } from '@notion-x/helpers'
 import { Client } from '@notionhq/client'
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import chalk from 'chalk'
 import cloudinary from 'cloudinary'
 import { get } from 'lodash'
-import { makeSlugText } from 'notion-nextjs-lib/dist/helpers/helpers'
-import {
-  getBlocks,
-  getNotionDatabaseWithoutCache as getNotionDatabase,
-  getNotionPageWithoutCache as getNotionPage
-} from 'notion-nextjs-lib/dist/lib/db'
 import yargs, * as yargsType from 'yargs'
 
 import { NotionHeader, NotionPost } from '../src/interface'
@@ -215,13 +211,19 @@ async function updateIconAll(dbId: string) {
 async function getPosts(dbId: string, startCursor?: string) {
   console.log('_____getPosts()....')
   try {
-    let data = await getNotionDatabase(dbId, notionToken, notionVersion)
+    let data = await getNotionDatabaseWithoutCache(dbId, notionToken, notionVersion)
     let postsList = get(data, 'results', []) as NotionPost[]
     if (data && data['has_more']) {
       let newStartCursor = startCursor
       while (data!['has_more']) {
         newStartCursor = data!['next_cursor'] as string
-        data = await getNotionDatabase(dbId, notionToken, notionVersion, undefined, newStartCursor)
+        data = await getNotionDatabaseWithoutCache(
+          dbId,
+          notionToken,
+          notionVersion,
+          undefined,
+          newStartCursor
+        )
         if (get(data, 'results')) {
           const lst = data!['results'] as any[]
           postsList = [...postsList, ...lst]
@@ -402,7 +404,7 @@ function ignoreImage(url: string): boolean {
 async function getNotionHeader(pageId: string) {
   if (!pageId) return { coverUrl: undefined, iconUrl: undefined, postTitle: '' }
 
-  const pageData = await getNotionPage(pageId, notionToken, notionVersion)
+  const pageData: any = await getNotionDatabaseWithoutCache(pageId, notionToken, notionVersion)
   const coverUrl = pageData?.cover?.file?.url || pageData?.cover?.external?.url
   const iconUrl = pageData?.icon?.external?.url || pageData?.icon?.file?.url
   const postTitle = getJoinedRichText(pageData?.properties?.Name?.title) || 'Untitled'

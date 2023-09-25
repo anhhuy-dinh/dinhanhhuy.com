@@ -1,10 +1,10 @@
 'use client'
 
+import { makeSlugText } from '@notion-x/helpers'
+import { useHeadsObserver } from '@notion-x/hooks'
+import { Tag } from '@notion-x/interface'
 import cn from 'classnames'
 import Link from 'next/link'
-import { makeSlugText } from 'notion-nextjs-lib/dist/helpers/helpers'
-import { Tag } from 'notion-nextjs-lib/dist/interface'
-import { useHeadsObserver } from 'notion-nextjs-lib/dist/lib/hooks'
 
 type NotesTocProps = {
   tags: Tag[]
@@ -38,15 +38,6 @@ export default function NotesToc(props: NotesTocProps) {
                 key={anchor}
                 href={`#${anchor}`}
               >
-                {/* {tag.icon && (
-              <div>
-                <ImageComponent
-                  image={tag.icon}
-                  alt="Heading icon"
-                  imageProps={{ width: 12, height: 12 }}
-                />
-              </div>
-            )} */}
                 <div>{tag.name}</div>
               </a>
             )

@@ -1,10 +1,10 @@
-import toTopImg from '@root/public/to-top.webp'
-import Nav from '@root/src/app/components/nav/Nav'
-import '@root/src/fontello/css/fontello.css'
+import toTopImg from '@/public/to-top.webp'
+import Nav from '@/src/app/components/nav/Nav'
+import '@/src/fontello/css/fontello.css'
+import ScrollToTop from '@notion-x/components/ScrollToTop'
+import '@notion-x/notion-x.scss'
 import { Analytics } from '@vercel/analytics/react'
-// import Script from 'next/script'
-import ScrollToTop from 'notion-nextjs-lib/dist/components/ScrollToTop'
-import 'notion-nextjs-lib/dist/styles.css'
+import Script from 'next/script'
 
 import me from '../data/me'
 import { poppins } from './lib/fonts'
@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={poppins.className}>
-      {/* <Script src={`https://www.googletagmanager.com/gtag/js?id=G-K3YRSB918B`} />
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=G-K3YRSB918B`} />
       <Script id="google-analytics">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           gtag('config', 'G-K3YRSB918B');
         `}
-      </Script> */}
+      </Script>
       <body suppressHydrationWarning={true}>
         <div className="flex min-h-screen flex-col justify-between">
           <Nav />

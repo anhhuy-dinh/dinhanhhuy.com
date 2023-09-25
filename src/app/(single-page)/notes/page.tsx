@@ -1,7 +1,7 @@
-import NotesIcon from '@root/public/notes.svg'
+import NotesIcon from '@/public/notes.svg'
+import SkeletonPostList from '@notion-x/SkeletonPostList'
+import { ImageType, Tag } from '@notion-x/interface'
 import cn from 'classnames'
-import SkeletonPostList from 'notion-nextjs-lib/dist/components/SkeletonPostList'
-import { ImageType, Tag } from 'notion-nextjs-lib/dist/interface'
 import { Suspense } from 'react'
 
 import topics from '../../../data/topics'

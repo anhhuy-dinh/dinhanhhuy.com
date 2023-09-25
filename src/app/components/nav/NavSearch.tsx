@@ -1,8 +1,8 @@
 'use client'
 
+import SearchModal from '@notion-x/components/SearchModal'
+import FiSearch from '@notion-x/icons/FiSearch'
 import cn from 'classnames'
-import SearchModal from 'notion-nextjs-lib/dist/components/SearchModal'
-import FiSearch from 'notion-nextjs-lib/dist/icons/FiSearch'
 import { useEffect, useState } from 'react'
 
 export default function NavSearch() {

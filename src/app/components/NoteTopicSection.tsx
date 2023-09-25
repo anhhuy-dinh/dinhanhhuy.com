@@ -1,7 +1,7 @@
+import ImageComponent from '@notion-x/components/ImageComponent'
+import PostList from '@notion-x/components/PostsList'
+import { Tag } from '@notion-x/interface'
 import Link from 'next/link'
-import ImageComponent from 'notion-nextjs-lib/dist/components/ImageComponent'
-import PostList from 'notion-nextjs-lib/dist/components/PostsList'
-import { Tag } from 'notion-nextjs-lib/dist/interface'
 
 import { getPostsBy } from '../lib/fetcher'
 import { poppins } from '../lib/fonts'

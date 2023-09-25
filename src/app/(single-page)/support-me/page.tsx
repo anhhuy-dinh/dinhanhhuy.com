@@ -1,31 +1,22 @@
+import { notionX } from '@notion-x/notionx'
 import { notFound } from 'next/navigation'
+import { parsePageId } from 'notion-utils'
 
-import { defaultBlockOptionsContext } from '../../lib/config'
-import { getBlocks, getPostHeader } from '../../lib/fetcher'
 import { getMetadata } from '../../lib/helpers'
 import SinglePostTemplate from '../../templates/SinglePostTemplate'
 
 export const revalidate = 60
 
 export const metadata = getMetadata({
-  title: 'Support Thi'
+  title: 'Support Huy'
 })
 
 export default async function SupportThiPage() {
   try {
-    const postHeader = await getPostHeader(process.env.SUPPORT_ME as string)
-    const contentBlocks = await getBlocks(process.env.SUPPORT_ME as string)
-    return (
-      <SinglePostTemplate
-        isPage={true}
-        hideMeta={true}
-        blockOptionsContext={{ disableAnchorHeading: true, ...defaultBlockOptionsContext }}
-        postHeader={postHeader}
-        contentBlocks={contentBlocks}
-      />
-    )
+    const recordMap = await notionX.getPage(parsePageId(process.env.SUPPORT_ME as string))
+    return <SinglePostTemplate hideMeta={true} recordMap={recordMap} />
   } catch (error) {
-    console.log('🚨Error when loading Support Thi page', error)
+    console.log('🚨Error when loading Support Huy page', error)
     notFound()
   }
 }

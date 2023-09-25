@@ -1,7 +1,7 @@
+import { ImgurUrlType } from '@/src/interface'
+import { Author, Tag } from '@notion-x/interface'
 import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
-import { ImgurUrlType } from '@root/src/interface'
 import { intersectionWith } from 'lodash'
-import { Author, Tag } from 'notion-nextjs-lib/dist/interface'
 
 import me from '../../data/me'
 
@@ -112,7 +112,7 @@ export function getFilter(filter?: any, getFull?: boolean): QueryDatabaseParamet
 }
 
 export function generateMetaTitle(title: string) {
-  return `${title} | Site of Huy`
+  return `${title} | Site of Thi`
 }
 
 export function getMetadata(opts: { title: string; description?: string; images?: any[] }) {

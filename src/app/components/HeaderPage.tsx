@@ -1,6 +1,6 @@
+import ImageComponent from '@notion-x/components/ImageComponent'
+import { ImageType } from '@notion-x/interface'
 import cn from 'classnames'
-import ImageComponent from 'notion-nextjs-lib/dist/components/ImageComponent'
-import { ImageType } from 'notion-nextjs-lib/dist/interface'
 
 import Header from './Header'
 

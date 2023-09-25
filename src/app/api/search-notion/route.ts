@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { makeSlugText } from 'notion-nextjs-lib/dist/helpers/helpers'
-import { SearchResult } from 'notion-nextjs-lib/dist/interface'
-import { searchNotion } from 'notion-nextjs-lib/dist/lib/db'
+import { searchNotion } from '@notion-x/db'
+import { makeSlugText } from '@notion-x/helpers'
+import { SearchResult } from '@notion-x/interface'
 
 const UNOFFICIAL_NOTION_KEYS = {
   slug: process.env.SEARCH_SLUG as string,

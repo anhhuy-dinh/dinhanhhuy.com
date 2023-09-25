@@ -1,8 +1,7 @@
+import SkeletonPostHeaderTopics from '@notion-x/components/SkeletonPostHeaderTopics'
+import AiOutlineClockCircle from '@notion-x/icons/AiOutlineClockCircle'
+import RiUser3Line from '@notion-x/icons/RiUser3Line'
 import cn from 'classnames'
-import { postBodyContainerClass } from 'notion-nextjs-lib/dist/components/PostBody'
-import AiOutlineClockCircle from 'notion-nextjs-lib/dist/icons/AiOutlineClockCircle'
-import RiUser3Line from 'notion-nextjs-lib/dist/icons/RiUser3Line'
-import SkeletonPostHeaderTopics from 'notion-nextjs-lib/dist/skeleton/SkeletonPostHeaderTopics'
 
 import { bodyPadding, containerNormal } from '../../lib/config'
 import Container from '../Container'
@@ -62,7 +61,7 @@ export default function SkeletonPost(props: SkeletonPostProps) {
       </div>
       {/* Content */}
       <Container className={cn(containerNormal, bodyPadding, 'h-[400px]')}>
-        <div className={cn(postBodyContainerClass)}>
+        <div className={cn('mx-auto container pb-8 pt-4')}>
           <div className="w-100 mt-4 mb-2 h-5 rounded-2xl bg-slate-200"></div>
           <div className="w-100 mb-2 h-5 rounded-2xl bg-slate-200"></div>
           <div className="w-100 mb-2 h-5 rounded-2xl bg-slate-200"></div>

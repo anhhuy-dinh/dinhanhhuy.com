@@ -1,11 +1,11 @@
-import CouseraIcon from '@root/public/social/coursera.png'
-import GithubIcon from '@root/public/social/github.svg'
-import GoodreadsIcon from '@root/public/social/goodreads.svg'
-import LinkedInIcon from '@root/public/social/linkedin.svg'
-import Math2ITIcon from '@root/public/social/math2it.png'
-import SOIcon from '@root/public/social/so.svg'
-import TwitterIcon from '@root/public/social/twitter.svg'
-import { BadgeSocialProps } from 'notion-nextjs-lib/dist/components/BadgeSocial'
+import CouseraIcon from '@/public/social/coursera.png'
+import GithubIcon from '@/public/social/github.svg'
+import GoodreadsIcon from '@/public/social/goodreads.svg'
+import LinkedInIcon from '@/public/social/linkedin.svg'
+import Math2ITIcon from '@/public/social/math2it.png'
+import SOIcon from '@/public/social/so.svg'
+import TwitterIcon from '@/public/social/twitter.svg'
+import { BadgeSocialProps } from '@notion-x/components/BadgeSocial'
 
 const socials: BadgeSocialProps[] = [
   {

@@ -1,9 +1,9 @@
-import CafeIcon from '@root/public/cafe.svg'
-import { containerWide } from '@root/src/app/lib/config'
+import CafeIcon from '@/public/cafe.svg'
+import { containerWide } from '@/src/app/lib/config'
+import TbExternalLink from '@notion-x/icons/TbExternalLink'
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
-import TbExternalLink from 'notion-nextjs-lib/dist/icons/TbExternalLink'
 
 import me from '../../data/me'
 import Container from './Container'
@@ -41,7 +41,7 @@ export default function Footer(props: FooterProps) {
           </a>{' '}
           <span>|</span>
           <Link className={cn(aClass)} href={'/support-me/'}>
-            <Image src={CafeIcon} alt="Cafe icon" width="16" height="16" /> Support Thi
+            <Image className="h-4 w-auto" src={CafeIcon} alt="Cafe icon" /> Support Huy
           </Link>
         </div>
         <div className="flex flex-row flex-wrap items-center justify-center gap-2 pt-1 pb-2 lg:flex-row">

@@ -1,29 +1,22 @@
-'use client'
-
-import {
-  BlockObjectResponse,
-  ListBlockChildrenResponse
-} from '@notionhq/client/build/src/api-endpoints'
-import toTopImg from '@root/public/to-top.webp'
-import PostAside from '@root/src/app/components/PostAside'
-import PostHeader from '@root/src/app/components/PostHeader'
+import toTopImg from '@/public/to-top.webp'
+import PostAside from '@/src/app/components/PostAside'
+import PostHeader from '@/src/app/components/PostHeader'
+import PostBody from '@notion-x/components/PostBody'
+import PostToc from '@notion-x/components/PostToc'
+import ScrollToTop from '@notion-x/components/ScrollToTop'
+import { BlockOptionsContextType } from '@notion-x/context'
 import cn from 'classnames'
-import { BlockOptionsContextType } from 'notion-nextjs-lib/dist/components/BlockRender'
-import PostBody from 'notion-nextjs-lib/dist/components/PostBody'
-import PostToc from 'notion-nextjs-lib/dist/components/PostToc'
-import ScrollToTop from 'notion-nextjs-lib/dist/components/ScrollToTop'
-import { PostHeaderType } from 'notion-nextjs-lib/dist/interface'
+import { ExtendedRecordMap, PageBlock } from 'notion-types'
+import { getPageTableOfContents } from 'notion-utils'
 
-// import Comments from '../components/Comments'
+import Comments from '../components/Comments'
 import Container from '../components/Container'
 import Footer from '../components/Footer'
 import { bodyPadding, containerNormal } from '../lib/config'
 
 type SinglePostTemplateProps = {
-  postHeader: PostHeaderType
-  contentBlocks: ListBlockChildrenResponse['results']
+  recordMap: ExtendedRecordMap
   blockOptionsContext?: BlockOptionsContextType
-  isPage?: boolean
   hideMeta?: boolean
 }
 
@@ -32,10 +25,13 @@ type SinglePostTemplateProps = {
 const asideClass = cn('hidden 2xl:block flex-1', 'h-[calc(100vh-130px)] sticky top-[70px] pt-8')
 
 export default function SinglePostTemplate(props: SinglePostTemplateProps) {
+  const id = Object.keys(props.recordMap.block)[0]
+  const block = props.recordMap.block[id]?.value
+  const tocs = getPageTableOfContents(block as PageBlock, props.recordMap)
   return (
     <>
       <div className="animate-fadeIn">
-        {props.postHeader && <PostHeader postHeader={props.postHeader} hideMeta={props.hideMeta} />}
+        <PostHeader recordMap={props.recordMap} hideMeta={props.hideMeta} />
         <div className={cn('flex justify-center', bodyPadding)}>
           <aside className={cn(asideClass)}>
             <PostAside position="left">
@@ -46,24 +42,23 @@ export default function SinglePostTemplate(props: SinglePostTemplateProps) {
           <Container className={containerNormal}>
             <article>
               <PostBody
-                className={cn('w-full')}
-                contentBlocks={props.contentBlocks as BlockObjectResponse[]}
-                showToc={true}
-                blockOptionsContext={props.blockOptionsContext}
-                labelTocTitle="In this note"
-              ></PostBody>
+                recordMap={props.recordMap}
+                blockOptions={{
+                  siteDomain: 'dinhanhthi.com',
+                  labelTocTitle: 'In this note',
+                  blockCodeCopiedText: 'Copied',
+                  blockCodeCopyText: 'Copy',
+                  headingScrollMarginTopClass: 'scroll-mt-[70px]'
+                }}
+              />
             </article>
 
-            {/* <Comments /> */}
+            <Comments />
           </Container>
 
           <aside className={cn(asideClass)}>
             <PostAside position="right">
-              <PostToc
-                showToc={true}
-                contentBlocks={props.contentBlocks as BlockObjectResponse[]}
-                labelTocTitle="In this note"
-              />
+              <PostToc showToc={true} tocs={tocs} labelTocTitle="In this note" />
             </PostAside>
           </aside>
         </div>

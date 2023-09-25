@@ -1,10 +1,10 @@
-import DataswatiLogo from '@root/public/about/cv/dataswati.png'
-import DHSPLogo from '@root/public/about/cv/dhsp.png'
-import IdetaLogo from '@root/public/about/cv/ideta-single.png'
-import Math2ITLogo from '@root/public/about/cv/math2it.png'
-import P13Logo from '@root/public/about/cv/p13.png'
-import SelfLearnLogo from '@root/public/about/cv/self-learn.webp'
-import ToursLogo from '@root/public/about/cv/tours.png'
+import DataswatiLogo from '@/public/about/cv/dataswati.png'
+import DHSPLogo from '@/public/about/cv/dhsp.png'
+import IdetaLogo from '@/public/about/cv/ideta-single.png'
+import Math2ITLogo from '@/public/about/cv/math2it.png'
+import P13Logo from '@/public/about/cv/p13.png'
+import SelfLearnLogo from '@/public/about/cv/self-learn.webp'
+import ToursLogo from '@/public/about/cv/tours.png'
 
 import { CVGroupType } from '../app/components/CVGroup'
 

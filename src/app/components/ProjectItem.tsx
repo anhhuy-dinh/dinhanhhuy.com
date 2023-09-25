@@ -1,5 +1,5 @@
+import BadgeTech from '@notion-x/components/BadgeTech'
 import cn from 'classnames'
-import BadgeTech from 'notion-nextjs-lib/dist/components/BadgeTech'
 
 import techs from '../../data/techs'
 

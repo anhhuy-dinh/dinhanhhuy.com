@@ -1,11 +1,11 @@
 /* eslint-disable quotes */
+import SkeletonPostList from '@notion-x/SkeletonPostList'
+import ImageComponent from '@notion-x/components/ImageComponent'
+import PostList from '@notion-x/components/PostsList'
+import { makeSlugText } from '@notion-x/helpers'
+import { ImageType } from '@notion-x/interface'
 import cn from 'classnames'
 import Link from 'next/link'
-import ImageComponent from 'notion-nextjs-lib/dist/components/ImageComponent'
-import PostList from 'notion-nextjs-lib/dist/components/PostsList'
-import SkeletonPostList from 'notion-nextjs-lib/dist/components/SkeletonPostList'
-import { makeSlugText } from 'notion-nextjs-lib/dist/helpers/helpers'
-import { ImageType } from 'notion-nextjs-lib/dist/interface'
 import { Suspense } from 'react'
 
 import me from '../data/me'
@@ -38,7 +38,7 @@ const HeadingWithMore = ({ title, href }: { title: string; href: string }) => (
   <h2
     id="notes"
     className={cn(
-      'font-heading text-3xl font-semibold text-slate-700 flex flex-wrap gap-y-0 gap-x-4'
+      'font-heading text-3xl font-semibold text-slate-700 flex items-baseline flex-wrap gap-y-0 gap-x-4'
     )}
   >
     <span>{title}</span>
@@ -113,7 +113,6 @@ export default async function Home() {
                       'flex items-center gap-1 p-2 thi-box-code',
                       'transition duration-200 ease-in-out hover:-translate-y-0.5',
                       { 'tooltip-auto': topic.description }
-                      // 'grayscale hover:grayscale-0'
                     )}
                     data-title={topic.description}
                   >

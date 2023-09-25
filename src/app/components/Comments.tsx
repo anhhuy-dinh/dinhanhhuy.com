@@ -1,4 +1,7 @@
-import AiOutlineLoading3Quarters from 'notion-nextjs-lib/dist/icons/AiOutlineLoading3Quarters'
+'use client'
+
+import AiOutlineLoading3Quarters from '@notion-x/icons/AiOutlineLoading3Quarters'
+import cn from 'classnames'
 import React, { useRef } from 'react'
 
 import useScript from '../hooks/useScript'
@@ -15,9 +18,9 @@ const Comments = ({ className }: { className?: string }) => {
   })
 
   return (
-    <div className={className}>
+    <div className={cn(className, 'mt-8')}>
       {status === 'loading' && (
-        <div className="flex items-center gap-2 animate-pulse text-slate-700">
+        <div className="flex mt-4 items-center justify-center gap-2 animate-pulse text-slate-700">
           <div className="animate-spin">
             <AiOutlineLoading3Quarters className="text-2xl" />
           </div>

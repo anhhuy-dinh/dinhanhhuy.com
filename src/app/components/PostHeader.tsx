@@ -1,22 +1,24 @@
 'use client'
 
-import { defaultFeaturedImage } from '@root/src/app/lib/config'
+import PostHeaderTopics from '@notion-x/components/PostHeaderTopics'
+import { LazyImage } from '@notion-x/components/lazy-image'
+import { PageIcon } from '@notion-x/components/page-icon'
+import { Text } from '@notion-x/components/text'
+import { useNotionContext } from '@notion-x/context'
+import { isDateAfter, mapTag } from '@notion-x/helpers'
+import AiOutlineClockCircle from '@notion-x/icons/AiOutlineClockCircle'
+import RiUser3Line from '@notion-x/icons/RiUser3Line'
 import cn from 'classnames'
 import dynamic from 'next/dynamic'
-// import DateComponent from 'notion-nextjs-lib/dist/components/Date'
-import ImageComponent from 'notion-nextjs-lib/dist/components/ImageComponent'
-import PostHeaderCover from 'notion-nextjs-lib/dist/components/PostHeaderCover'
-import PostHeaderTopics from 'notion-nextjs-lib/dist/components/PostHeaderTopics'
-import { isDateAfter } from 'notion-nextjs-lib/dist/helpers/helpers'
-import AiOutlineClockCircle from 'notion-nextjs-lib/dist/icons/AiOutlineClockCircle'
-import RiUser3Line from 'notion-nextjs-lib/dist/icons/RiUser3Line'
-import { PostHeaderType } from 'notion-nextjs-lib/dist/interface'
+import * as types from 'notion-types'
+import { ExtendedRecordMap } from 'notion-types'
+import { getTextContent } from 'notion-utils'
 import { useEffect, useState } from 'react'
 
 import me from '../../data/me'
 import Header from './Header'
 
-const DateComponent = dynamic(() => import('notion-nextjs-lib/dist/components/Date'), {
+const DateComponent = dynamic(() => import('@notion-x/components/DateComponent'), {
   ssr: false
 })
 
@@ -24,19 +26,41 @@ export const fullWidthPostCoverHeight = 'h-[25vh] max-h-[25vh] min-h-[25vh]'
 export const gapHeaderItems = 'mb-3'
 
 type PostHeaderProps = {
-  postHeader: PostHeaderType
+  recordMap: ExtendedRecordMap
   hideMeta?: boolean
 }
+
+const pageCoverStyleCache: Record<string, object> = {}
 
 export const containerHeaderClass = 'max-w-full bg-slate-50 drop-shadow-sm py-4'
 
 export default function PostHeader(props: PostHeaderProps) {
   const [isIn7Days, setIsIn7Days] = useState(false)
   const [isNew, setIsNew] = useState(false)
-  const { title, date, tags, icon, featuredImage, createdDate } = props.postHeader
+
+  const ctx = useNotionContext()
+  const { mapImageUrl } = ctx
+
+  const id = Object.keys(props.recordMap.block)[0]
+  const block = props.recordMap.block[id]?.value
+
+  const title = block.properties?.title
+  const createdDate = getCreatedDate(block)
+  const modifiedDate = getModifedDate(block)
+  const tagNames = block.properties?.[`${process.env.NEXT_PUBLIC_ID_TAGS}`]?.[0]?.[0].split(',')
+  const tags = tagNames?.map((tagName: string) => mapTag(tagName, 'tag'))
+  const icon = block.format?.page_icon
+  const coverPosition = (1 - (block?.format?.page_cover_position || 0.5)) * 100
+  const pageCoverObjectPosition = `center ${coverPosition}%`
+  let pageCoverStyle = pageCoverStyleCache[pageCoverObjectPosition]
+  if (!pageCoverStyle) {
+    pageCoverStyle = pageCoverStyleCache[pageCoverObjectPosition] = {
+      objectPosition: pageCoverObjectPosition
+    }
+  }
 
   useEffect(() => {
-    const lastModifiedDate = new Date(date!)
+    const lastModifiedDate = new Date(modifiedDate)
     const today = new Date()
     const diffTime = Math.abs(today.getTime() - lastModifiedDate.getTime())
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
@@ -55,39 +79,26 @@ export default function PostHeader(props: PostHeaderProps) {
 
   return (
     <>
-      {featuredImage && (
-        <PostHeaderCover
-          defaultCover={defaultFeaturedImage}
-          cover={featuredImage}
-          alt={`Cover for post "${title}"`}
-          coverHeight="h-[25vh] max-h-[25vh] min-h-[25vh]"
-        />
+      {block?.format?.page_cover && (
+        <div className="flex w-full items-center justify-center h-[25vh] max-h-[25vh] min-h-[25vh]">
+          <div className="relative flex h-full w-full items-center overflow-hidden">
+            <LazyImage
+              src={mapImageUrl(block.format.page_cover as any, block)}
+              alt={getTextContent(title)}
+              priority={true}
+              className="notion-page-cover absolute"
+              style={pageCoverStyle}
+            />
+          </div>
+        </div>
       )}
 
       {/* Main header with infos */}
       <Header headerType={'white'} headerWidth="normal">
         <div className="py-8 flex flex-col gap-3">
-          <div className={cn('flex flex-col md:flex-row gap-3 items-center')}>
+          <div className={cn('flex flex-col md:flex-row gap-3 items-start')}>
             {/* icon */}
-            {!!icon && (
-              <div>
-                {icon.img && (
-                  <ImageComponent
-                    image={icon.img}
-                    alt="icon"
-                    className="w-14 h-14 rounded-full"
-                    imageProps={{ width: 64, height: 64 }}
-                  />
-                )}
-                {icon.emoji && (
-                  <span className="text-[3rem] md:text-[3.25rem]">
-                    <span role="img" aria-label="icon">
-                      {icon.emoji}
-                    </span>
-                  </span>
-                )}
-              </div>
-            )}
+            {icon && <PageIcon block={block} inline={false} />}
 
             {/* Title */}
             <h1
@@ -95,12 +106,13 @@ export default function PostHeader(props: PostHeaderProps) {
                 `text-2xl md:text-3xl xl:text-4xl font-bold leading-tight
                 tracking-tight text-center md:text-left thi-text-rainbow`
               )}
-              dangerouslySetInnerHTML={{ __html: title }}
-            />
+            >
+              <Text value={title} block={block} />
+            </h1>
           </div>
 
           {/* Authors & Date */}
-          {date && !props.hideMeta && (
+          {!props.hideMeta && (
             <div
               className={cn(
                 `flex w-full flex-wrap gap-3 md:w-auto md:flex-nowrap items-center
@@ -113,16 +125,17 @@ export default function PostHeader(props: PostHeaderProps) {
                 {me.name}
               </div>
 
-              {createdDate && (
-                <div className="flex items-center gap-1 text-base opacity-80">
-                  <AiOutlineClockCircle />
-                  <span>created </span>
-                  <DateComponent humanize={true} dateString={createdDate} format="MMM DD, YYYY" />
-                </div>
-              )}
-
+              <div className="flex items-center gap-1 text-base opacity-80">
+                <AiOutlineClockCircle />
+                <DateComponent
+                  humanize={true}
+                  dateString={createdDate}
+                  dateLabel="added"
+                  format="MMM DD, YYYY"
+                />
+              </div>
               <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
-                {createdDate && !isNew && date && isDateAfter(date, createdDate) && (
+                {createdDate && !isNew && isDateAfter(modifiedDate, createdDate) && (
                   <div
                     className={cn('px-3 py-0.5 text-sm items-start rounded-xl whitespace-nowrap', {
                       'text-slate-700 bg-slate-100': !isIn7Days,
@@ -130,7 +143,11 @@ export default function PostHeader(props: PostHeaderProps) {
                     })}
                   >
                     updated{' '}
-                    <DateComponent humanize={true} dateString={date} format="MMM DD, YYYY" />
+                    <DateComponent
+                      humanize={true}
+                      dateString={modifiedDate}
+                      format="MMM DD, YYYY"
+                    />
                   </div>
                 )}
 
@@ -144,19 +161,6 @@ export default function PostHeader(props: PostHeaderProps) {
                     new
                   </div>
                 )}
-
-                {/* <div className="whitespace-nowrap">
-                  <Link
-                    className={cn(
-                      'shadow-md text-white rounded-3xl hover:translate-y-[-2px] hover:transition-all',
-                      'bg-gradient-to-r from-purple-700 to-pink-500',
-                      'text-[0.85rem] h-fit w-fit block py-[2px] px-[15px]'
-                    )}
-                    href={'/'}
-                  >
-                    ✍ Write with me?
-                  </Link>
-                </div> */}
               </div>
             </div>
           )}
@@ -176,4 +180,24 @@ export default function PostHeader(props: PostHeaderProps) {
       </Header>
     </>
   )
+}
+
+function getCreatedDate(block: types.Block) {
+  const _cDf =
+    block.properties?.[`${process.env.NEXT_PUBLIC_ID_CREATED_DATE}`]?.[0]?.[1]?.[0]?.[1]?.[
+      'start_date'
+    ]
+  const createdDateField = _cDf ? new Date(_cDf).toISOString() : null
+  const created_time = new Date(block.created_time).toISOString()
+  return createdDateField || created_time
+}
+
+function getModifedDate(block: types.Block) {
+  const _mDf =
+    block.properties?.[`${process.env.NEXT_PUBLIC_ID_LAST_MODIFIED}`]?.[0]?.[1]?.[0]?.[1]?.[
+      'start_date'
+    ]
+  const modifiedDateField = _mDf ? new Date(_mDf).toISOString() : null
+  const last_edited_time = new Date(block.last_edited_time).toISOString()
+  return modifiedDateField || last_edited_time
 }

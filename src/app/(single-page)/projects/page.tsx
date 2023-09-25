@@ -1,4 +1,4 @@
-import ProjectIcon from '@root/public/project.svg'
+import ProjectIcon from '@/public/project.svg'
 import cn from 'classnames'
 
 import Container from '../../components/Container'

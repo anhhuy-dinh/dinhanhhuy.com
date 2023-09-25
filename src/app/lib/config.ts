@@ -1,9 +1,4 @@
-import _dImg from '@root/public/featured-images/_default.png'
-import { BlockOptionsContextType } from 'notion-nextjs-lib/dist/components/BlockRender'
-
-export const defaultBlockOptionsContext: BlockOptionsContextType = {
-  siteDomain: process.env.SITE_DOMAIN
-}
+import _dImg from '@/public/featured-images/_default.png'
 
 export const defaultBlurDataURL = `data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwC
   AAAAC0lEQVR42mN8XA8AAksBZG7LpHYAAAAASUVORK5CYII=`

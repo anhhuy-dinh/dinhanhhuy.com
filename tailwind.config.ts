@@ -8,7 +8,7 @@ export default {
     './src/app/lib/config.ts',
     './src/app/lib/helpers.ts',
     './src/data/*.{ts,tsx}',
-    './node_modules/notion-nextjs-lib/dist/**/*.{js,ts,jsx,tsx,mdx}'
+    './notion-x/**/*.{js,ts,jsx,tsx,mdx,css,scss}'
   ],
   // important: true,
   theme: {

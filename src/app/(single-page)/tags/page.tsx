@@ -1,8 +1,8 @@
-import TopicIcon from '@root/public/topics.svg'
+import TopicIcon from '@/public/topics.svg'
+import ImageComponent from '@notion-x/components/ImageComponent'
+import { ImageType, Tag } from '@notion-x/interface'
 import cn from 'classnames'
 import Link from 'next/link'
-import ImageComponent from 'notion-nextjs-lib/dist/components/ImageComponent'
-import { ImageType, Tag } from 'notion-nextjs-lib/dist/interface'
 import { Suspense } from 'react'
 
 import topics from '../../../data/topics'

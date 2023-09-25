@@ -1,5 +1,5 @@
+import { BadgeInfosProps } from '@notion-x/components/BadgeInfos'
 import cn from 'classnames'
-import { BadgeInfosProps } from 'notion-nextjs-lib/dist/components/BadgeInfos'
 
 import me from './me'
 

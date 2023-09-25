@@ -1,17 +1,17 @@
-import { notionMaxRequest, numPostsPerPage } from '@root/src/app/lib/config'
-import { getPostsBy, getTags } from '@root/src/app/lib/fetcher'
-import { generateMetaTitle, getFilterOf, getMetadata, getUri } from '@root/src/app/lib/helpers'
-import PageOfPostsListTemplate from '@root/src/app/templates/PageOfPostsListTemplate'
-import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
-import { getStartCursorForCurrentPage } from 'notion-nextjs-lib/dist/helpers/helpers'
+import { notionMaxRequest, numPostsPerPage } from '@/src/app/lib/config'
+import { getPostsBy, getTags } from '@/src/app/lib/fetcher'
+import { generateMetaTitle, getFilterOf, getMetadata, getUri } from '@/src/app/lib/helpers'
+import PageOfPostsListTemplate from '@/src/app/templates/PageOfPostsListTemplate'
+import { getStartCursorForCurrentPage } from '@notion-x/helpers'
 import {
   ImageType,
   OptionalCatchAllParams,
   OptionalCatchAllProps,
   Post,
   Tag
-} from 'notion-nextjs-lib/dist/interface'
+} from '@notion-x/interface'
+import { Metadata } from 'next'
+import { notFound, redirect } from 'next/navigation'
 
 import topics from '../../../data/topics'
 
@@ -20,6 +20,7 @@ export const revalidate = 60
 export async function generateMetadata({ params }: OptionalCatchAllProps): Promise<Metadata> {
   const slug = params.slug[0] || ''
   const currentPage = +(params?.slug?.[2] || 1)
+  console.debug(`\n👉 Slug:  ${slug}, currentPage: ${currentPage}\n`)
   const [totalPages] = await getTotalPages({ slug } as Tag)
   const tags = await getTags()
   const tag = getTag(slug, tags)
