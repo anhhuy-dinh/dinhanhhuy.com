@@ -1,6 +1,6 @@
 {
-  "name": "math2it-nextjs",
-  "description": "A Next.js version of Math2IT",
+  "name": "dinhanhhuy.com",
+  "description": "My personal site.",
   "version": "6.0.1",
   "author": "Math2IT Team",
   "private": true,
@@ -20,7 +20,7 @@
     "ud-cover-all": "npx tsx -r dotenv/config ./scripts/ud_images.ts dotenv_config_path=.env.local --a cover-all",
     "ud-icon-all": "npx tsx -r dotenv/config ./scripts/ud_images.ts dotenv_config_path=.env.local --a icon-all",
     "ud-images-post": "npx tsx -r dotenv/config ./scripts/ud_images.ts dotenv_config_path=.env.local --a images-in-post --pid",
-    "getlib": "rimraf node_modules/notion-nextjs-lib && rimraf yarn.lock && yarn install"
+    "getlib": "git submodule update --recursive --remote"
   },
   "dependencies": {
     "@fisch0920/medium-zoom": "^1.0.7",

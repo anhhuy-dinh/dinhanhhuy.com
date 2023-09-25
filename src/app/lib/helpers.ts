@@ -112,7 +112,7 @@ export function getFilter(filter?: any, getFull?: boolean): QueryDatabaseParamet
 }
 
 export function generateMetaTitle(title: string) {
-  return `${title} | Site of Thi`
+  return `${title} | Site of Huy`
 }
 
 export function getMetadata(opts: { title: string; description?: string; images?: any[] }) {
