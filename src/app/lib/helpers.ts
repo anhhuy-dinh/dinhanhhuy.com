@@ -1,18 +1,16 @@
 import { ImgurUrlType } from '@/src/interface'
-import { Author, Tag } from '@notion-x/interface'
+import { Post, Tag } from '@notion-x/src/interface'
 import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
-import { intersectionWith } from 'lodash'
+import { Block } from 'notion-types'
 
+import { mapTag } from '../../../notion-x/src/lib/helpers'
 import me from '../../data/me'
 
-export function getUri(type: 'tag' | 'blog' | 'note', slug?: string): string | undefined {
+export function getUri(type: 'tag' | 'note', slug?: string): string | undefined {
   if (!slug) return undefined
   switch (type) {
     case 'tag':
       return `/tag/${slug}/`
-
-    case 'blog':
-      return `/blog/${slug}/`
 
     case 'note':
       return `/note/${slug}/`
@@ -20,18 +18,6 @@ export function getUri(type: 'tag' | 'blog' | 'note', slug?: string): string | u
     default:
       return `/note/${slug}/`
   }
-}
-
-export function parseAuthorsForPost(authorIdsList: string[], authorsList: Author[]): Author[] {
-  return intersectionWith(authorsList, authorIdsList, (author, id) => author.id === id)
-}
-
-export function parseNotionImageUrl(url: string): string {
-  if (url.startsWith('/images')) {
-    url = `https://www.notion.so${url}`
-    return url
-  }
-  return url
 }
 
 /**
@@ -57,7 +43,7 @@ export const parseImgurUrl = (opts: {
   return opts.url.replace(/(\.\w+$)/, `${opts.type}$1`)
 }
 
-export function getFilterOf(type: 'tag' | 'blog', data?: Tag): unknown {
+export function getFilterOf(type: 'tag' | 'blog', data?: Tag): any {
   switch (type) {
     case 'tag':
       return {
@@ -81,7 +67,7 @@ export function getFilterOf(type: 'tag' | 'blog', data?: Tag): unknown {
 /**
  * Filter to be used in getPosts(). Remark, we ignore single page (where isPage = true on Notion)
  */
-export function getFilter(filter?: any, getFull?: boolean): QueryDatabaseParameters['filter'] {
+export function getFilter(filter?: any): QueryDatabaseParameters['filter'] {
   const defaultFilter = [] as any[]
 
   // Ignore single page
@@ -131,5 +117,45 @@ export function getMetadata(opts: { title: string; description?: string; images?
         }
       ]
     }
+  }
+}
+
+export function getPostProperties(post: Block): Post {
+  const id = post.id
+  const properties = post?.properties
+  const slug = properties?.[`${process.env.NEXT_PUBLIC_ID_SLUG}`]?.[0]?.[0] ?? ''
+  const title = properties?.title?.[0]?.[0]
+  const drawTitle = properties?.title
+  const date =
+    properties?.[`${process.env.NEXT_PUBLIC_ID_LAST_MODIFIED}`]?.[0]?.[1]?.[0]?.[1]?.start_date ??
+    new Date(post?.last_edited_time).toISOString()
+  const createdDate =
+    properties?.[`${process.env.NEXT_PUBLIC_ID_CREATED_DATE}`]?.[0]?.[1]?.[0]?.[1]?.start_date ??
+    new Date(post?.created_time).toISOString()
+  const tags = properties?.[`${process.env.NEXT_PUBLIC_ID_TAGS}`]?.[0]?.[0]
+    .split(',')
+    ?.map((tagName: string) => mapTag(tagName, 'tag'))
+  const isPublished = properties?.[`${process.env.NEXT_PUBLIC_ID_PUBLISHED}`]?.[0]?.[0] === 'Yes'
+  const isPage = properties?.[`${process.env.NEXT_PUBLIC_ID_IS_PAGE}`]?.[0]?.[0] === 'Yes'
+  const isDraft = properties?.[`${process.env.NEXT_PUBLIC_ID_DRAFT}`]?.[0]?.[0] === 'Yes'
+  const icon = post.format?.page_icon
+  const pageCover = post.format?.page_cover
+  const coverPosition = (1 - (post?.format?.page_cover_position || 0.5)) * 100
+
+  return {
+    id,
+    slug,
+    uri: `/note/${slug}/`,
+    title,
+    drawTitle,
+    date,
+    createdDate,
+    tags,
+    isPublished,
+    isPage,
+    isDraft,
+    icon,
+    pageCover,
+    coverPosition
   }
 }

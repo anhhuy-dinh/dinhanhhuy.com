@@ -1,6 +1,6 @@
 import TopicIcon from '@/public/topics.svg'
-import ImageComponent from '@notion-x/components/ImageComponent'
-import { ImageType, Tag } from '@notion-x/interface'
+import ImageComponent from '@notion-x/src/components/ImageComponent'
+import { ImageType, Tag } from '@notion-x/src/interface'
 import cn from 'classnames'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -13,7 +13,7 @@ import { bodyPadding, containerWide } from '../../lib/config'
 import { getTags } from '../../lib/fetcher'
 import { getMetadata } from '../../lib/helpers'
 
-export const revalidate = 60
+export const revalidate = 20
 
 export const metadata = getMetadata({
   title: 'List of topics',

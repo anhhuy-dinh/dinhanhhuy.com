@@ -1,31 +1,40 @@
-import {
-  getBlocks as getNotionBlocks,
-  getNotionPageWithoutCache,
-  getPostsWithoutCache,
-  retrieveNotionDatabaseWithoutCache
-} from '@notion-x/db'
-import { getJoinedRichText, makeSlugText } from '@notion-x/helpers'
-import { NotionSorts, Post, Tag } from '@notion-x/interface'
-import {
-  ListBlockChildrenResponse,
-  QueryDatabaseParameters
-} from '@notionhq/client/build/src/api-endpoints'
+import { NotionSorts, Post, Tag } from '@notion-x/src/interface'
+import { getUnofficialDatabase, queryDatabase, retrieveDatabase } from '@notion-x/src/lib/db'
+import { getJoinedRichText, makeSlugText } from '@notion-x/src/lib/helpers'
+import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 import { get } from 'lodash'
-import { cache } from 'react'
+import { CollectionInstance } from 'notion-types'
 
 import { NotionPost, NotionTagData } from '../../interface'
-import { SINGLE_PAGE_SLUGS, defaultPostDate, defaultPostTitle } from './config'
-import { getFilter, getUri, parseImgurUrl } from './helpers'
+import { Project } from '../components/ProjectItem'
+import { defaultPostDate, defaultPostTitle } from './config'
+import { getFilter, getPostProperties, getUri } from './helpers'
+
+export async function getUnofficialPosts() {
+  try {
+    const data = await getUnofficialDatabase({
+      spaceId: process.env.SPACE_ID,
+      sourceId: process.env.SOURCE_ID,
+      collectionViewId: process.env.COLLECTION_VIEW_ID,
+      notionTokenV2: process.env.NOTION_TOKEN_V2,
+      notionActiveUser: process.env.NOTION_ACTIVE_USER,
+      notionApiWeb: process.env.NOTION_API_WEB
+    })
+    return transformUnofficialPosts(data)
+  } catch (error) {
+    console.error('🚨 Error in getUnofficialPosts()', error)
+    return []
+  }
+}
 
 export async function getPosts(options: {
-  dbId: string
-  filter?: unknown
+  filter?: QueryDatabaseParameters['filter']
   startCursor?: string
   pageSize?: number
   sorts?: NotionSorts[]
-  getFull?: boolean
 }): Promise<Post[]> {
-  const { dbId, filter, startCursor, pageSize, sorts, getFull } = options
+  if (!process.env.NOTION_DB_POSTS) throw new Error('getPosts(): NOTION_DB_POSTS is not defined')
+  const { filter, startCursor, pageSize, sorts } = options
 
   try {
     const defaultSort = {
@@ -34,56 +43,19 @@ export async function getPosts(options: {
     } as NotionSorts
 
     const sortsToUse: any = sorts?.length ? sorts.push(defaultSort) : [defaultSort]
-    const filterToUse = getFilter(filter, getFull)
+    const filterToUse = getFilter(filter)
 
-    // console.debug(
-    //   `input of getPostsFromNotion: ${JSON.stringify({
-    //     dbId,
-    //     filterToUse,
-    //     startCursor,
-    //     pageSize,
-    //     sortsToUse
-    //   })}`
-    // )
-
-    const postsList: NotionPost[] = await getPostsFromNotion(
-      dbId,
-      filterToUse,
-      startCursor,
-      pageSize,
-      sortsToUse
-    )
-
-    // console.debug(`👉 Before transformNotionPostsData with postsList length: ${postsList.length}`)
-
-    const posts = await transformNotionPostsData({
-      data: postsList
-    })
-    return posts
-  } catch (error) {
-    console.error('🐞🐞🐞 Error in getPosts()', error)
-    return []
-  }
-}
-
-export async function getPostsBy(options: {
-  filter: unknown
-  pageSize: number
-  startCursor?: string
-  getFull?: boolean
-}) {
-  const { filter, pageSize, startCursor, getFull } = options
-  try {
-    const posts = await getPosts({
+    const data = await queryDatabase({
       dbId: process.env.NOTION_DB_POSTS as string,
-      filter,
-      pageSize,
+      filter: filterToUse,
       startCursor,
-      getFull
+      pageSize,
+      sorts: sortsToUse
     })
-    return posts
+
+    return await transformNotionPostsData({ data: data?.results as any[] })
   } catch (error) {
-    console.error('🐞🐞🐞 Error in getPostsBy()', error)
+    console.error('🚨 Error in getPosts()', error)
     return []
   }
 }
@@ -91,18 +63,99 @@ export async function getPostsBy(options: {
 export const getTags = async () => {
   if (!process.env.NOTION_DB_POSTS) throw new Error('process.env.NOTION_DB_POSTS is not defined')
   try {
-    const data = await retrieveNotionDatabase(process.env.NOTION_DB_POSTS)
+    const data = await retrieveDatabase(process.env.NOTION_DB_POSTS)
     return (
       data?.properties?.tags?.multi_select?.options?.map((opt: NotionTagData) => mapTag(opt)) || []
     )
   } catch (error) {
-    console.error('🐞🐞🐞 Error in getTags()', error)
+    console.error('🚨 Error in getTags()', error)
     return []
   }
 }
 
+export async function getProjects() {
+  try {
+    const data = await getUnofficialDatabase({
+      spaceId: process.env.SPACE_ID,
+      sourceId: process.env.PROJECTS_SOURCE_ID,
+      collectionViewId: process.env.PROJECTS_COLLECTION_VIEW_ID,
+      notionTokenV2: process.env.NOTION_TOKEN_V2,
+      notionActiveUser: process.env.NOTION_ACTIVE_USER,
+      notionApiWeb: process.env.NOTION_API_WEB
+    })
+    return transformProjects(data)
+  } catch (error) {
+    console.error('🚨 Error in getProjects()', error)
+    return []
+  }
+}
+
+function transformProjects(data: CollectionInstance): Project[] {
+  const block = data?.recordMap?.block
+  const projectIds = Object.keys(block)
+  const projects = [] as Project[]
+
+  for (const id of projectIds) {
+    const project = block[id]
+    const properties = project?.value?.properties
+    const description = properties?.[`${process.env.PROJECTS_DESC_KEY}`]?.[0]?.[0]
+    if (!description) continue // because there are useless blocks in the database
+    const type = properties?.[`${process.env.PROJECTS_TYPE_KEY}`]?.[0]?.[0]?.split(',')
+    const title = properties?.title?.[0]?.[0]
+    const tech = properties?.[`${process.env.PROJECTS_TECH_KEY}`]?.[0]?.[0]?.split(',')
+    const source = properties?.[`${process.env.PROJECTS_SOURCE_KEY}`]?.[0]?.[0]
+    const url = properties?.[`${process.env.PROJECTS_URL_KEY}`]?.[0]?.[0]
+    const techText = properties?.[`${process.env.PROJECTS_TECH_TEXT_KEY}`]?.[0]?.[0]?.split(',')
+    const choice = properties?.[`${process.env.PROJECTS_CHOICE_KEY}`]?.[0]?.[0] === 'Yes'
+    const icon = project?.value?.format?.page_icon
+    const lastModified =
+      properties?.[`${process.env.PROJECTS_LAST_MODIFIED_KEY}`]?.[0]?.[1]?.[0]?.[1]?.start_date ??
+      new Date(project?.value?.last_edited_time).toISOString()
+
+    projects.push({
+      id,
+      title,
+      description,
+      type,
+      tech,
+      source,
+      url,
+      techText,
+      choice,
+      icon,
+      lastModified
+    })
+  }
+
+  projects.sort(function (a, b) {
+    const keyA = new Date(a.lastModified)
+    const keyB = new Date(b.lastModified)
+    if (keyA < keyB) return 1
+    if (keyA > keyB) return -1
+    return 0
+  })
+
+  return projects
+}
+
+function transformUnofficialPosts(data: CollectionInstance): Post[] {
+  const block = data?.recordMap?.block
+  const postIds = Object.keys(block)
+  const posts = []
+  for (const id of postIds) {
+    const post = block[id]
+    const properties = post?.value?.properties
+    const slug = properties?.[`${process.env.NEXT_PUBLIC_ID_SLUG}`]?.[0]?.[0]
+    if (!slug) continue
+
+    posts.push(getPostProperties(post?.value))
+  }
+
+  return posts
+}
+
 function mapTag(tag: NotionTagData): Tag {
-  if (!tag || !tag.name) throw new Error('Tag is invalid')
+  if (!tag || !tag.name) throw new Error('tag is invalid')
   return {
     id: makeSlugText(tag.name),
     name: tag.name,
@@ -110,93 +163,6 @@ function mapTag(tag: NotionTagData): Tag {
     uri: getUri('tag', makeSlugText(tag.name))
   }
 }
-
-// ARCHIVED: We use the information in the recordMap instead of this method
-// export async function getPostHeader(pageId: string): Promise<PostHeaderType> {
-//   try {
-//     const pageData = await getNotionPage(pageId)
-//     const properties = pageData?.properties
-
-//     // title
-//     const title = getJoinedRichText(properties?.Name?.title as any) || defaultPostTitle
-
-//     // date
-//     const gotDate = get(
-//       pageData,
-//       'properties.finalModified.formula.date.start',
-//       get(pageData, 'last_edited_time', defaultPostDate)
-//     )
-//     const date = new Date(gotDate).toISOString()
-
-//     // createdDate
-//     const createdDate = new Date(
-//       get(
-//         pageData,
-//         'properties.createdDate.date.start',
-//         get(pageData, 'created_time', defaultPostDate)
-//       )
-//     ).toISOString()
-
-//     // tags
-//     const tags = properties?.tags?.multi_select?.map((tag: NotionTagData) => mapTag(tag)) || []
-
-//     // icon
-//     const icon = pageData.icon
-//       ? {
-//           emoji: pageData.icon.emoji,
-//           img:
-//             pageData.icon.external?.url || pageData.icon.file?.url
-//               ? await parseImage({
-//                   sourceUrl: pageData.icon.external?.url || pageData.icon.file?.url,
-//                   altText: `Icon for "${title}"`
-//                 })
-//               : undefined
-//         }
-//       : undefined
-
-//     // featured image
-//     const sourceUrl = pageData?.cover?.external?.url || pageData?.cover?.file?.url
-//     const featuredImage = await parseImage({
-//       sourceUrl,
-//       altText: `Ảnh đại diện cho bài viết "${title}"`
-//     })
-
-//     return {
-//       title,
-//       date,
-//       createdDate,
-//       tags,
-//       icon,
-//       featuredImage
-//     }
-//   } catch (error) {
-//     console.error('🐞🐞🐞 Error in getPostHeader()', error)
-//     return {
-//       title: '',
-//       date: '',
-//       createdDate: '',
-//       tags: [],
-//       icon: undefined,
-//       featuredImage: undefined
-//     }
-//   }
-// }
-
-/**
- * Make sure that the return of this method is always an image (from Notion or from the default image)
- */
-// async function parseImage(options: { sourceUrl: string; altText?: string }): Promise<ImageType> {
-//   const { sourceUrl, altText } = options
-//   if (!sourceUrl) return null
-//   const image: ImageType = { altText, sourceUrl }
-//   const imgUrl = parseNotionImageUrl(sourceUrl)
-//   const { base64, width, height } = await getPlaceholderImage(imgUrl)
-//   image.blurDataURL = base64
-//   image.width = width
-//   image.height = height
-
-//   return image
-// }
 
 async function transformNotionPostsData(options: { data: NotionPost[] }): Promise<Post[]> {
   const { data } = options
@@ -231,13 +197,6 @@ async function transformNotionPostsData(options: { data: NotionPost[] }): Promis
         get(post, 'properties.slug.rich_text[0].plain_text', '') ||
         makeSlugText(getJoinedRichText(post?.properties?.Name?.title as any))
 
-      // prefixSlug
-      // const prefixSlug = get(post, 'properties.blog.checkbox') ? 'blog' : 'note'
-      const prefixSlug = 'note'
-
-      // isBlog
-      const isBlog = get(post, 'properties.blog.checkbox') || false
-
       // isDraft
       const isDraft = get(post, 'properties.draft.checkbox') || false
 
@@ -245,94 +204,12 @@ async function transformNotionPostsData(options: { data: NotionPost[] }): Promis
         id,
         title,
         slug,
-        uri: getUri(prefixSlug, slug),
+        uri: getUri('note', slug),
         date,
         createdDate,
         tags,
-        isBlog,
         isDraft
       } as Post
     })
   )
 }
-
-export async function getBlocks(blockId: string): Promise<ListBlockChildrenResponse['results']> {
-  try {
-    return await getNotionBlocks(
-      blockId,
-      process.env.NOTION_TOKEN as string,
-      process.env.NOTION_VERSION as string,
-      undefined,
-      getPageUri,
-      parseImgurUrlForGettingBlocks
-    )
-  } catch (error) {
-    console.error('🐞🐞🐞 Error in getBlocks()', error)
-    return []
-  }
-}
-
-function parseImgurUrlForGettingBlocks(url: string) {
-  return parseImgurUrl({ url, type: 'h', ignoreImgType: 'png' })
-}
-
-/**
- * Get uri (not slug) of a Notion page
- */
-async function getPageUri(pageId: string): Promise<string | undefined> {
-  const pageData = await getNotionPage(pageId)
-  const slug =
-    get(pageData, 'properties.slug.rich_text[0].plain_text', '') ||
-    makeSlugText(getJoinedRichText(pageData?.properties?.Name?.title as any))
-  if (!slug) return undefined
-  return !SINGLE_PAGE_SLUGS.includes(slug) ? `/note/${slug}/` : `/${slug}/`
-}
-
-/**
- * Get posts from Notion using the official Notion APIs. We use React cache() to cache the data.
- *
- * @see {@link https://developers.notion.com/reference/post-database-query Query a database - Notion API}
- * @see {@link https://nextjs.org/docs/app/building-your-application/data-fetching/caching#react-cache React cache()}
- * @see {@link https://developers.notion.com/reference/request-limits Notion API request limits}
- */
-const getPostsFromNotion = cache(
-  async (
-    dataId: string,
-    filter?: QueryDatabaseParameters['filter'],
-    startCursor?: string,
-    pageSize?: number,
-    sorts?: NotionSorts[]
-  ) =>
-    getPostsWithoutCache({
-      dbId: dataId,
-      notionToken: process.env.NOTION_TOKEN as string,
-      notionVersion: process.env.NOTION_VERSION as string,
-      filter,
-      startCursor,
-      pageSize,
-      sorts
-    })
-)
-
-export const retrieveNotionDatabase = cache(async (dataId: string) =>
-  retrieveNotionDatabaseWithoutCache(
-    dataId,
-    process.env.NOTION_TOKEN as string,
-    process.env.NOTION_VERSION as string
-  )
-)
-
-/**
- * Get Notion Page by pageId
- *
- * It's "notion.pages.retrieve()" if we use Notion API directly.
- *
- * @see {@link https://developers.notion.com/reference/retrieve-a-page Retrieve a page - Notion API}
- */
-const getNotionPage = cache(async (pageId: string) =>
-  getNotionPageWithoutCache(
-    pageId,
-    process.env.NOTION_TOKEN as string,
-    process.env.NOTION_VERSION as string
-  )
-)

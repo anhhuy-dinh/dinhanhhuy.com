@@ -1,6 +1,6 @@
 'use client'
 
-import AiOutlineLoading3Quarters from '@notion-x/icons/AiOutlineLoading3Quarters'
+import AiOutlineLoading3Quarters from '@notion-x/src/icons/AiOutlineLoading3Quarters'
 import cn from 'classnames'
 import React, { useRef } from 'react'
 
@@ -13,7 +13,7 @@ const Comments = ({ className }: { className?: string }) => {
     url: 'https://utteranc.es/client.js',
     theme: 'github-light',
     issueTerm: 'title',
-    repo: 'dinhanhthi/dinhanhthi.com-comments',
+    repo: 'anhhuy-dinh/dinhanhhuy.com-comments',
     ref: comment
   })
 

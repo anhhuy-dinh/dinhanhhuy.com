@@ -1,10 +1,10 @@
 import toTopImg from '@/public/to-top.webp'
 import PostAside from '@/src/app/components/PostAside'
 import PostHeader from '@/src/app/components/PostHeader'
-import PostBody from '@notion-x/components/PostBody'
-import PostToc from '@notion-x/components/PostToc'
-import ScrollToTop from '@notion-x/components/ScrollToTop'
-import { BlockOptionsContextType } from '@notion-x/context'
+import PostBody from '@notion-x/src/components/PostBody'
+import PostToc from '@notion-x/src/components/PostToc'
+import ScrollToTop from '@notion-x/src/components/ScrollToTop'
+import { BlockOptionsContextType } from '@notion-x/src/lib/context'
 import cn from 'classnames'
 import { ExtendedRecordMap, PageBlock } from 'notion-types'
 import { getPageTableOfContents } from 'notion-utils'
@@ -48,7 +48,8 @@ export default function SinglePostTemplate(props: SinglePostTemplateProps) {
                   labelTocTitle: 'In this note',
                   blockCodeCopiedText: 'Copied',
                   blockCodeCopyText: 'Copy',
-                  headingScrollMarginTopClass: 'scroll-mt-[70px]'
+                  headingScrollMarginTopClass: 'scroll-mt-[70px]',
+                  minNumHeadingsToShowToc: 4
                 }}
               />
             </article>
@@ -58,7 +59,7 @@ export default function SinglePostTemplate(props: SinglePostTemplateProps) {
 
           <aside className={cn(asideClass)}>
             <PostAside position="right">
-              <PostToc showToc={true} tocs={tocs} labelTocTitle="In this note" />
+              <PostToc recordMap={props.recordMap} tocs={tocs} labelTocTitle="In this note" />
             </PostAside>
           </aside>
         </div>

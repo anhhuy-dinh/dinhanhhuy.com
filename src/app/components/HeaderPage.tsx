@@ -1,5 +1,5 @@
-import ImageComponent from '@notion-x/components/ImageComponent'
-import { ImageType } from '@notion-x/interface'
+import ImageComponent from '@notion-x/src/components/ImageComponent'
+import { ImageType } from '@notion-x/src/interface'
 import cn from 'classnames'
 
 import Header from './Header'

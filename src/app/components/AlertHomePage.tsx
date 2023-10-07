@@ -1,4 +1,4 @@
-import AiOutlineAlert from '@notion-x/icons/AiOutlineAlert'
+import AiOutlineAlert from '@notion-x/src/icons/AiOutlineAlert'
 import cn from 'classnames'
 
 import { containerWide } from '../lib/config'

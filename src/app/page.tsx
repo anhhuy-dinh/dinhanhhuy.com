@@ -1,29 +1,27 @@
 /* eslint-disable quotes */
-import SkeletonPostList from '@notion-x/SkeletonPostList'
-import ImageComponent from '@notion-x/components/ImageComponent'
-import PostList from '@notion-x/components/PostsList'
-import { makeSlugText } from '@notion-x/helpers'
-import { ImageType } from '@notion-x/interface'
+import ImageComponent from '@notion-x/src/components/ImageComponent'
+import PostList from '@notion-x/src/components/PostsList'
+import SkeletonPostList from '@notion-x/src/components/SkeletonPostList'
+import { ImageType } from '@notion-x/src/interface'
+import { makeSlugText } from '@notion-x/src/lib/helpers'
 import cn from 'classnames'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
 import me from '../data/me'
-import projects from '../data/projects'
 import topics from '../data/topics'
 import Container from './components/Container'
 import Footer from './components/Footer'
 import HeaderIndex from './components/HeaderIndex'
 import ProjectItem, { Project, SkeletonProjectItem } from './components/ProjectItem'
-import { bodyPadding, containerWide } from './lib/config'
-import { getPosts } from './lib/fetcher'
-import { poppins } from './lib/fonts'
+import { bodyPadding, containerWide, defaultPostTypeOpts } from './lib/config'
+import { getPosts, getProjects } from './lib/fetcher'
 import { getMetadata, getUri } from './lib/helpers'
 
-export const revalidate = 60
+export const revalidate = 20
 
 export const metadata = getMetadata({
-  title: "Hi! I'm Huy",
+  title: "Hi! I'm Thi",
   description: me.quote,
   images: [
     {
@@ -52,11 +50,8 @@ const HeadingWithMore = ({ title, href }: { title: string; href: string }) => (
 )
 
 export default async function Home() {
-  const posts = await getPosts({
-    dbId: process.env.NOTION_DB_POSTS as string,
-    pageSize: 10,
-    getFull: true
-  })
+  const posts = await getPosts({ pageSize: 10 })
+  const projects = await getProjects()
 
   const projectsToShow = projects.slice(0, 6)
   const isThereDsProject = projectsToShow.some(project => project.type.includes('ds'))
@@ -86,11 +81,7 @@ export default async function Home() {
                 <PostList
                   posts={posts}
                   postType="PostSimple"
-                  postTypeOpts={{
-                    fontClassName: poppins.className,
-                    updatedOnLabel: 'updated',
-                    humanizeDate: true
-                  }}
+                  postTypeOpts={defaultPostTypeOpts}
                   options={{
                     className: 'flex flex-col divide-y'
                   }}

@@ -20,7 +20,8 @@ const useScript = (params: any) => {
     script.setAttribute('repo', repo)
 
     // Check if the script is already in the document?
-    const existingScript = document.getElementsByClassName('utterances')[0]
+    const existingScript =
+      !!document.getElementsByClassName('utterances')[0] || ref?.current?.firstChild
 
     if (existingScript) {
       setStatus('ready')

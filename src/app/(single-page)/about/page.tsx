@@ -12,7 +12,7 @@ import SkillGroup, { SkeletonSkillGroup, SkillGroupType } from '../../components
 import { bodyPadding, containerWide } from '../../lib/config'
 import { getMetadata } from '../../lib/helpers'
 
-export const revalidate = 60
+export const revalidate = 20
 
 export const metadata = getMetadata({
   title: 'About me',

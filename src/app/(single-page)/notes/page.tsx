@@ -1,6 +1,6 @@
 import NotesIcon from '@/public/notes.svg'
-import SkeletonPostList from '@notion-x/SkeletonPostList'
-import { ImageType, Tag } from '@notion-x/interface'
+import SkeletonPostList from '@notion-x/src/components/SkeletonPostList'
+import { ImageType, Tag } from '@notion-x/src/interface'
 import cn from 'classnames'
 import { Suspense } from 'react'
 
@@ -14,7 +14,7 @@ import { bodyPadding, containerWide } from '../../lib/config'
 import { getTags } from '../../lib/fetcher'
 import { getMetadata } from '../../lib/helpers'
 
-export const revalidate = 60
+export const revalidate = 20
 
 export const metadata = getMetadata({
   title: 'Notes',

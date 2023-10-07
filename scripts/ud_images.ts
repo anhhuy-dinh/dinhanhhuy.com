@@ -1,5 +1,5 @@
-import { getBlocks, getNotionDatabaseWithoutCache } from '@notion-x/db'
-import { makeSlugText } from '@notion-x/helpers'
+import { getBlocks, queryDatabase, retrievePage } from '@notion-x/src/lib/db'
+import { makeSlugText } from '@notion-x/src/lib/helpers'
 import { Client } from '@notionhq/client'
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import chalk from 'chalk'
@@ -16,8 +16,7 @@ import { NotionHeader, NotionPost } from '../src/interface'
 
 // Notion
 const notionClient = new Client({ auth: process.env.NOTION_TOKEN })
-const notionToken = process.env.NOTION_TOKEN as string
-const notionVersion = process.env.NOTION_VERSION as string
+const dbId = process.env.NOTION_DB_POSTS as string
 
 // Cloudinary
 const albumCover = 'dat.com-post-covers'
@@ -45,12 +44,12 @@ async function main(argv: yargsType.Argv['argv']) {
     }
 
     case 'cover-all': {
-      await updateCoverAll(process.env.NOTION_DB_POSTS as string)
+      await updateCoverAll()
       break
     }
 
     case 'icon-all': {
-      await updateIconAll(process.env.NOTION_DB_POSTS as string)
+      await updateIconAll()
       break
     }
 
@@ -70,7 +69,7 @@ async function updateImagesInPost(postId: string) {
 
   console.log(chalk.yellow('⧗ Checking and downloading image from Notion...'))
   const { postTitle, firstTag } = await getNotionHeader(postId)
-  const blocks = await getBlocks(postId, notionToken, notionVersion)
+  const blocks = await getBlocks(postId)
   const flatBlocks = flattenAllBlocks(blocks)
   const imageBlocks = flatBlocks.filter((block: any) => 'type' in block && block.type === 'image')
 
@@ -174,12 +173,12 @@ function flattenAllBlocks(blocks: any[]): any {
   return [...blocks, ...childBlocks.flat()]
 }
 
-async function updateCoverAll(dbId: string) {
+async function updateCoverAll() {
   console.log(chalk.blue(`🌶 Update COVER for ALL POSTS in database ${dbId}`))
   if (!dbId) return handleError('Missing database id', 'updateCoverAll()')
 
   console.log(chalk.yellow('⧗ Checking and downloading images from Notion...'))
-  const posts = await getPosts(dbId, undefined)
+  const posts = await getPosts()
   for (const post of posts) {
     if (!post?.postId || !post?.coverUrl) continue
     console.log(chalk.magenta(`\n👉 postId: ${post?.postId}`))
@@ -191,12 +190,12 @@ async function updateCoverAll(dbId: string) {
   }
 }
 
-async function updateIconAll(dbId: string) {
+async function updateIconAll() {
   console.log(chalk.blue(`🌶 Update ICON for ALL POSTS in database ${dbId}`))
   if (!dbId) return handleError('Missing database id', 'updateIconAll()')
 
   console.log(chalk.yellow('⧗ Checking and downloading icons from Notion...'))
-  const posts = await getPosts(dbId, undefined)
+  const posts = await getPosts()
   for (const post of posts) {
     if (!post?.postId || !post?.iconUrl) continue
     console.log(chalk.magenta(`\n👉 postId: ${post?.postId}`))
@@ -208,30 +207,11 @@ async function updateIconAll(dbId: string) {
   }
 }
 
-async function getPosts(dbId: string, startCursor?: string) {
+async function getPosts(startCursor?: string) {
   console.log('_____getPosts()....')
   try {
-    let data = await getNotionDatabaseWithoutCache(dbId, notionToken, notionVersion)
-    let postsList = get(data, 'results', []) as NotionPost[]
-    if (data && data['has_more']) {
-      let newStartCursor = startCursor
-      while (data!['has_more']) {
-        newStartCursor = data!['next_cursor'] as string
-        data = await getNotionDatabaseWithoutCache(
-          dbId,
-          notionToken,
-          notionVersion,
-          undefined,
-          newStartCursor
-        )
-        if (get(data, 'results')) {
-          const lst = data!['results'] as any[]
-          postsList = [...postsList, ...lst]
-        }
-      }
-    }
-    const posts = (await transformNotionPostsData(postsList)) || []
-    return posts
+    const data = await queryDatabase({ dbId, startCursor })
+    return await transformNotionPostsData(data?.results as any[])
   } catch (error) {
     console.log('🐞 _____getPosts() error: ', error)
     return []
@@ -404,7 +384,7 @@ function ignoreImage(url: string): boolean {
 async function getNotionHeader(pageId: string) {
   if (!pageId) return { coverUrl: undefined, iconUrl: undefined, postTitle: '' }
 
-  const pageData: any = await getNotionDatabaseWithoutCache(pageId, notionToken, notionVersion)
+  const pageData: any = await retrievePage(pageId)
   const coverUrl = pageData?.cover?.file?.url || pageData?.cover?.external?.url
   const iconUrl = pageData?.icon?.external?.url || pageData?.icon?.file?.url
   const postTitle = getJoinedRichText(pageData?.properties?.Name?.title) || 'Untitled'

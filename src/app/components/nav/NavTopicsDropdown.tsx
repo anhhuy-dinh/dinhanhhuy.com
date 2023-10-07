@@ -1,7 +1,7 @@
 'use client'
 
 import { Popover, Transition } from '@headlessui/react'
-import FiChevronDown from '@notion-x/icons/FiChevronDown'
+import FiChevronDown from '@notion-x/src/icons/FiChevronDown'
 import Link from 'next/link'
 import { Fragment, useRef } from 'react'
 

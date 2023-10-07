@@ -1,6 +1,6 @@
-import SkeletonPostHeaderTopics from '@notion-x/components/SkeletonPostHeaderTopics'
-import AiOutlineClockCircle from '@notion-x/icons/AiOutlineClockCircle'
-import RiUser3Line from '@notion-x/icons/RiUser3Line'
+import SkeletonPostHeaderTopics from '@notion-x/src/components/SkeletonPostHeaderTopics'
+import AiOutlineClockCircle from '@notion-x/src/icons/AiOutlineClockCircle'
+import RiUser3Line from '@notion-x/src/icons/RiUser3Line'
 import cn from 'classnames'
 
 import { bodyPadding, containerNormal } from '../../lib/config'
@@ -36,7 +36,7 @@ export default function SkeletonPost(props: SkeletonPostProps) {
           headerType={'white'}
           headerWidth="normal"
         >
-          <div className="py-8 flex flex-col gap-3 w-full">
+          <div className="py-8 flex flex-col gap-4 w-full">
             {/* Title */}
             <div className={cn('h-8 w-3/4 rounded-2xl bg-slate-200')}></div>
 

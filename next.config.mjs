@@ -1,5 +1,3 @@
-import withPlaiceholder from '@plaiceholder/next'
-
 const nextConfig = {
   // output: 'export',
   trailingSlash: true, // use "/about/" instead of "/about" (not supported yet by --turbo)
@@ -8,6 +6,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true, // not supported yet by --turbo,
     esmExternals: false
+    // serverActions: true
     // esmExternals: 'loose' // https://nextjs.org/docs/messages/import-esm-externals
   },
   modularizeImports: {
@@ -25,6 +24,7 @@ const nextConfig = {
       'secure.gravatar.com',
       'math2it.com',
       'dinhanhthi.com',
+      'dinhanhhuy.com',
       // 👇 for notion's post cover
       'images.unsplash.com',
       'notion.so',
@@ -55,4 +55,4 @@ const nextConfig = {
   }
 }
 
-export default withPlaiceholder(nextConfig)
+export default nextConfig

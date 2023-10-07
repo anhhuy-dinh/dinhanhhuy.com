@@ -1,5 +1,5 @@
 import VictoryHand from '@/public/victory_hand.webp'
-import BadgeInfos from '@notion-x/components/BadgeInfos'
+import BadgeInfos from '@notion-x/src/components/BadgeInfos'
 import cn from 'classnames'
 import Image from 'next/image'
 

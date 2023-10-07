@@ -1,11 +1,11 @@
-import { notionX } from '@notion-x/notionx'
+import { notionX } from '@notion-x/src/lib/notionx'
 import { notFound } from 'next/navigation'
 import { parsePageId } from 'notion-utils'
 
 import { getMetadata } from '../../lib/helpers'
 import SinglePostTemplate from '../../templates/SinglePostTemplate'
 
-export const revalidate = 60
+export const revalidate = 20
 
 export const metadata = getMetadata({
   title: 'Support Huy'

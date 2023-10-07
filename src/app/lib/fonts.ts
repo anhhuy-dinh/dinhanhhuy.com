@@ -10,5 +10,5 @@ export const comfortaa = Comfortaa({
 export const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['400', '600', '700']
+  weight: ['400', '500', '600']
 })

@@ -1,9 +1,9 @@
 import Avatar from '@/public/avatar.webp'
 import WavingHand from '@/public/waving_hand.webp'
-import BadgeInfos from '@notion-x/components/BadgeInfos'
-import BadgeSocial from '@notion-x/components/BadgeSocial'
-import ImageComponent from '@notion-x/components/ImageComponent'
-import { ImageType } from '@notion-x/interface'
+import BadgeInfos from '@notion-x/src/components/BadgeInfos'
+import BadgeSocial from '@notion-x/src/components/BadgeSocial'
+import ImageComponent from '@notion-x/src/components/ImageComponent'
+import { ImageType } from '@notion-x/src/interface'
 import cn from 'classnames'
 import Image from 'next/image'
 

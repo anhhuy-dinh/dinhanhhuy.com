@@ -1,7 +1,7 @@
 'use client'
 
-import SearchModal from '@notion-x/components/SearchModal'
-import FiSearch from '@notion-x/icons/FiSearch'
+import SearchModal from '@notion-x/src/components/SearchModal'
+import FiSearch from '@notion-x/src/icons/FiSearch'
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
 
@@ -58,7 +58,6 @@ export default function NavSearch() {
       </div>
       {isSearchOpen && (
         <SearchModal
-          // Cannot use process.env here because of 'use client' at the top
           url="/api/search-notion"
           slugPrefix={'note'}
           isOpen={isSearchOpen}

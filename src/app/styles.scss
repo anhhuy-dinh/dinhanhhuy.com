@@ -24,14 +24,6 @@
   font-display: swap;
 }
 
-.m2it-prose {
-  h2,
-  h3 {
-    font-family: 'Recoleta', 'Arial', 'Helvetica', 'sans-serif' !important;
-    font-weight: normal !important;
-  }
-}
-
 @layer base {
   html {
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
@@ -153,5 +145,13 @@
 
   .thi-prose {
     @apply thi-prose-code thi-prose-pre prose prose-strong:font-medium;
+  }
+}
+
+.m2it-prose {
+  h2,
+  h3 {
+    font-family: 'Recoleta', 'Arial', 'Helvetica', 'sans-serif' !important;
+    font-weight: normal !important;
   }
 }

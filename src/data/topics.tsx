@@ -20,7 +20,7 @@ import PythonIcon from '@/public/topics/python.svg'
 import SSGIcon from '@/public/topics/ssg.svg'
 import WebDevIcon from '@/public/topics/web-dev.svg'
 import WindowsIcon from '@/public/topics/windows.svg'
-import { Tag } from '@notion-x/interface'
+import { Tag } from '@notion-x/src/interface'
 
 const topics: Tag[] = [
   {

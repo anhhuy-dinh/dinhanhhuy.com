@@ -1,4 +1,4 @@
-import BadgeTech from '@notion-x/components/BadgeTech'
+import BadgeTech from '@notion-x/src/components/BadgeTech'
 import cn from 'classnames'
 
 import techs from '../../data/techs'
@@ -9,8 +9,9 @@ export type Project = {
   id: string
   type: ProjectType[]
   title: string
-  icon?: string
+  lastModified: string
   description: string
+  icon?: string
   source?: string
   url?: string
   tech?: string[]

@@ -1,16 +1,12 @@
 'use client'
 
 import cn from 'classnames'
-import { Suspense, useState } from 'react'
+import { useState } from 'react'
 
-import projects from '../../../data/projects'
-import ProjectItem, {
-  Project,
-  ProjectType,
-  SkeletonProjectItem
-} from '../../components/ProjectItem'
+import ProjectItem, { Project, ProjectType } from '../../components/ProjectItem'
 
-export default function ProjectPage() {
+export default function ProjectPage(props: { projects: Project[] }) {
+  const { projects } = props
   const [typeToShow, setTypeToShow] = useState<ProjectType[]>(['web', 'ds', 'other'])
   const buttonClassName = (type: ProjectType) =>
     cn(
@@ -28,6 +24,15 @@ export default function ProjectPage() {
       }
     )
 
+  const numClass = (type: ProjectType) =>
+    cn(
+      'bg-[#ffffffb8] text-slate-800 rounded-full text-[0.8rem] flex items-center justify-center',
+      'h-5 w-6',
+      {
+        '!bg-slate-200': !typeToShow.includes(type)
+      }
+    )
+
   const toggleTypeToShow = (type: ProjectType) => {
     if (typeToShow.includes(type)) {
       setTypeToShow(typeToShow.filter(item => item !== type))
@@ -39,15 +44,6 @@ export default function ProjectPage() {
   const numDSProjects = projects.filter(project => project.type.includes('ds')).length
   const numWebProjects = projects.filter(project => project.type.includes('web')).length
   const numOtherProjects = projects.filter(project => project.type.includes('other')).length
-
-  const numClass = (type: ProjectType) =>
-    cn(
-      'bg-[#ffffffb8] text-slate-800 rounded-full text-[0.8rem] flex items-center justify-center',
-      'h-5 w-6',
-      {
-        '!bg-slate-200': !typeToShow.includes(type)
-      }
-    )
 
   return (
     <div className="flex flex-col gap-12">
@@ -72,15 +68,13 @@ export default function ProjectPage() {
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {projects.map((project: Project) => (
-          <Suspense key={project.id} fallback={<SkeletonProjectItem />}>
-            <ProjectItem
-              key={project.id}
-              project={project}
-              className={cn({
-                hidden: !typeToShow.some(type => project.type.includes(type))
-              })}
-            />
-          </Suspense>
+          <ProjectItem
+            key={project.id}
+            project={project}
+            className={cn({
+              hidden: !typeToShow.some(type => project.type.includes(type))
+            })}
+          />
         ))}
       </div>
     </div>

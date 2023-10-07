@@ -1,26 +1,25 @@
-import { notionMaxRequest, numPostsPerPage } from '@/src/app/lib/config'
-import { getPostsBy, getTags } from '@/src/app/lib/fetcher'
-import { generateMetaTitle, getFilterOf, getMetadata, getUri } from '@/src/app/lib/helpers'
+import { getPosts, getTags } from '@/src/app/lib/fetcher'
+import { generateMetaTitle, getMetadata, getUri } from '@/src/app/lib/helpers'
 import PageOfPostsListTemplate from '@/src/app/templates/PageOfPostsListTemplate'
-import { getStartCursorForCurrentPage } from '@notion-x/helpers'
 import {
   ImageType,
   OptionalCatchAllParams,
   OptionalCatchAllProps,
   Post,
   Tag
-} from '@notion-x/interface'
+} from '@notion-x/src/interface'
+import { getStartCursorForCurrentPage } from '@notion-x/src/lib/helpers'
 import { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import topics from '../../../data/topics'
 
-export const revalidate = 60
+export const revalidate = 20
 
 export async function generateMetadata({ params }: OptionalCatchAllProps): Promise<Metadata> {
   const slug = params.slug[0] || ''
   const currentPage = +(params?.slug?.[2] || 1)
-  console.debug(`\n👉 Slug:  ${slug}, currentPage: ${currentPage}\n`)
+  console.debug(`\n👉 slug:  ${slug}, currentPage: ${currentPage}\n`)
   const [totalPages] = await getTotalPages({ slug } as Tag)
   const tags = await getTags()
   const tag = getTag(slug, tags)
@@ -70,6 +69,8 @@ export default async function TagPage({ params }: OptionalCatchAllProps) {
   const notRootPage = params.slug.length > 1
   const slug = params.slug[0] || ''
 
+  console.log(`\n👉 uri: /tag/${slug}/page/${currentPage}/`)
+
   const tags = await getTags()
   const tag = getTag(slug, tags)
   if (!tag) notFound()
@@ -91,14 +92,22 @@ export default async function TagPage({ params }: OptionalCatchAllProps) {
     notFound()
   }
 
-  const startCursor = getStartCursorForCurrentPage(currentPage, allPosts, numPostsPerPage)
+  const startCursor = getStartCursorForCurrentPage(
+    currentPage,
+    allPosts,
+    +process.env.POSTS_PER_PAGE!
+  )
   const postsOnThisPage = !allPosts.length
     ? []
-    : await getPostsBy({
-        filter: getFilterOf('tag', tag),
+    : await getPosts({
+        filter: {
+          property: 'tags',
+          multi_select: {
+            contains: tag?.name
+          }
+        },
         startCursor,
-        pageSize: numPostsPerPage,
-        getFull: true
+        pageSize: +process.env.POSTS_PER_PAGE!
       })
 
   return (
@@ -112,13 +121,16 @@ export default async function TagPage({ params }: OptionalCatchAllProps) {
 }
 
 async function getTotalPages(tag: Tag): Promise<[number, Post[]]> {
-  const allPosts = await getPostsBy({
-    filter: getFilterOf('tag', tag),
-    pageSize: notionMaxRequest,
-    getFull: true
+  const allPosts = await getPosts({
+    filter: {
+      property: 'tags',
+      multi_select: {
+        contains: tag?.name
+      }
+    }
   })
   const numPosts = allPosts?.length || 0
-  const totalPages = Math.ceil(numPosts / numPostsPerPage)
+  const totalPages = Math.ceil(numPosts / +process.env.POSTS_PER_PAGE!)
   return [totalPages, allPosts]
 }
 

@@ -1,14 +1,13 @@
 import Container from '@/src/app/components/Container'
-import SkeletonPostList from '@notion-x/SkeletonPostList'
-import Pagination from '@notion-x/components/Pagination'
-import PostList from '@notion-x/components/PostsList'
-import { Post, Tag } from '@notion-x/interface'
+import Pagination from '@notion-x/src/components/Pagination'
+import PostList from '@notion-x/src/components/PostsList'
+import SkeletonPostList from '@notion-x/src/components/SkeletonPostList'
+import { Post, Tag } from '@notion-x/src/interface'
 import cn from 'classnames'
 
 import Footer from '../components/Footer'
 import HeaderPage, { HeaderPageSkeleton } from '../components/HeaderPage'
-import { bodyPadding, containerWide } from '../lib/config'
-import { poppins } from '../lib/fonts'
+import { bodyPadding, containerWide, defaultPostTypeOpts } from '../lib/config'
 
 type PageOfPostsListTemplateProps = {
   object: Tag
@@ -39,11 +38,7 @@ export default function PageOfPostsListTemplate(props: PageOfPostsListTemplatePr
                   <PostList
                     posts={posts}
                     postType="PostSimple"
-                    postTypeOpts={{
-                      fontClassName: poppins.className,
-                      updatedOnLabel: 'updated',
-                      humanizeDate: true
-                    }}
+                    postTypeOpts={defaultPostTypeOpts}
                     options={{
                       className: 'flex flex-col divide-y'
                     }}

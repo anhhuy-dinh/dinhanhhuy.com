@@ -1,8 +1,8 @@
-import FaGithub from '@notion-x/icons/FaGithub'
+import FaGithub from '@notion-x/src/icons/FaGithub'
 // import FaPenNib from '@notion-x/icons/FaPenNib'
-import GrCircleInformation from '@notion-x/icons/GrCircleInformation'
+import GrCircleInformation from '@notion-x/src/icons/GrCircleInformation'
 // import ImPencil2 from '@notion-x/icons/ImPencil2'
-import RiHome2Line from '@notion-x/icons/RiHome2Line'
+import RiHome2Line from '@notion-x/src/icons/RiHome2Line'
 
 // import TiTag from '@notion-x/icons/TiTag'
 import me from './me'

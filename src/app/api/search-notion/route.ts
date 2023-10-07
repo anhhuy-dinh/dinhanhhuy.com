@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { searchNotion } from '@notion-x/db'
-import { makeSlugText } from '@notion-x/helpers'
-import { SearchResult } from '@notion-x/interface'
+import { SearchResult } from '@notion-x/src/interface'
+import { searchNotion } from '@notion-x/src/lib/db'
+import { makeSlugText } from '@notion-x/src/lib/helpers'
 
 const UNOFFICIAL_NOTION_KEYS = {
-  slug: process.env.SEARCH_SLUG as string,
-  published: process.env.SEARCH_PUBLISHED as string,
+  slug: process.env.NEXT_PUBLIC_ID_SLUG as string,
+  published: process.env.NEXT_PUBLIC_ID_PUBLISHED as string,
   title: 'title',
   boldSearchKey: `<${process.env.SEARCH_BOLD_KEY}>`,
   boldSearchKeyClose: `</${process.env.SEARCH_BOLD_KEY}>`
