@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://dinhanhhuy.com/
+
+# Sitemaps
+Sitemap: https://dinhanhhuy.com/sitemap.xml
