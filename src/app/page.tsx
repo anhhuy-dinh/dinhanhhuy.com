@@ -1,4 +1,5 @@
 /* eslint-disable quotes */
+import HeadingWithMore from '@notion-x/src/components/HeadingWithMore'
 import ImageComponent from '@notion-x/src/components/ImageComponent'
 import PostList from '@notion-x/src/components/PostsList'
 import SkeletonPostList from '@notion-x/src/components/SkeletonPostList'
@@ -31,23 +32,6 @@ export const metadata = getMetadata({
     }
   ]
 })
-
-const HeadingWithMore = ({ title, href }: { title: string; href: string }) => (
-  <h2
-    id="notes"
-    className={cn(
-      'font-heading text-3xl font-semibold text-slate-700 flex items-baseline flex-wrap gap-y-0 gap-x-4'
-    )}
-  >
-    <span>{title}</span>
-    <Link
-      className="text-[60%] italic text-slate-600 hover:m2it-link-hover font-normal"
-      href={href}
-    >
-      ...more
-    </Link>
-  </h2>
-)
 
 export default async function Home() {
   const posts = await getPosts({ pageSize: 10 })

@@ -1,4 +1,6 @@
 import NotesIcon from '@/public/notes.svg'
+import HeadingWithMore from '@notion-x/src/components/HeadingWithMore'
+import PostList from '@notion-x/src/components/PostsList'
 import SkeletonPostList from '@notion-x/src/components/SkeletonPostList'
 import { ImageType, Tag } from '@notion-x/src/interface'
 import cn from 'classnames'
@@ -10,8 +12,8 @@ import Footer from '../../components/Footer'
 import HeaderPage from '../../components/HeaderPage'
 import NoteTopicSection from '../../components/NoteTopicSection'
 import NotesToc from '../../components/NotesToc'
-import { bodyPadding, containerWide } from '../../lib/config'
-import { getTags } from '../../lib/fetcher'
+import { bodyPadding, containerWide, defaultPostTypeOpts } from '../../lib/config'
+import { getPosts, getTags } from '../../lib/fetcher'
 import { getMetadata } from '../../lib/helpers'
 
 export const revalidate = 20
@@ -22,6 +24,7 @@ export const metadata = getMetadata({
 })
 
 export default async function NotesPage() {
+  const posts = await getPosts({ pageSize: 8 })
   const tags: Tag[] = await getTags()
   for (const tag of tags) {
     const predefinedTag = topics.find(t => t.name === tag.name)
@@ -47,6 +50,33 @@ export default async function NotesPage() {
         <div className="flex flex-col md:flex-row gap-8">
           <Suspense fallback={<SkeletonNotesPageBody />}>
             <div className="order-2 flex-1 flex flex-col gap-12">
+              {/* Recently updated notes */}
+              <div className="flex flex-col gap-2">
+                <HeadingWithMore title="Recently updated notes" />
+                <div className="thi-box-code overflow-hidden">
+                  <Suspense
+                    fallback={
+                      <SkeletonPostList
+                        count={4}
+                        postType="PostSimple"
+                        options={{
+                          className: 'flex flex-col divide-y'
+                        }}
+                      />
+                    }
+                  >
+                    <PostList
+                      posts={posts.filter(post => !post.pinned)}
+                      postType="PostSimple"
+                      postTypeOpts={defaultPostTypeOpts}
+                      options={{
+                        className: 'flex flex-col divide-y'
+                      }}
+                    />
+                  </Suspense>
+                </div>
+              </div>
+
               {pinnedTags.map((tag: Tag) => (
                 <NoteTopicSection key={tag.id} tag={tag} />
               ))}
