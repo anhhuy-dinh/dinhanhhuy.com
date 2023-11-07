@@ -1,9 +1,9 @@
 import { ImgurUrlType } from '@/src/interface'
 import { Post, Tag } from '@notion-x/src/interface'
+import { mapTag } from '@notion-x/src/lib/helpers'
 import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 import { Block } from 'notion-types'
 
-import { mapTag } from '../../../notion-x/src/lib/helpers'
 import me from '../../data/me'
 
 export function getUri(type: 'tag' | 'note', slug?: string): string | undefined {
