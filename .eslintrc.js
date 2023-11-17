@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   env: {
     browser: true,
     es2021: true,
@@ -13,6 +13,7 @@ module.exports = {
     'plugin:@next/next/recommended',
     'plugin:tailwindcss/recommended',
     'next',
+    'plugin:unicorn/recommended',
     'prettier' // make sure it's the last one,
   ],
   overrides: [],
@@ -71,3 +72,5 @@ module.exports = {
   },
   ignorePatterns: ['next-env.d.ts', 'graphql/**/*.ts']
 }
+
+export default config
