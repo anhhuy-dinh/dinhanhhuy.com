@@ -1,9 +1,7 @@
-import toTopImg from '@/public/to-top.webp'
 import PostAside from '@/src/app/components/PostAside'
 import PostHeader from '@/src/app/components/PostHeader'
 import PostBody from '@notion-x/src/components/PostBody'
 import PostToc from '@notion-x/src/components/PostToc'
-import ScrollToTop from '@notion-x/src/components/ScrollToTop'
 import { BlockOptionsContextType } from '@notion-x/src/lib/context'
 import cn from 'classnames'
 import { ExtendedRecordMap, PageBlock } from 'notion-types'
@@ -52,6 +50,7 @@ export default function SinglePostTemplate(props: SinglePostTemplateProps) {
                   minNumHeadingsToShowToc: 4
                 }}
                 useSimpleImage={true}
+                showBackToTopButton={true}
               />
             </article>
 
@@ -67,7 +66,6 @@ export default function SinglePostTemplate(props: SinglePostTemplateProps) {
 
         <Footer footerType="white" />
       </div>
-      <ScrollToTop image={toTopImg} />
     </>
   )
 }
