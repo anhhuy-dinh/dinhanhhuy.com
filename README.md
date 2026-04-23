@@ -1,4 +1,4 @@
-# Portfolio — Dinh Anh Thi
+# dinhanhhuy.com
 > Next.js 15 · TypeScript · Framer Motion · Spline 3D
 
 ---
