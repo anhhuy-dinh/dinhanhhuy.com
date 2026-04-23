@@ -1,6 +1,6 @@
 "use client";
 
-const NAV_ITEMS = ["Home", "About", "Projects", "Publications", "Awards", "Contact"];
+const NAV_ITEMS = ["Home", "About", "Projects", "Publications", "Awards" /*, "Contact" */];
 
 interface NavProps { page: string; setPage: (p: string) => void; }
 
@@ -99,7 +99,7 @@ export default function Nav({ page, setPage }: NavProps) {
             </div>
           ))}
 
-          {/* CTA button */}
+          {/* CTA button — temporarily hidden
           <button
             className="btn btn-grad"
             onClick={() => setPage("Contact")}
@@ -111,6 +111,7 @@ export default function Nav({ page, setPage }: NavProps) {
           >
             Get in Touch
           </button>
+          */}
         </div>
       </div>
     </nav>

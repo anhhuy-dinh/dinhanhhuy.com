@@ -22,7 +22,7 @@ export default function Portfolio() {
       case "Projects":     return <ProjectsPage />;
       case "Publications": return <PublicationsPage />;
       case "Awards":       return <AwardsPage />;
-      case "Contact":      return <ContactPage />;
+      // case "Contact":      return <ContactPage />;
       default:             return <HomePage setPage={setPage} />;
     }
   };
@@ -68,7 +68,7 @@ export default function Portfolio() {
 
             {/* GitHub */}
             <a
-              href="#"
+              href="https://github.com/anhhuy-dinh"
               aria-label="GitHub"
               style={{ color: "#a3a3a3", display: "flex", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
@@ -81,7 +81,7 @@ export default function Portfolio() {
 
             {/* LinkedIn */}
             <a
-              href="#"
+              href="https://www.linkedin.com/in/anh-huy-dinh-534364250/"
               aria-label="LinkedIn"
               style={{ color: "#a3a3a3", display: "flex", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
@@ -94,7 +94,7 @@ export default function Portfolio() {
 
             {/* Google Scholar */}
             <a
-              href="#"
+              href="https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi"
               aria-label="Google Scholar"
               style={{ color: "#a3a3a3", display: "flex", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#fff")}

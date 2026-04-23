@@ -97,9 +97,9 @@ export default function ContactPage() {
                 }}
               >
                 {[
-                  { label: "GitHub",         href: "https://github.com/dinhanhthi" },
-                  { label: "LinkedIn",       href: "#" },
-                  { label: "Google Scholar", href: "#" },
+                  { label: "GitHub",         href: "https://github.com/anhhuy-dinh" },
+                  { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/" },
+                  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi" },
                 ].map(l => (
                   <a
                     key={l.label}
