@@ -74,16 +74,16 @@ export default function ContactPage() {
                   justifyContent: "center",
                 }}
               >
-                <a href="mailto:hi@dinhanhthi.com" className="btn btn-grad">
-                  hi@dinhanhthi.com →
+                <a href="mailto:anh-huy.2.dinh@ucdenver.edu" className="btn btn-grad">
+                  anh-huy.2.dinh@ucdenver.edu →
                 </a>
                 <a
-                  href="https://dinhanhthi.com"
+                  href="https://dinhanhhuy.com"
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-ghost"
                 >
-                  dinhanhthi.com
+                  dinhanhhuy.com
                 </a>
               </div>
 

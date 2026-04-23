@@ -143,7 +143,7 @@ img: "/images/tastesensing.jpg"
 import Image from "next/image";
 
 <div className="avatar-inner" style={{ overflow:"hidden" }}>
-  <Image src="/images/avatar.jpg" alt="Anh Thi" width={72} height={72}
+  <Image src="/images/avatar.jpg" alt="Huy Dinh" width={72} height={72}
     style={{ objectFit:"cover", borderRadius:"50%", width:"100%", height:"100%" }} />
 </div>
 ```
