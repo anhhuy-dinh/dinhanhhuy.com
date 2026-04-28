@@ -7,7 +7,7 @@ export default function ProjectsPage() {
     <PageWrapper>
       <div
         style={{
-          maxWidth: 900,
+          maxWidth: 1100,
           margin: "0 auto",
           padding: "60px 2rem",
         }}

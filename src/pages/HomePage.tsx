@@ -335,8 +335,12 @@ export default function HomePage({ setPage }: Props) {
                 >
                   {p.title}
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "#a3a3a3" }}>{p.venue}</div>
-                <div style={{ fontSize: "0.68rem", color: "#8e6ff7", marginTop: "0.2rem" }}>{p.year}</div>
+                <div style={{ fontSize: "0.7rem", color: "#a3a3a3" }}>{p.venueShort}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.3rem" }}>
+                  <span style={{ fontSize: "0.65rem", color: p.statusColor, fontWeight: 600 }}>{p.status}</span>
+                  <span style={{ fontSize: "0.65rem", color: "#555" }}>·</span>
+                  <span style={{ fontSize: "0.65rem", color: "#666" }}>{p.year}</span>
+                </div>
               </div>
             ))}
           </div>

@@ -16,7 +16,7 @@ export default function PublicationsPage() {
     <PageWrapper>
       <div
         style={{
-          maxWidth: 820,
+          maxWidth: 1100,
           margin: "0 auto",
           padding: "60px 2rem 80px",
         }}

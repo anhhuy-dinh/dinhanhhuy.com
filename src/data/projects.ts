@@ -5,6 +5,7 @@ import type { Project } from "@/types";
 // img:   use "/images/your-file.jpg" for local, or a full URL
 // link:  set to null to hide the "View Details" button
 const projects: Project[] = [
+  /* hidden – uncomment to restore
   {
     title: "TasteSensing",
     badge: "open",
@@ -83,6 +84,7 @@ const projects: Project[] = [
     tech: ["Docker", "CUDA", "JupyterLab", "Tailscale", "PyTorch", "TensorFlow"],
     link: null,
   },
+  */
 ];
 
 export default projects;

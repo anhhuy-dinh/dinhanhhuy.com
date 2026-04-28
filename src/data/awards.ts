@@ -3,24 +3,19 @@ import type { Award } from "@/types";
 // ─── EDIT HERE: Awards & Recognition ─────────────────────────────────────────
 const awards: Award[] = [
   {
-    title: "NIH R21 Co-Investigator",
-    year: "2025",
-    desc: "Exoskeleton-assisted rehabilitation — systematic review lead.",
+    title: "Certificate of Merit — Graduate with High Distinction",
+    year: "2022",
+    desc: "Awarded by the director of Vietnam National University Ho Chi Minh City for graduating with outstanding academic performance.",
   },
   {
-    title: "COMIRB IRB Approval",
-    year: "2025",
-    desc: "Protocol 26-0702 — IonSpiro novel spirometer, PI: Dr. Nam Bui.",
+    title: "National Mathematics Development Program Scholarship",
+    year: "2019",
+    desc: "Awarded by the Vietnam Institute for Advanced Study in Mathematics (VIASM) to outstanding mathematics students nationwide.",
   },
   {
-    title: "Outstanding Teaching Award",
-    year: "2023",
-    desc: "Voted by students for ML & Applied Mathematics instruction.",
-  },
-  {
-    title: "Graduate Research Fellowship",
-    year: "2021",
-    desc: "Competitive departmental fellowship, Math & Stats Department.",
+    title: "Promoting Learning Scholarship — Top 5%",
+    year: "2018 — 2022",
+    desc: "Awarded each year by Ho Chi Minh City University of Science to the top 5% of students for sustained academic excellence.",
   },
 ];
 

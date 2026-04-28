@@ -2,57 +2,58 @@ import type { Publication } from "@/types";
 
 // ─── EDIT HERE: Publications & Talks ─────────────────────────────────────────
 // status options: "Published" | "Under Review" | "In Preparation" | "Guest Lecture" | "Presentation"
-// statusColor:   "#4ade80" green | "#fbbf24" yellow | "#a3a3a3" gray | "#60a5fa" blue
 const publications: Publication[] = [
   {
-    title: "Optimal Control of the Sweeping Process with Moving Controlled Polyhedral Sets",
-    authors: "D.A. Thi, N. Bui",
-    venue: "Nonlinear Analysis: Hybrid Systems",
-    year: "2024",
+    title: "MAGVIS: A Maglev-based Volumetric Platform for Immersive Telepresence System",
+    authors: "Huy Dinh, Tuan Tran, Prativa Oli, Youngwook Son, Luis Carlos Gutierrez, Kevin Diaz, S. M. H. Hosseini, Xia Zhou, Sangtae Ha, Nam Bui",
+    venue: "The 32nd Annual International Conference on Mobile Computing and Networking (MobiCom 2026)",
+    venueShort: "ACM MobiCom 2026",
+    year: "2026",
     status: "Under Review",
     statusColor: "#fbbf24",
     abstract:
-      "This paper investigates optimal control problems governed by the sweeping process with moving controlled polyhedral sets. We derive necessary optimality conditions and develop numerical schemes based on Moreau's catching-up algorithm for practical computation.",
-    links: [{ label: "View Paper", href: "#" }],
+      "We present MAGVIS, a maglev-based volumetric display platform that enables immersive, glasses-free 3D telepresence for multiple participants. The system uses a rapidly rotating LED matrix driven by magnetic levitation to generate real-time volumetric imagery, providing a realistic sense of co-presence without specialized eyewear.",
+    links: [],
   },
   {
-    title: "Numerical Analysis of Moreau's Catching-Up Algorithm for Sweeping Processes",
-    authors: "D.A. Thi, N. Bui",
-    venue: "Journal of Mathematical Analysis and Applications",
-    year: "2023",
-    status: "Published",
+    title: "EchoVision: Hybrid NPU-CPU Deployment of EfficientViT-SAM and YOLO for Real-Time Assistive Navigation",
+    authors: "Su Ho Lim, Artemis Shaw, Huy Dinh, Nikolaus Correll, Nam Bui",
+    venue: "The International Workshop on Mobile Computing with Efficient Foundation Models (EIFCOM 2026), co-located with ACM MobiSys 2026",
+    venueShort: "ACM MobiSys 2026 (Workshop)",
+    year: "2026",
+    status: "Accepted",
     statusColor: "#4ade80",
     abstract:
-      "We analyze convergence properties of Moreau's catching-up algorithm applied to a class of sweeping processes with prox-regular sets. Error estimates are established and validated through numerical experiments in finite-dimensional spaces.",
-    links: [
-      { label: "View Paper", href: "#" },
-      { label: "Journal", href: "#" },
-    ],
+      "EchoVision proposes a hybrid NPU-CPU deployment strategy combining EfficientViT-SAM and YOLO for real-time assistive navigation on mobile devices. By splitting workloads across the neural processing unit and CPU, the system achieves low-latency scene understanding suitable for visually impaired users in dynamic environments.",
+    links: [],
   },
   {
-    title: "EEG-Based Taste Perception Classification via TS-SEFFNet Dual-Modality Architecture",
-    authors: "D.A. Thi, H. Dinh, N. Bui",
-    venue: "IEEE BCI Workshop",
+    title: "OOKPIK - A Collection of Out-of-Context Image-Caption Pairs",
+    authors: "Kha-Luan Pham, Minh-Khoi Nguyen-Nhat, Anh-Huy Dinh, Quang-Tri Le, Manh-Thien Nguyen, Anh-Duy Tran, Minh-Triet Tran, Duc-Tien Dang-Nguyen",
+    venue: "The 30th International Conference on Multimedia Modeling (MMM 2024)",
+    venueShort: "MMM 2024",
     year: "2024",
     status: "Published",
     statusColor: "#4ade80",
     abstract:
-      "We present TS-SEFFNet, a dual-modality deep learning architecture combining EEG and infrared signals for real-time taste perception classification. Our model achieves state-of-the-art accuracy on our collected dataset across 5 taste categories.",
+      "We introduce OOKPIK, a dataset of out-of-context image-caption pairs for cheapfake detection research. The dataset comprises 545 images and 1090 real captions organized as triplets {image, caption1, caption2}, with a baseline model proposed for the MMSys'21 grand challenge on detecting out-of-context media.",
     links: [
-      { label: "View Paper", href: "#" },
-      { label: "Workshop", href: "#" },
+      { label: "View Paper", href: "https://doi.org/10.1007/978-3-031-53302-0_10" },
     ],
   },
   {
-    title: "Exoskeleton-Assisted Rehabilitation: A Systematic Literature Review",
-    authors: "D.A. Thi et al.",
-    venue: "NIH R21 Grant Report",
-    year: "2025",
-    status: "In Preparation",
-    statusColor: "#a3a3a3",
+    title: "Drone Detection Using Deep Neural Networks",
+    authors: "Hoang Pham, Anh-Huy Dinh, Phat Thai, Trung Nguyen, Binh Nguyen",
+    venue: "The 21st International Conference on Intelligent Software Methodologies, Tools, and Techniques (SoMeT 2022)",
+    venueShort: "SoMeT 2022",
+    year: "2022",
+    status: "Published",
+    statusColor: "#4ade80",
     abstract:
-      "A comprehensive systematic review of 100+ papers on exoskeleton-assisted rehabilitation, structured using a 14-field schema covering research problems, sensor modalities, outcomes, and limitations. Targets NIH R21 grant submission.",
-    links: [],
+      "We present a drone detection system combining YOLOv4 with Seq-NMS post-processing and ByteTrack object tracking to improve detection performance in video data. The approach demonstrates strong real-time detection capability on a curated drone video dataset.",
+    links: [
+      { label: "View Paper", href: "https://doi.org/10.3233/FAIA220280" },
+    ],
   },
 ];
 

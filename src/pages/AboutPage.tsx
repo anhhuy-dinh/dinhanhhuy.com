@@ -14,7 +14,7 @@ export default function AboutPage() {
     <PageWrapper>
       <div
         style={{
-          maxWidth: 900,
+          maxWidth: 1100,
           margin: "0 auto",
           padding: "60px 2rem 80px",
         }}
@@ -65,14 +65,7 @@ export default function AboutPage() {
                   lineHeight: 1.85,
                 }}
               >
-                I&apos;m a PhD researcher in EE who got obsessed with one question:{" "}
-                <em style={{ color: "#c4b5fd" }}>{bio.headline}</em>
-                <br /><br />
-                {bio.intro
-                  .replace(bio.headline, "")
-                  .replace("I'm a PhD researcher in EE who got obsessed with one question: ", "")}
-                <br /><br />
-                <span style={{ color: "#a3a3a3" }}>{bio.personal}</span>
+                {bio.intro}
               </p>
             </div>
 
@@ -171,22 +164,58 @@ export default function AboutPage() {
               key={e.degree}
               style={{
                 display: "grid",
-                gridTemplateColumns: "110px 28px 1fr",
+                gridTemplateColumns: "160px 36px 1fr",
                 gap: "0 1rem",
               }}
             >
-              {/* Period label */}
+              {/* Left: logo card + period, centered */}
               <div
                 style={{
-                  fontSize: "0.75rem",
-                  color: "#a3a3a3",
-                  fontWeight: 500,
-                  textAlign: "right",
-                  paddingTop: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                   paddingBottom: i < education.length - 1 ? "2rem" : 0,
                 }}
               >
-                {e.period}
+                <div
+                  className="card"
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minHeight: 64,
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {e.logo ? (
+                    <img
+                      src={e.logo}
+                      alt={e.school}
+                      style={{
+                        height: 36,
+                        width: "auto",
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                        filter: "brightness(0) invert(1)",
+                        opacity: 0.9,
+                      }}
+                    />
+                  ) : (
+                    <span style={{ fontSize: "0.65rem", color: "#555" }}>—</span>
+                  )}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.72rem",
+                    color: "#a3a3a3",
+                    fontWeight: 500,
+                    textAlign: "center",
+                  }}
+                >
+                  {e.period}
+                </div>
               </div>
 
               {/* Timeline dot + connector */}
@@ -195,6 +224,7 @@ export default function AboutPage() {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  paddingTop: 4,
                 }}
               >
                 <div
@@ -205,7 +235,6 @@ export default function AboutPage() {
                     background: i === 0 ? "#8e6ff7" : "#404040",
                     border: `2px solid ${i === 0 ? "#8e6ff7" : "#555"}`,
                     flexShrink: 0,
-                    marginTop: 2,
                     boxShadow: i === 0 ? "0 0 8px #8e6ff7" : "none",
                   }}
                 />
@@ -221,7 +250,7 @@ export default function AboutPage() {
                 )}
               </div>
 
-              {/* Degree details */}
+              {/* Right: degree + school + details */}
               <div
                 style={{
                   paddingBottom: i < education.length - 1 ? "2rem" : 0,
@@ -254,7 +283,9 @@ export default function AboutPage() {
                     lineHeight: 1.7,
                   }}
                 >
-                  {e.detail}
+                  {e.detail.map((line, idx) => (
+                    <div key={idx}>{line}</div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -280,7 +311,7 @@ export default function AboutPage() {
               key={e.role}
               style={{
                 display: "grid",
-                gridTemplateColumns: "110px 28px 1fr",
+                gridTemplateColumns: "160px 36px 1fr",
                 gap: "0 1rem",
               }}
             >

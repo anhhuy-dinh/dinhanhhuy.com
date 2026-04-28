@@ -24,6 +24,7 @@ export interface Publication {
   title: string;
   authors: string;
   venue: string;
+  venueShort: string;
   year: string;
   status: string;
   statusColor: string;
@@ -46,7 +47,8 @@ export interface Education {
   degree: string;
   school: string;
   period: string;
-  detail: string;
+  detail: string[];
+  logo?: string | null;
 }
 
 export interface Experience {

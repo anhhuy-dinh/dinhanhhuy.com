@@ -4,32 +4,32 @@ import type { Update } from "@/types";
 // Add newest entry at the TOP. dot color: use any hex color.
 const updates: Update[] = [
   {
-    date: "Apr 2025",
-    title: "COMIRB IRB Approved — IonSpiro 🎉",
-    desc: "Protocol 26-0702 approved. Novel NAI-based spirometer study with Dr. Nam Bui (PI) can now proceed to data collection.",
-    tag: "Clinical",
+    date: "Aug 2024",
+    title: "Started PhD at University of Colorado Denver 🎓",
+    desc: "Joined the InsCy Lab under Asst. Prof. Nam Bui. Research focus on EEG-based taste perception classification and novel 3D display systems.",
+    tag: "Education",
     dot: "#8e6ff7",
   },
   {
-    date: "Mar 2025",
-    title: "Paper submitted to NAHS",
-    desc: 'Submitted revision of "Optimal Control of the Sweeping Process with Moving Controlled Polyhedral Sets" to Nonlinear Analysis: Hybrid Systems.',
+    date: "Jan 2024",
+    title: "OOKPIK paper published at MMM 2024",
+    desc: "Paper accepted at the 30th International Conference on Multimedia Modeling (Amsterdam, Netherlands). Introducing a dataset for out-of-context image-caption cheapfake detection.",
+    tag: "Publication",
+    dot: "#4ade80",
+  },
+  {
+    date: "Jul 2023",
+    title: "Research Internship at InsCy Lab (Remote)",
+    desc: "Started remote internship at CU Denver's InsCy Lab. Working on 3D video conferencing and low-cost volumetric 3D display using magnetic levitation.",
     tag: "Research",
     dot: "#6366f1",
   },
   {
-    date: "Feb 2025",
-    title: "NIH R21 exoskeleton review completed",
-    desc: "Delivered systematic literature review across 100+ papers. Structured 14-field schema for grant submission.",
-    tag: "Grant",
+    date: "Sep 2022",
+    title: "Presented at SoMeT 2022 (KitaKyushu, Japan)",
+    desc: "Presented drone detection paper at the 21st International Conference on Intelligent Software Methodologies, Tools, and Techniques — participated remotely.",
+    tag: "Conference",
     dot: "#a855f7",
-  },
-  {
-    date: "Jan 2025",
-    title: "TasteSensing — BioZ pipeline live",
-    desc: "MAX30001 real-time reader functional with packet parsing, init command sequencing, and CSV logging.",
-    tag: "Project",
-    dot: "#525252",
   },
 ];
 
