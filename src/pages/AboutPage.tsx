@@ -33,7 +33,7 @@ export default function AboutPage() {
         </h1>
         <p
           style={{
-            fontSize: "0.95rem",
+            fontSize: "1rem",
             color: "#a3a3a3",
             marginBottom: "3rem",
           }}
@@ -60,12 +60,32 @@ export default function AboutPage() {
             <div>
               <p
                 style={{
-                  fontSize: "0.95rem",
+                  fontSize: "1rem",
                   color: "#d4d4d4",
                   lineHeight: 1.85,
                 }}
               >
-                {bio.intro}
+                {bio.intro.map((seg, i) =>
+                  typeof seg === "string" ? (
+                    <span key={i}>{seg}</span>
+                  ) : (
+                    <a
+                      key={i}
+                      href={seg.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        color: "#c4b5fd",
+                        textDecoration: "none",
+                        fontWeight: 500,
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.textDecoration = "underline")}
+                      onMouseLeave={e => (e.currentTarget.style.textDecoration = "none")}
+                    >
+                      {seg.text}
+                    </a>
+                  )
+                )}
               </p>
             </div>
 
@@ -85,7 +105,7 @@ export default function AboutPage() {
                 >
                   <span
                     style={{
-                      fontSize: "0.72rem",
+                      fontSize: "1rem",
                       color: "#a3a3a3",
                       fontWeight: 500,
                       minWidth: 90,
@@ -95,7 +115,7 @@ export default function AboutPage() {
                   </span>
                   <span
                     style={{
-                      fontSize: "0.88rem",
+                      fontSize: "1rem",
                       color: "#fff",
                       fontWeight: 500,
                     }}
@@ -109,14 +129,15 @@ export default function AboutPage() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  gap: "0.6rem",
                   marginTop: "1.25rem",
                 }}
               >
                 {[
-                  { label: "GitHub",         href: "https://github.com/anhhuy-dinh",                                          icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg> },
-                  { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/",                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> },
-                  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi",            icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v.5a8.5 8.5 0 0 0 17 0v-.5H24L12 0z"/></svg> },
+                  { label: "GitHub",         href: "https://github.com/anhhuy-dinh",                               icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg> },
+                  { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/",          icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> },
+                  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi", icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v.5a8.5 8.5 0 0 0 17 0v-.5H24L12 0z"/></svg> },
+                  { label: "CV",             href: "/cv.pdf",                                                       icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> },
                 ].map(s => (
                   <a
                     key={s.label}
@@ -127,14 +148,27 @@ export default function AboutPage() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.4rem",
+                      gap: "0.45rem",
                       color: "#a3a3a3",
                       textDecoration: "none",
-                      fontSize: "0.78rem",
-                      transition: "color .15s",
+                      fontSize: "0.82rem",
+                      fontWeight: 500,
+                      background: "rgba(142,111,247,0.06)",
+                      border: "1px solid rgba(142,111,247,0.15)",
+                      borderRadius: 100,
+                      padding: "6px 14px",
+                      transition: "color .15s, background .15s, border-color .15s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#8e6ff7")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "#a3a3a3")}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.color = "#c4b5fd";
+                      e.currentTarget.style.background = "rgba(142,111,247,0.15)";
+                      e.currentTarget.style.borderColor = "rgba(142,111,247,0.4)";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.color = "#a3a3a3";
+                      e.currentTarget.style.background = "rgba(142,111,247,0.06)";
+                      e.currentTarget.style.borderColor = "rgba(142,111,247,0.15)";
+                    }}
                   >
                     {s.icon}
                     {s.label}
@@ -181,12 +215,14 @@ export default function AboutPage() {
                   className="card"
                   style={{
                     width: "100%",
-                    padding: "0.75rem",
+                    padding: "0.5rem",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    minHeight: 64,
+                    minHeight: 80,
                     marginBottom: "0.5rem",
+                    background: "#ffffff",
+                    border: "none",
                   }}
                 >
                   {e.logo ? (
@@ -194,21 +230,20 @@ export default function AboutPage() {
                       src={e.logo}
                       alt={e.school}
                       style={{
-                        height: 36,
-                        width: "auto",
-                        maxWidth: "100%",
+                        width: "100%",
+                        height: "auto",
+                        maxHeight: 72,
                         objectFit: "contain",
-                        filter: "brightness(0) invert(1)",
                         opacity: 0.9,
                       }}
                     />
                   ) : (
-                    <span style={{ fontSize: "0.65rem", color: "#555" }}>—</span>
+                    <span style={{ fontSize: "1rem", color: "#555" }}>—</span>
                   )}
                 </div>
                 <div
                   style={{
-                    fontSize: "0.72rem",
+                    fontSize: "0.92rem",
                     color: "#a3a3a3",
                     fontWeight: 500,
                     textAlign: "center",
@@ -232,10 +267,10 @@ export default function AboutPage() {
                     width: 10,
                     height: 10,
                     borderRadius: "50%",
-                    background: i === 0 ? "#8e6ff7" : "#404040",
-                    border: `2px solid ${i === 0 ? "#8e6ff7" : "#555"}`,
+                    background: e.period.includes("Present") ? "#8e6ff7" : "#404040",
+                    border: `2px solid ${e.period.includes("Present") ? "#8e6ff7" : "#555"}`,
                     flexShrink: 0,
-                    boxShadow: i === 0 ? "0 0 8px #8e6ff7" : "none",
+                    boxShadow: e.period.includes("Present") ? "0 0 8px #8e6ff7" : "none",
                   }}
                 />
                 {i < education.length - 1 && (
@@ -268,7 +303,7 @@ export default function AboutPage() {
                 </div>
                 <div
                   style={{
-                    fontSize: "0.82rem",
+                    fontSize: "0.9rem",
                     color: "#8e6ff7",
                     marginBottom: "0.4rem",
                     fontWeight: 500,
@@ -278,7 +313,7 @@ export default function AboutPage() {
                 </div>
                 <div
                   style={{
-                    fontSize: "0.82rem",
+                    fontSize: "0.9rem",
                     color: "#d4d4d4",
                     lineHeight: 1.7,
                   }}
@@ -318,7 +353,7 @@ export default function AboutPage() {
               {/* Period label */}
               <div
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: "0.92rem",
                   color: "#a3a3a3",
                   fontWeight: 500,
                   textAlign: "right",
@@ -342,11 +377,11 @@ export default function AboutPage() {
                     width: 10,
                     height: 10,
                     borderRadius: "50%",
-                    background: i === 0 ? "#8e6ff7" : "#404040",
-                    border: `2px solid ${i === 0 ? "#8e6ff7" : "#555"}`,
+                    background: e.period.includes("Present") ? "#8e6ff7" : "#404040",
+                    border: `2px solid ${e.period.includes("Present") ? "#8e6ff7" : "#555"}`,
                     flexShrink: 0,
                     marginTop: 2,
-                    boxShadow: i === 0 ? "0 0 8px #8e6ff7" : "none",
+                    boxShadow: e.period.includes("Present") ? "0 0 8px #8e6ff7" : "none",
                   }}
                 />
                 {i < experience.length - 1 && (
@@ -386,7 +421,7 @@ export default function AboutPage() {
                       <div
                         style={{
                           fontWeight: 700,
-                          fontSize: "0.95rem",
+                          fontSize: "1rem",
                           color: "#fff",
                           marginBottom: "0.15rem",
                         }}
@@ -395,7 +430,7 @@ export default function AboutPage() {
                       </div>
                       <div
                         style={{
-                          fontSize: "0.8rem",
+                          fontSize: "1rem",
                           color: "#8e6ff7",
                           fontWeight: 500,
                         }}
@@ -410,7 +445,7 @@ export default function AboutPage() {
                         border: `1px solid ${EXP_COLOR[e.type]}40`,
                         borderRadius: 5,
                         padding: "2px 8px",
-                        fontSize: "0.65rem",
+                        fontSize: "1rem",
                         fontWeight: 600,
                       }}
                     >
@@ -421,7 +456,7 @@ export default function AboutPage() {
                   {/* Description */}
                   <p
                     style={{
-                      fontSize: "0.85rem",
+                      fontSize: "0.92rem",
                       color: "#d4d4d4",
                       lineHeight: 1.75,
                       marginBottom: "0.75rem",
@@ -447,7 +482,7 @@ export default function AboutPage() {
                           border: "1px solid rgba(142,111,247,0.15)",
                           borderRadius: 5,
                           padding: "2px 8px",
-                          fontSize: "0.7rem",
+                          fontSize: "0.92rem",
                         }}
                       >
                         {t}
@@ -486,7 +521,7 @@ export default function AboutPage() {
                 {/* Group label */}
                 <div
                   style={{
-                    fontSize: "0.68rem",
+                    fontSize: "0.75rem",
                     color: "#a3a3a3",
                     fontWeight: 600,
                     letterSpacing: "0.1em",
@@ -514,8 +549,8 @@ export default function AboutPage() {
                         display: "flex",
                         alignItems: "center",
                         gap: "0.5rem",
-                        background: "#2a2a2a",
-                        border: "1px solid #383838",
+                        background: "rgba(142,111,247,0.08)",
+                        border: "1px solid rgba(142,111,247,0.18)",
                         borderRadius: 100,
                         padding: "5px 12px 5px 8px",
                         cursor: "default",
@@ -544,7 +579,7 @@ export default function AboutPage() {
                             alignItems: "center",
                             justifyContent: "center",
                             flexShrink: 0,
-                            fontSize: "0.6rem",
+                            fontSize: "0.75rem",
                             color: "#888",
                           }}
                         >
@@ -553,7 +588,7 @@ export default function AboutPage() {
                       )}
                       <span
                         style={{
-                          fontSize: "0.82rem",
+                          fontSize: "0.9rem",
                           color: "#e0e0e0",
                           fontWeight: 500,
                           whiteSpace: "nowrap",

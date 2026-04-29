@@ -1,10 +1,10 @@
 "use client";
+import { useState } from "react";
 import SplineScene from "@/components/SplineScene";
-import { GradText, Tag, StatusBadge, PageWrapper } from "@/components/ui";
-import { HOME_UPDATES_COUNT, HOME_PUBS_COUNT, HOME_PROJECTS_COUNT } from "@/data/home";
-import updates      from "@/data/updates";
-import publications from "@/data/publications";
-import projects     from "@/data/projects";
+import { GradText, PageWrapper } from "@/components/ui";
+import updates from "@/data/updates";
+
+const UPDATES_PREVIEW = 5;
 
 interface Props { setPage: (p: string) => void; }
 
@@ -14,10 +14,9 @@ const RESEARCH_INTERESTS = [
   { label: "On-device AI",     icon: "🧠" },
 ];
 
-export default function HomePage({ setPage }: Props) {
-  const previewUpdates  = updates.slice(0, HOME_UPDATES_COUNT);
-  const previewPubs     = publications.slice(0, HOME_PUBS_COUNT);
-  const previewProjects = projects.slice(0, HOME_PROJECTS_COUNT);
+export default function HomePage({ setPage: _setPage }: Props) {
+  const [expanded, setExpanded] = useState(false);
+  const visibleUpdates = expanded ? updates : updates.slice(0, UPDATES_PREVIEW);
 
   return (
     <PageWrapper>
@@ -139,7 +138,7 @@ export default function HomePage({ setPage }: Props) {
         </div>
       </div>
 
-      {/* ── 3-col bottom panels ── */}
+      {/* ── Latest Updates ── */}
       <div
         style={{
           borderTop: "1px solid #404040",
@@ -150,294 +149,148 @@ export default function HomePage({ setPage }: Props) {
           style={{
             maxWidth: 1100,
             margin: "0 auto",
-            padding: "3rem 2rem",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: 0,
+            padding: "4rem 2rem 5rem",
           }}
         >
-
-          {/* ── Updates column ── */}
-          <div
+          {/* Section heading */}
+          <h2
             style={{
-              padding: "0 2rem 0 0",
-              borderRight: "1px solid #404040",
+              fontSize: "clamp(1.8rem,3vw,2.5rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              color: "#fff",
+              marginBottom: "0.4rem",
             }}
           >
-            {/* Column header */}
+            Latest <GradText>Updates.</GradText>
+          </h2>
+          <div
+            style={{
+              width: 40,
+              height: 2,
+              background: "linear-gradient(90deg,#8e6ff7,#4c29c5)",
+              borderRadius: 2,
+              marginBottom: "2.5rem",
+            }}
+          />
+
+          {/* Timeline items */}
+          {visibleUpdates.map((u, i) => (
             <div
+              key={i}
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "1.5rem",
+                display: "grid",
+                gridTemplateColumns: "24px 1fr",
+                gap: "0 1.25rem",
               }}
             >
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  color: "#fff",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Latest Updates
-              </span>
-              <button
-                onClick={() => setPage("About")}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "0.72rem",
-                  color: "#8e6ff7",
-                  padding: 0,
-                }}
-              >
-                All →
-              </button>
-            </div>
-
-            {/* Update timeline items */}
-            {previewUpdates.map((u, i) => (
+              {/* Dot + connector */}
               <div
-                key={u.title}
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "16px 1fr",
-                  gap: "0 0.75rem",
-                  marginBottom: i < previewUpdates.length - 1 ? "1.25rem" : 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  paddingTop: 6,
                 }}
               >
-                {/* Dot + connector */}
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    paddingTop: 4,
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    background: "#8e6ff7",
+                    flexShrink: 0,
+                    border: "2px solid rgba(142,111,247,0.25)",
+                    boxShadow: i === 0 ? "0 0 10px #8e6ff7" : "none",
                   }}
-                >
+                />
+                {i < visibleUpdates.length - 1 && (
                   <div
                     style={{
-                      width: 7,
-                      height: 7,
-                      borderRadius: "50%",
-                      background: u.dot,
-                      boxShadow: i === 0 ? `0 0 6px ${u.dot}` : "none",
+                      flex: 1,
+                      width: 1,
+                      background: "#2a2a2a",
+                      marginTop: 6,
                     }}
                   />
-                  {i < previewUpdates.length - 1 && (
-                    <div
-                      style={{
-                        flex: 1,
-                        width: 1,
-                        background: "#404040",
-                        marginTop: 4,
-                      }}
-                    />
+                )}
+              </div>
+
+              {/* Update content */}
+              <div
+                style={{
+                  paddingBottom: i < visibleUpdates.length - 1 ? "2rem" : 0,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "0.95rem",
+                    fontWeight: 700,
+                    color: "#8e6ff7",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  {u.date}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.95rem",
+                    color: "#d4d4d4",
+                    lineHeight: 1.75,
+                  }}
+                >
+                  {u.desc.map((seg, j) =>
+                    typeof seg === "string" ? (
+                      <span key={j}>{seg}</span>
+                    ) : seg.href ? (
+                      <a
+                        key={j}
+                        href={seg.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          color: "#8e6ff7",
+                          fontWeight: seg.bold ? 700 : 400,
+                          textDecoration: "none",
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.textDecoration = "underline")}
+                        onMouseLeave={e => (e.currentTarget.style.textDecoration = "none")}
+                      >
+                        {seg.text}
+                      </a>
+                    ) : (
+                      <strong key={j} style={{ color: "#fff", fontWeight: 700 }}>{seg.text}</strong>
+                    )
                   )}
                 </div>
-
-                {/* Update text */}
-                <div
-                  style={{
-                    paddingBottom: i < previewUpdates.length - 1 ? "1.25rem" : 0,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "0.82rem",
-                      fontWeight: 600,
-                      color: "#fff",
-                      lineHeight: 1.4,
-                      marginBottom: "0.2rem",
-                    }}
-                  >
-                    {u.title}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.7rem",
-                      color: "#a3a3a3",
-                      marginBottom: "0.35rem",
-                    }}
-                  >
-                    {u.date}
-                  </div>
-                  <Tag label={u.tag} />
-                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
 
-          {/* ── Publications column ── */}
-          <div
-            style={{
-              padding: "0 2rem",
-              borderRight: "1px solid #404040",
-            }}
-          >
-            {/* Column header */}
-            <div
+          {/* Expand / collapse button */}
+          {updates.length > UPDATES_PREVIEW && (
+            <button
+              onClick={() => setExpanded(prev => !prev)}
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "1.5rem",
+                marginTop: "2rem",
+                background: "none",
+                border: "1px solid #404040",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontSize: "0.78rem",
+                color: "#8e6ff7",
+                padding: "8px 20px",
+                display: "block",
+                transition: "border-color .15s",
               }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = "#8e6ff7")}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = "#404040")}
             >
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  color: "#fff",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Selected Publications
-              </span>
-              <button
-                onClick={() => setPage("Publications")}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "0.72rem",
-                  color: "#8e6ff7",
-                  padding: 0,
-                }}
-              >
-                All →
-              </button>
-            </div>
-
-            {/* Publication items */}
-            {previewPubs.map((p, i) => (
-              <div
-                key={p.title}
-                style={{
-                  paddingBottom: "1.25rem",
-                  borderBottom: i < previewPubs.length - 1 ? "1px solid #404040" : "none",
-                  marginBottom: "1.25rem",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "0.83rem",
-                    fontWeight: 600,
-                    color: "#fff",
-                    lineHeight: 1.45,
-                    marginBottom: "0.3rem",
-                  }}
-                >
-                  {p.title}
-                </div>
-                <div style={{ fontSize: "0.7rem", color: "#a3a3a3" }}>{p.venueShort}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.3rem" }}>
-                  <span style={{ fontSize: "0.65rem", color: p.statusColor, fontWeight: 600 }}>{p.status}</span>
-                  <span style={{ fontSize: "0.65rem", color: "#555" }}>·</span>
-                  <span style={{ fontSize: "0.65rem", color: "#666" }}>{p.year}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ── Projects column ── */}
-          <div style={{ padding: "0 0 0 2rem" }}>
-            {/* Column header */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "1.5rem",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  color: "#fff",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Selected Projects
-              </span>
-              <button
-                onClick={() => setPage("Projects")}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "0.72rem",
-                  color: "#8e6ff7",
-                  padding: 0,
-                }}
-              >
-                All →
-              </button>
-            </div>
-
-            {/* Project cards */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {previewProjects.map(p => (
-                <div
-                  key={p.title}
-                  className="card"
-                  style={{ padding: "1rem 1.25rem" }}
-                >
-                  {/* Title + status badge */}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "0.4rem",
-                    }}
-                  >
-                    <span style={{ fontWeight: 700, fontSize: "0.88rem", color: "#fff" }}>{p.title}</span>
-                    <StatusBadge type={p.badge} />
-                  </div>
-
-                  {/* Description */}
-                  <p
-                    style={{
-                      fontSize: "0.76rem",
-                      color: "#d4d4d4",
-                      lineHeight: 1.6,
-                      marginBottom: "0.6rem",
-                    }}
-                  >
-                    {p.desc}
-                  </p>
-
-                  {/* Tech tags (max 3) */}
-                  <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
-                    {p.tech.slice(0, 3).map(t => (
-                      <span
-                        key={t}
-                        style={{
-                          background: "rgba(142,111,247,0.08)",
-                          color: "#c4b5fd",
-                          border: "1px solid rgba(142,111,247,0.15)",
-                          borderRadius: 4,
-                          padding: "2px 7px",
-                          fontSize: "0.65rem",
-                        }}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
+              {expanded ? "Show less ↑" : `Show all ${updates.length} updates ↓`}
+            </button>
+          )}
         </div>
       </div>
     </PageWrapper>

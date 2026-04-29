@@ -2,8 +2,11 @@ import type { Education, Experience, SkillGroup } from "@/types";
 
 // ─── EDIT HERE: Bio paragraph ─────────────────────────────────────────────────
 export const bio = {
-  intro:
-    "I'm a PhD student in Engineering Science at CU Denver, working at the InsCy Lab under Asst. Prof. Nam Bui. My research focuses on embedded AI for healthcare applications, developing novel wearable devices that bring real-time clinical intelligence to the edge — where sensing, inference, and the human body meet.",
+  intro: [
+    "I'm a PhD student in Engineering Science at CU Denver, working at the InsCy Lab under ",
+    { text: "Asst. Prof. Nam Bui", href: "https://inscylab.org/NamBui" },
+    ". My research focuses on embedded AI for healthcare applications, developing novel wearable devices that bring real-time clinical intelligence to the edge — where sensing, inference, and the human body meet.",
+  ] as (string | { text: string; href: string })[],
 };
 
 // ─── EDIT HERE: Quick facts sidebar ──────────────────────────────────────────
@@ -96,15 +99,15 @@ export const skillsGrouped: SkillGroup[] = [
     group: "Embedded & Hardware",
     items: [
       { name: "Embedded C/C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-      { name: "Arduino",        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" },
-      { name: "Jetson Nano",    icon: null },
-      { name: "Raspberry Pi",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" },
-      { name: "EEG/EMG/EKG",   icon: null },
-      { name: "OpenBCI",        icon: null },
-      { name: "Brainwave",      icon: null },
-      { name: "SolidWorks",     icon: null },
-      { name: "Altium",         icon: null },
-      { name: "Capture CIS",    icon: null },
+      { name: "Arduino",        icon: "https://cdn.simpleicons.org/arduino" },
+      { name: "Jetson Nano",    icon: "https://cdn.simpleicons.org/nvidia" },
+      { name: "Raspberry Pi",   icon: "https://cdn.simpleicons.org/raspberrypi" },
+      { name: "EEG/EMG/EKG",   icon: "/icons/eeg.svg" },
+      { name: "OpenBCI",        icon: "/icons/openbci.jpeg" },
+      { name: "Brainwave",      icon: "/icons/brain.svg" },
+      { name: "SolidWorks",     icon: "https://cdn.simpleicons.org/dassaultsystemes" },
+      { name: "Altium",         icon: "/icons/altium.svg" },
+      { name: "PSpice",    icon: "/icons/circuit.svg" },
     ],
   },
   {
@@ -114,8 +117,8 @@ export const skillsGrouped: SkillGroup[] = [
       { name: "PyTorch",      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" },
       { name: "TensorFlow",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
       { name: "scikit-learn", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" },
-      { name: "RAG / LLM",    icon: null },
-      { name: "Signal Processing", icon: null },
+      { name: "RAG / LLM",    icon: "/icons/llm.svg" },
+      { name: "Signal Processing", icon: "/icons/signal.svg" },
     ],
   },
   {
@@ -138,8 +141,9 @@ export const skillsGrouped: SkillGroup[] = [
   {
     group: "Research",
     items: [
-      { name: "LaTeX", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/latex/latex-original.svg" },
-      { name: "MATLAB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" },
+      { name: "LaTeX",    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/latex/latex-original.svg" },
+      { name: "MATLAB",   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" },
+      { name: "Inkscape", icon: "https://cdn.simpleicons.org/inkscape" },
     ],
   },
 ];

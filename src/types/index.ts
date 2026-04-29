@@ -1,9 +1,8 @@
+export type UpdateSegment = string | { text: string; bold?: boolean; href?: string };
+
 export interface Update {
   date: string;
-  title: string;
-  desc: string;
-  tag: string;
-  dot: string;
+  desc: UpdateSegment[];
 }
 
 export interface Project {

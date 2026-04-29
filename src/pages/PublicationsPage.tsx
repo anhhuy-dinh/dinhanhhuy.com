@@ -31,17 +31,8 @@ export default function PublicationsPage() {
             marginBottom: "0.5rem",
           }}
         >
-          Publications <GradText>&amp; Talks.</GradText>
+          <GradText>Publications.</GradText>
         </h1>
-        <p
-          style={{
-            fontSize: "0.95rem",
-            color: "#a3a3a3",
-            marginBottom: "3.5rem",
-          }}
-        >
-          Academic papers, peer reviews, and technical presentations.
-        </p>
 
         {/* ── Publication list ── */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -60,10 +51,12 @@ export default function PublicationsPage() {
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.borderColor = `${accent}80`;
+                  e.currentTarget.style.borderLeftColor = accent;
                   e.currentTarget.style.background = "#2c2c2c";
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.borderColor = `${accent}40`;
+                  e.currentTarget.style.borderLeftColor = accent;
                   e.currentTarget.style.background = "#262626";
                 }}
               >
