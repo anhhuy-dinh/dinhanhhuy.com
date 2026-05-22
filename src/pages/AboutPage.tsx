@@ -1,6 +1,8 @@
 "use client";
 import { GradText, PageWrapper } from "@/components/ui";
 import { bio, quickFacts, education, experience, skillsGrouped } from "@/data/about";
+import { FiGithub, FiLinkedin, FiFileText } from "react-icons/fi";
+import { SiGooglescholar } from "react-icons/si";
 
 // Badge color per experience type
 const EXP_COLOR: Record<string, string> = {
@@ -56,13 +58,14 @@ export default function AboutPage() {
               gap: "2rem",
             }}
           >
-            {/* Bio paragraph */}
-            <div>
+            {/* Bio paragraph + social links */}
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <p
                 style={{
                   fontSize: "1rem",
                   color: "#d4d4d4",
                   lineHeight: 1.85,
+                  marginBottom: "1.25rem",
                 }}
               >
                 {bio.intro.map((seg, i) =>
@@ -87,6 +90,58 @@ export default function AboutPage() {
                   )
                 )}
               </p>
+
+              {/* Social links */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.6rem",
+                  flexWrap: "wrap",
+                  marginTop: "auto",
+                }}
+              >
+                {[
+                  { label: "GitHub",         href: "https://github.com/anhhuy-dinh",                               icon: <FiGithub size={15} /> },
+                  { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/",          icon: <FiLinkedin size={15} /> },
+                  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi", icon: <SiGooglescholar size={15} /> },
+                  { label: "CV",             href: "/cv.pdf",                                                       icon: <FiFileText width={15} height={15} /> },
+                ].map(s => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.label}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.45rem",
+                      color: "#a3a3a3",
+                      textDecoration: "none",
+                      fontSize: "0.82rem",
+                      fontWeight: 500,
+                      background: "rgba(142,111,247,0.06)",
+                      border: "1px solid rgba(142,111,247,0.15)",
+                      borderRadius: 100,
+                      padding: "6px 14px",
+                      transition: "color .15s, background .15s, border-color .15s",
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.color = "#c4b5fd";
+                      e.currentTarget.style.background = "rgba(142,111,247,0.15)";
+                      e.currentTarget.style.borderColor = "rgba(142,111,247,0.4)";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.color = "#a3a3a3";
+                      e.currentTarget.style.background = "rgba(142,111,247,0.06)";
+                      e.currentTarget.style.borderColor = "rgba(142,111,247,0.15)";
+                    }}
+                  >
+                    {s.icon}
+                    {s.label}
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Quick facts list */}
@@ -125,56 +180,6 @@ export default function AboutPage() {
                 </div>
               ))}
 
-              {/* Social links */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: "0.6rem",
-                  marginTop: "1.25rem",
-                }}
-              >
-                {[
-                  { label: "GitHub",         href: "https://github.com/anhhuy-dinh",                               icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg> },
-                  { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/",          icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> },
-                  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi", icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v.5a8.5 8.5 0 0 0 17 0v-.5H24L12 0z"/></svg> },
-                  { label: "CV",             href: "/cv.pdf",                                                       icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> },
-                ].map(s => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={s.label}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.45rem",
-                      color: "#a3a3a3",
-                      textDecoration: "none",
-                      fontSize: "0.82rem",
-                      fontWeight: 500,
-                      background: "rgba(142,111,247,0.06)",
-                      border: "1px solid rgba(142,111,247,0.15)",
-                      borderRadius: 100,
-                      padding: "6px 14px",
-                      transition: "color .15s, background .15s, border-color .15s",
-                    }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.color = "#c4b5fd";
-                      e.currentTarget.style.background = "rgba(142,111,247,0.15)";
-                      e.currentTarget.style.borderColor = "rgba(142,111,247,0.4)";
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.color = "#a3a3a3";
-                      e.currentTarget.style.background = "rgba(142,111,247,0.06)";
-                      e.currentTarget.style.borderColor = "rgba(142,111,247,0.15)";
-                    }}
-                  >
-                    {s.icon}
-                    {s.label}
-                  </a>
-                ))}
-              </div>
             </div>
           </div>
         </div>

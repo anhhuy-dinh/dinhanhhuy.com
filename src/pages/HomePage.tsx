@@ -14,7 +14,7 @@ const RESEARCH_INTERESTS = [
   { label: "On-device AI",     icon: "🧠" },
 ];
 
-export default function HomePage({ setPage: _setPage }: Props) {
+export default function HomePage({ setPage }: Props) {
   const [expanded, setExpanded] = useState(false);
   const visibleUpdates = expanded ? updates : updates.slice(0, UPDATES_PREVIEW);
 
@@ -107,7 +107,7 @@ export default function HomePage({ setPage: _setPage }: Props) {
                 display: "flex",
                 gap: "0.75rem",
                 flexWrap: "wrap",
-                marginBottom: "2.5rem",
+                marginBottom: "2rem",
               }}
             >
               {RESEARCH_INTERESTS.map(r => (
@@ -132,6 +132,24 @@ export default function HomePage({ setPage: _setPage }: Props) {
                   {r.label}
                 </div>
               ))}
+            </div>
+
+            {/* CTA buttons */}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              <button
+                onClick={() => setPage("Projects")}
+                className="btn btn-grad"
+                style={{ fontSize: "0.95rem", padding: "0.7rem 1.5rem", borderRadius: 12 }}
+              >
+                View My Work →
+              </button>
+              <button
+                onClick={() => setPage("About")}
+                className="btn btn-ghost"
+                style={{ fontSize: "0.95rem", padding: "0.7rem 1.5rem", borderRadius: 12 }}
+              >
+                About Me
+              </button>
             </div>
 
           </div>
@@ -193,17 +211,19 @@ export default function HomePage({ setPage: _setPage }: Props) {
                   paddingTop: 6,
                 }}
               >
-                <div
-                  style={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: "50%",
-                    background: "#8e6ff7",
-                    flexShrink: 0,
-                    border: "2px solid rgba(142,111,247,0.25)",
-                    boxShadow: i === 0 ? "0 0 10px #8e6ff7" : "none",
-                  }}
-                />
+                <div style={{ position: "relative", width: 12, height: 12, flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: "50%",
+                      background: "#8e6ff7",
+                      border: "2px solid rgba(142,111,247,0.25)",
+                      boxShadow: i === 0 ? "0 0 10px #8e6ff7" : "none",
+                    }}
+                  />
+                  {i === 0 && <div className="dot-ping" />}
+                </div>
                 {i < visibleUpdates.length - 1 && (
                   <div
                     style={{

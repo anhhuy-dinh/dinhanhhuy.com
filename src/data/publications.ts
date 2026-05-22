@@ -6,11 +6,11 @@ const publications: Publication[] = [
   {
     title: "MAGVIS: A Maglev-based Volumetric Platform for Immersive Telepresence System",
     authors: "Huy Dinh, Tuan Tran, Prativa Oli, Youngwook Son, Luis Carlos Gutierrez, Kevin Diaz, S. M. H. Hosseini, Xia Zhou, Sangtae Ha, Nam Bui",
-    venue: "The 32nd Annual International Conference on Mobile Computing and Networking (MobiCom 2026)",
-    venueShort: "ACM MobiCom 2026",
-    year: "2026",
-    status: "Under Review",
-    statusColor: "#fbbf24",
+    venue: "MobiSys 2027",
+    venueShort: "MobiSys 2027",
+    year: "2027",
+    status: "In Preparation",
+    statusColor: "#a3a3a3",
     abstract:
       "We present MAGVIS, a maglev-based volumetric display platform that enables immersive, glasses-free 3D telepresence for multiple participants. The system uses a rapidly rotating LED matrix driven by magnetic levitation to generate real-time volumetric imagery, providing a realistic sense of co-presence without specialized eyewear.",
     links: [],

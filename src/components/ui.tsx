@@ -1,19 +1,29 @@
 // ─── Shared UI primitives ─────────────────────────────────────────────────────
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 // Gradient text span (purple → indigo)
 export function GradText({ children }: { children: ReactNode }) {
   return (
     <span
       style={{
-        background: "linear-gradient(135deg,#8e6ff7,#4c29c5)",
+        background: "linear-gradient(135deg,#c4b5fd 0%,#8e6ff7 50%,#4c29c5 100%)",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         backgroundClip: "text",
+        display: "inline-block",
       }}
     >
       {children}
     </span>
+  );
+}
+
+// Glassmorphism card wrapper
+export function Card({ children, className = "", style = {} }: { children: ReactNode; className?: string; style?: React.CSSProperties }) {
+  return (
+    <div className={`card ${className}`} style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", ...style }}>
+      {children}
+    </div>
   );
 }
 

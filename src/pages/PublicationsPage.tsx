@@ -41,23 +41,9 @@ export default function PublicationsPage() {
             return (
               <div
                 key={p.title}
+                className="card"
                 style={{
-                  background: "#262626",
-                  border: `1px solid ${accent}40`,
-                  borderLeft: `4px solid ${accent}`,
-                  borderRadius: 16,
                   padding: "1.75rem 2rem",
-                  transition: "border-color .2s, background .2s",
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = `${accent}80`;
-                  e.currentTarget.style.borderLeftColor = accent;
-                  e.currentTarget.style.background = "#2c2c2c";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = `${accent}40`;
-                  e.currentTarget.style.borderLeftColor = accent;
-                  e.currentTarget.style.background = "#262626";
                 }}
               >
 
@@ -144,7 +130,7 @@ export default function PublicationsPage() {
                     padding: "0.85rem 1rem",
                     background: "rgba(255,255,255,0.03)",
                     borderRadius: 8,
-                    borderLeft: `2px solid ${accent}60`,
+                    borderLeft: "2px solid rgba(142,111,247,0.3)",
                   }}
                 >
                   {p.abstract}

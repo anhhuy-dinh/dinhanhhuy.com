@@ -35,30 +35,12 @@ export default function ProjectsPage() {
         </p>
 
         {/* ── Project list ── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}>
-          {projects.map((p, i) => (
-            <div
-              key={p.title}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "2.5rem",
-                alignItems: "start",
-                paddingBottom: "3.5rem",
-                borderBottom: i < projects.length - 1 ? "1px solid #404040" : "none",
-              }}
-            >
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          {projects.map((p) => (
+            <div key={p.title} className="card project-card-inner">
 
               {/* Project image */}
-              <div
-                style={{
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  border: "1px solid #404040",
-                  aspectRatio: "16/10",
-                  position: "relative",
-                }}
-              >
+              <div className="project-card-img">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={p.img}
@@ -68,10 +50,20 @@ export default function ProjectsPage() {
                     height: "100%",
                     objectFit: "cover",
                     display: "block",
-                    filter: "brightness(0.85)",
+                    opacity: 0.8,
+                    transition: "opacity 0.3s, transform 0.5s",
                   }}
                 />
-                {/* Tech tags overlay */}
+                {/* Bottom gradient overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to top, #09090b 0%, transparent 60%)",
+                    opacity: 0.8,
+                  }}
+                />
+                {/* Tech tag overlay */}
                 <div
                   style={{
                     position: "absolute",
@@ -103,7 +95,15 @@ export default function ProjectsPage() {
               </div>
 
               {/* Project details */}
-              <div>
+              <div
+                style={{
+                  flex: 1,
+                  padding: "2rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
                 {/* Status + tag + badge row */}
                 <div
                   style={{
@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                   {p.title}
                 </h2>
 
-                {/* Collaborators (optional) */}
+                {/* Collaborators */}
                 {p.collab && (
                   <div
                     style={{
@@ -198,12 +198,23 @@ export default function ProjectsPage() {
                   ))}
                 </div>
 
-                {/* Link button */}
+                {/* Link */}
                 {p.link && (
                   <a
                     href={p.link}
-                    className="btn btn-grad"
-                    style={{ padding: "0.55rem 1.25rem", fontSize: "0.82rem" }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.35rem",
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
+                      color: "#fff",
+                      textDecoration: "none",
+                      transition: "color 0.15s",
+                      width: "fit-content",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#8e6ff7")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#fff")}
                   >
                     View Details →
                   </a>
