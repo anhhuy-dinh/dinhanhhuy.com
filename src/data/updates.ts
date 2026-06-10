@@ -9,6 +9,16 @@ import type { Update } from "@/types";
 //   { text: "bold link", bold: true, href: "https://..." }
 const updates: Update[] = [
   {
+    date: "Jun 2026",
+    desc: [
+      "Submitted our systematic review on ",
+      { text: "exoskeleton evaluation in aging workforces", bold: true },
+      " to the ",
+      { text: "Applied Ergonomics Journal", bold: true },
+      ".",
+    ],
+  },
+  {
     date: "Apr 2026",
     desc: [
       "Paper ",
@@ -17,16 +27,6 @@ const updates: Update[] = [
       { text: "EIFCOM 2026", href: "https://eifcom26.pages.dev/" },
       ", co-located with ",
       { text: "ACM MobiSys 2026", href: "https://www.sigmobile.org/mobisys/2026/" },
-      ".",
-    ],
-  },
-  {
-    date: "Mar 2026",
-    desc: [
-      "Submitted ",
-      { text: "MAGVIS", bold: true },
-      " paper to ",
-      { text: "ACM MobiCom 2026", href: "https://www.sigmobile.org/mobicom/2026/" },
       ".",
     ],
   },

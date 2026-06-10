@@ -16,6 +16,18 @@ const publications: Publication[] = [
     links: [],
   },
   {
+    title: "Sensing Methods and Selection Criteria for Exoskeleton Evaluation in Aging Workforces: A Systematic Review",
+    authors: "Kamran Muhammad, Huy Dinh*, Prativa Oli, Nam Bui, Phuong H.D. Nguyen",
+    venue: "Applied Ergonomics Journal",
+    venueShort: "Applied Ergonomics",
+    year: "2026",
+    status: "Under Review",
+    statusColor: "#fbbf24",
+    abstract:
+      "We systematically review 166 exoskeleton evaluation studies published between 2015 and 2026 across industrial and clinical settings using a three-group factor framework. The analysis reveals a severe imbalance: device-oriented metrics dominate (83.1% biomechanics, 51.8% mechanical interfaces) while only 7.8% conducted thermal measurements, 45.8% omitted participant age, and none of the 123 industrial studies recruited older workers. To address these gaps, we propose an evidence-based multimodal sensor selection criterion to guide comprehensive evaluation protocols in real-world settings.",
+    links: [],
+  },
+  {
     title: "EchoVision: Hybrid NPU-CPU Deployment of EfficientViT-SAM and YOLO for Real-Time Assistive Navigation",
     authors: "Su Ho Lim, Artemis Shaw, Huy Dinh, Nikolaus Correll, Nam Bui",
     venue: "The International Workshop on Mobile Computing with Efficient Foundation Models (EIFCOM 2026), co-located with ACM MobiSys 2026",

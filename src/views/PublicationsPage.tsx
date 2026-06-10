@@ -6,11 +6,29 @@ import publications from "@/data/publications";
 // Badge classes per publication status
 const STATUS_BADGE: Record<string, string> = {
   "Published":      "bg-green-400/10 text-green-400 border-green-400/25",
+  "Accepted":       "bg-green-400/10 text-green-400 border-green-400/25",
   "Under Review":   "bg-amber-400/10 text-amber-400 border-amber-400/25",
   "In Preparation": "bg-neutral-400/10 text-neutral-400 border-neutral-400/25",
   "Guest Lecture":  "bg-blue-400/10 text-blue-400 border-blue-400/25",
   "Presentation":   "bg-violet-400/10 text-violet-400 border-violet-400/25",
 };
+
+// Highlight the site owner's name inside author lists
+const NAME_RE = /(Anh-Huy Dinh|Huy Dinh)/g;
+
+function Authors({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(NAME_RE).map((part, i) =>
+        part === "Huy Dinh" || part === "Anh-Huy Dinh" ? (
+          <span key={i} className="font-semibold text-white">{part}</span>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
 
 export default function PublicationsPage() {
   return (
@@ -48,7 +66,7 @@ export default function PublicationsPage() {
 
                 {/* Authors */}
                 <div className="mb-1.5 text-sm italic text-accent">
-                  {p.authors}
+                  <Authors text={p.authors} />
                 </div>
 
                 {/* Venue */}
