@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { GradText, Tag, StatusBadge, PageWrapper } from "@/components/ui";
 import projects from "@/data/projects";
 
@@ -21,11 +22,12 @@ export default function ProjectsPage() {
 
               {/* Project image */}
               <div className="relative w-[41.67%] shrink-0 overflow-hidden border-r border-line max-md:aspect-[16/10] max-md:w-full max-md:border-r-0 max-md:border-b">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={p.img}
                   alt={p.title}
-                  className="block h-full w-full object-cover opacity-80 transition-[opacity,transform] duration-300"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 460px"
+                  className="object-cover opacity-80 transition-[opacity,transform] duration-300"
                 />
                 {/* Bottom gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent to-60% opacity-80" />

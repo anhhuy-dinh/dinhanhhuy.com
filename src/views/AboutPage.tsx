@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { GradText, PageWrapper } from "@/components/ui";
 import { bio, quickFacts, education, experience, skillsGrouped } from "@/data/about";
 import { FiGithub, FiLinkedin, FiFileText } from "react-icons/fi";
@@ -29,7 +30,7 @@ export default function AboutPage() {
 
         {/* ── Bio + Quick Facts ── */}
         <div className="card mb-12 p-8">
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* Bio paragraph + social links */}
             <div className="flex flex-col">
               <p className="mb-5 text-base leading-[1.85] text-neutral-300">
@@ -94,15 +95,16 @@ export default function AboutPage() {
             const isLast = i === education.length - 1;
             const current = e.period.includes("Present");
             return (
-              <div key={e.degree} className="grid grid-cols-[160px_36px_1fr] gap-x-4">
+              <div key={e.degree} className="grid grid-cols-[90px_24px_1fr] gap-x-3 md:grid-cols-[160px_36px_1fr] md:gap-x-4">
                 {/* Left: logo card + period, centered */}
                 <div className={`flex flex-col items-center ${isLast ? "" : "pb-8"}`}>
                   <div className="card mb-2 flex min-h-[80px] w-full items-center justify-center border-0 bg-white p-2">
                     {e.logo ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
+                      <Image
                         src={e.logo}
                         alt={e.school}
+                        width={160}
+                        height={72}
                         className="h-auto max-h-[72px] w-full object-contain opacity-90"
                       />
                     ) : (
@@ -151,7 +153,7 @@ export default function AboutPage() {
             const isLast = i === experience.length - 1;
             const current = e.period.includes("Present");
             return (
-              <div key={e.role} className="grid grid-cols-[160px_36px_1fr] gap-x-4">
+              <div key={e.role} className="grid grid-cols-[90px_24px_1fr] gap-x-3 md:grid-cols-[160px_36px_1fr] md:gap-x-4">
                 {/* Period label */}
                 <div className={`pt-0.5 text-right text-sm font-medium text-neutral-400 ${isLast ? "" : "pb-8"}`}>
                   {e.period}

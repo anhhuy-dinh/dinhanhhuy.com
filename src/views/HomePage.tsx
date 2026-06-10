@@ -1,20 +1,20 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+import { Cpu, Stethoscope, Brain } from "lucide-react";
 import SplineScene from "@/components/SplineScene";
 import { GradText, PageWrapper } from "@/components/ui";
 import updates from "@/data/updates";
 
 const UPDATES_PREVIEW = 5;
 
-interface Props { setPage: (p: string) => void; }
-
 const RESEARCH_INTERESTS = [
-  { label: "Embedded Systems", icon: "⚙️" },
-  { label: "Mobile Health",    icon: "🩺" },
-  { label: "On-device AI",     icon: "🧠" },
+  { label: "Embedded Systems", Icon: Cpu },
+  { label: "Mobile Health",    Icon: Stethoscope },
+  { label: "On-device AI",     Icon: Brain },
 ];
 
-export default function HomePage({ setPage }: Props) {
+export default function HomePage() {
   const [expanded, setExpanded] = useState(false);
   const visibleUpdates = expanded ? updates : updates.slice(0, UPDATES_PREVIEW);
 
@@ -23,14 +23,14 @@ export default function HomePage({ setPage }: Props) {
 
       {/* ── HERO ── */}
       <div className="relative flex min-h-[calc(100vh-60px)] items-center overflow-hidden">
-        {/* Spline scene — absolute right, full bleed */}
-        <div className="pointer-events-none absolute top-0 right-[150px] z-[1] h-full w-[55%]">
+        {/* Spline scene — absolute right, full bleed (desktop only) */}
+        <div className="pointer-events-none absolute top-0 right-[150px] z-[1] hidden h-full w-[55%] md:block">
           <SplineScene />
         </div>
 
         {/* Left text block */}
-        <div className="relative z-[3] mx-auto w-full max-w-screen-xl px-16">
-          <div className="max-w-[48%]">
+        <div className="relative z-[3] mx-auto w-full max-w-screen-xl px-6 md:px-16">
+          <div className="md:max-w-[48%]">
 
             {/* Headline */}
             <h1 className="mb-3 text-hero font-extrabold">
@@ -52,25 +52,25 @@ export default function HomePage({ setPage }: Props) {
 
             {/* Research interest pills */}
             <div className="mb-8 flex flex-wrap gap-3">
-              {RESEARCH_INTERESTS.map(r => (
+              {RESEARCH_INTERESTS.map(({ label, Icon }) => (
                 <div
-                  key={r.label}
+                  key={label}
                   className="flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-accent-light"
                 >
-                  <span>{r.icon}</span>
-                  {r.label}
+                  <Icon size={14} aria-hidden />
+                  {label}
                 </div>
               ))}
             </div>
 
             {/* CTA buttons */}
             <div className="flex flex-wrap items-center gap-4">
-              <button onClick={() => setPage("Projects")} className="btn btn-grad">
+              <Link href="/projects" className="btn btn-grad">
                 View My Work →
-              </button>
-              <button onClick={() => setPage("About")} className="btn btn-ghost">
+              </Link>
+              <Link href="/about" className="btn btn-ghost">
                 About Me
-              </button>
+              </Link>
             </div>
 
           </div>
@@ -79,7 +79,7 @@ export default function HomePage({ setPage }: Props) {
 
       {/* ── Latest Updates ── */}
       <div className="border-t border-line bg-black/20">
-        <div className="mx-auto max-w-content px-8 pt-16 pb-20">
+        <div className="mx-auto max-w-content px-6 pt-16 pb-20 md:px-8">
           {/* Section heading */}
           <h2 className="mb-1.5 text-h2 font-extrabold text-white">
             Latest <GradText>Updates.</GradText>

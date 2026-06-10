@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({ subsets:["latin"], variable:"--font-inter", weight:["300","400","500","600","700","800","900"] });
 
 export const metadata: Metadata = {
-  title: "Hi! I'm Huy | Site of Huy",
+  title: {
+    default: "Hi! I'm Huy | Site of Huy",
+    template: "%s | Huy Dinh",
+  },
   description: "Portfolio of Huy Dinh — PhD Student in Electrical Engineering",
   icons: {
     icon: "/logo.svg",
@@ -26,7 +31,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="pointer-events-none fixed top-[40%] left-[10%] z-0 h-[min(50vw,500px)] w-[min(50vw,500px)] rounded-full bg-fuchsia-600/10 mix-blend-screen blur-[100px]" />
         {/* Noise texture */}
         <div className="pointer-events-none fixed inset-0 z-[1] opacity-15 mix-blend-overlay" style={{ backgroundImage: NOISE_BG }} />
-        {children}
+
+        <div className="relative z-[1] min-h-screen">
+          <Nav />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );
