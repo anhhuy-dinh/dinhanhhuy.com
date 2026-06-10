@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { GradText } from "@/components/ui";
 
 const NAV_ITEMS = ["Home", "About", "Projects", "Publications", "Awards" /*, "Contact" */];
 
@@ -16,92 +17,37 @@ export default function Nav({ page, setPage }: NavProps) {
   }, []);
 
   return (
-    <nav
-      style={{
-        position: "fixed",
-        top: 24,
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 9999,
-        width: "95%",
-        maxWidth: 768,
-        transition: "all 0.3s",
-      }}
-    >
+    <nav className="fixed top-6 left-1/2 z-[9999] w-[95%] max-w-3xl -translate-x-1/2 transition-all duration-300">
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0.6rem 1.5rem",
-          borderRadius: 9999,
-          transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
-          background: scrolled ? "rgba(9,9,11,0.85)" : "transparent",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderTop: scrolled ? "1px solid rgba(255,255,255,0.2)" : "1px solid transparent",
-          borderRight: scrolled ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
-          borderLeft: scrolled ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.5)" : "none",
-        }}
+        className={`flex items-center justify-between rounded-full px-6 py-2.5 backdrop-blur-xl transition-[background,border-color,box-shadow] duration-300 border ${
+          scrolled
+            ? "bg-surface/85 border-line shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+            : "bg-transparent border-transparent"
+        }`}
       >
         {/* Logo + name */}
         <button
           onClick={() => setPage("Home")}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            color: "#fff",
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            fontSize: "1rem",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 0,
-          }}
+          className="flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-base font-extrabold tracking-tight text-white"
         >
-          <img src="/logo.svg" alt="logo" style={{ height: 22, width: "auto" }} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt="logo" className="h-[22px] w-auto" />
           <span>
-            Huy Dinh
-            <span
-              style={{
-                background: "linear-gradient(135deg,#8e6ff7,#4c29c5)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >.</span>
+            Huy Dinh<GradText>.</GradText>
           </span>
         </button>
 
         {/* Nav links */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
+        <div className="flex items-center gap-1">
           {NAV_ITEMS.map(item => (
             <button
               key={item}
               onClick={() => setPage(item)}
-              style={{
-                position: "relative",
-                padding: "0.375rem 0.75rem",
-                borderRadius: 9999,
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                color: page === item ? "#fff" : "#e4e4e7",
-                background: page === item ? "rgba(255,255,255,0.1)" : "transparent",
-                border: "none",
-                cursor: "pointer",
-                transition: "all 0.2s",
-                boxShadow: page === item ? "inset 0 1px 0 rgba(255,255,255,0.1)" : "none",
-              }}
-              onMouseEnter={e => {
-                if (page !== item) e.currentTarget.style.color = "#fff";
-              }}
-              onMouseLeave={e => {
-                if (page !== item) e.currentTarget.style.color = "#e4e4e7";
-              }}
+              className={`relative cursor-pointer rounded-full border-0 px-3 py-1.5 text-sm font-medium transition-colors duration-200 ${
+                page === item
+                  ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+                  : "bg-transparent text-zinc-200 hover:text-white"
+              }`}
             >
               {item}
             </button>

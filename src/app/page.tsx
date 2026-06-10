@@ -11,6 +11,12 @@ import PublicationsPage from "@/pages/PublicationsPage";
 import AwardsPage       from "@/pages/AwardsPage";
 import ContactPage      from "@/pages/ContactPage";
 
+const SOCIALS = [
+  { label: "GitHub",         href: "https://github.com/anhhuy-dinh",                               Icon: FiGithub },
+  { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/",          Icon: FiLinkedin },
+  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi", Icon: SiGooglescholar },
+];
+
 export default function Portfolio() {
   const [page, setPage] = useState("Home");
 
@@ -30,76 +36,37 @@ export default function Portfolio() {
   };
 
   return (
-    <div style={{ background: "transparent", minHeight: "100vh", position: "relative", zIndex: 1 }}>
+    <div className="relative z-[1] min-h-screen bg-transparent">
       <Nav page={page} setPage={setPage} />
 
       {/* ── Page content ── */}
       {renderPage()}
 
       {/* ── Footer ── */}
-      <footer
-        style={{
-          position: "relative",
-          zIndex: 1,
-          borderTop: "1px solid #404040",
-          padding: "1.25rem 2rem",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+      <footer className="relative z-[1] border-t border-line px-8 py-5">
+        <div className="mx-auto flex max-w-content items-center justify-between">
           {/* Name */}
-          <span style={{ fontWeight: 800, fontSize: "0.88rem" }}>
+          <span className="text-sm font-extrabold">
             Huy Dinh<GradText>.</GradText>
           </span>
 
           {/* Copyright */}
-          <span style={{ fontSize: "0.75rem", color: "#a3a3a3" }}>
+          <span className="text-xs text-neutral-400">
             © 2026 Huy Dinh · PhD Student in Electrical Engineering
           </span>
 
           {/* Social icons */}
-          <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-
-            {/* GitHub */}
-            <a
-              href="https://github.com/anhhuy-dinh"
-              aria-label="GitHub"
-              style={{ color: "#a3a3a3", display: "flex", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#a3a3a3")}
-            >
-              <FiGithub size={18} />
-            </a>
-
-            {/* LinkedIn */}
-            <a
-              href="https://www.linkedin.com/in/anh-huy-dinh-534364250/"
-              aria-label="LinkedIn"
-              style={{ color: "#a3a3a3", display: "flex", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#a3a3a3")}
-            >
-              <FiLinkedin size={18} />
-            </a>
-
-            {/* Google Scholar */}
-            <a
-              href="https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi"
-              aria-label="Google Scholar"
-              style={{ color: "#a3a3a3", display: "flex", transition: "color 0.2s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#a3a3a3")}
-            >
-              <SiGooglescholar size={18} />
-            </a>
-
+          <div className="flex items-center gap-5">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="flex text-neutral-400 transition-colors duration-200 hover:text-white"
+              >
+                <Icon size={18} />
+              </a>
+            ))}
           </div>
         </div>
       </footer>

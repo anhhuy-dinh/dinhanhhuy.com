@@ -2,149 +2,69 @@
 import { GradText, PageWrapper } from "@/components/ui";
 import publications from "@/data/publications";
 
-// Accent color per publication status
-const STATUS_ACCENT: Record<string, string> = {
-  "Published":      "#4ade80",
-  "Under Review":   "#fbbf24",
-  "In Preparation": "#a3a3a3",
-  "Guest Lecture":  "#60a5fa",
-  "Presentation":   "#a78bfa",
+// Badge classes per publication status
+const STATUS_BADGE: Record<string, string> = {
+  "Published":      "bg-green-400/10 text-green-400 border-green-400/25",
+  "Under Review":   "bg-amber-400/10 text-amber-400 border-amber-400/25",
+  "In Preparation": "bg-neutral-400/10 text-neutral-400 border-neutral-400/25",
+  "Guest Lecture":  "bg-blue-400/10 text-blue-400 border-blue-400/25",
+  "Presentation":   "bg-violet-400/10 text-violet-400 border-violet-400/25",
 };
 
 export default function PublicationsPage() {
   return (
     <PageWrapper>
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "60px 2rem 80px",
-        }}
-      >
+      <div className="mx-auto max-w-content px-8 pt-[60px] pb-20">
         {/* ── Page heading ── */}
-        <h1
-          style={{
-            fontSize: "clamp(2rem,4vw,3rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.03em",
-            color: "#fff",
-            marginBottom: "0.5rem",
-          }}
-        >
+        <h1 className="mb-12 text-h1 font-extrabold text-white">
           <GradText>Publications.</GradText>
         </h1>
 
         {/* ── Publication list ── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="flex flex-col gap-5">
           {publications.map((p) => {
-            const accent = STATUS_ACCENT[p.status] ?? "#8e6ff7";
+            const badge = STATUS_BADGE[p.status] ?? "bg-accent/10 text-accent border-accent/25";
             return (
-              <div
-                key={p.title}
-                className="card"
-                style={{
-                  padding: "1.75rem 2rem",
-                }}
-              >
+              <div key={p.title} className="card px-8 py-7">
 
                 {/* Status pill + year */}
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "0.85rem",
-                    flexWrap: "wrap",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <span
-                    style={{
-                      background: `${accent}18`,
-                      color: accent,
-                      border: `1px solid ${accent}40`,
-                      borderRadius: 100,
-                      padding: "3px 12px",
-                      fontSize: "0.68rem",
-                      fontWeight: 600,
-                    }}
-                  >
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <span className={`rounded-full border px-3 py-0.5 text-xs font-semibold ${badge}`}>
                     {p.status}
                   </span>
-                  <span
-                    style={{
-                      fontSize: "0.78rem",
-                      color: "#a3a3a3",
-                      fontWeight: 500,
-                    }}
-                  >
+                  <span className="text-xs font-medium text-neutral-400">
                     {p.year}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h2
-                  style={{
-                    fontSize: "1.05rem",
-                    fontWeight: 700,
-                    color: "#fff",
-                    lineHeight: 1.4,
-                    marginBottom: "0.5rem",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
+                <h2 className="mb-2 text-base font-bold leading-[1.4] tracking-tight text-white">
                   {p.title}
                 </h2>
 
                 {/* Authors */}
-                <div
-                  style={{
-                    fontSize: "0.82rem",
-                    color: "#8e6ff7",
-                    marginBottom: "0.4rem",
-                    fontStyle: "italic",
-                  }}
-                >
+                <div className="mb-1.5 text-sm italic text-accent">
                   {p.authors}
                 </div>
 
                 {/* Venue */}
-                <div
-                  style={{
-                    fontSize: "0.78rem",
-                    color: "#c4b5fd",
-                    fontWeight: 500,
-                    marginBottom: "1.1rem",
-                  }}
-                >
+                <div className="mb-4 text-xs font-medium text-accent-light">
                   {p.venue}
                 </div>
 
                 {/* Abstract */}
-                <p
-                  style={{
-                    fontSize: "0.85rem",
-                    color: "#b0b0b0",
-                    lineHeight: 1.8,
-                    marginBottom: p.links.length > 0 ? "1.25rem" : 0,
-                    padding: "0.85rem 1rem",
-                    background: "rgba(255,255,255,0.03)",
-                    borderRadius: 8,
-                    borderLeft: "2px solid rgba(142,111,247,0.3)",
-                  }}
-                >
+                <p className={`rounded-lg border-l-2 border-accent/30 bg-white/[0.03] px-4 py-3.5 text-sm leading-[1.8] text-neutral-400 ${p.links.length > 0 ? "mb-5" : "mb-0"}`}>
                   {p.abstract}
                 </p>
 
                 {/* Links */}
                 {p.links.length > 0 && (
-                  <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+                  <div className="flex flex-wrap gap-2.5">
                     {p.links.map((l, li) => (
                       <a
                         key={li}
                         href={l.href}
-                        className={li === 0 ? "btn btn-grad" : "btn btn-ghost"}
-                        style={{ padding: "0.45rem 1rem", fontSize: "0.78rem" }}
+                        className={`${li === 0 ? "btn btn-grad" : "btn btn-ghost"} !px-4 !py-2 !text-xs`}
                       >
                         {l.label}{li === 0 ? " ↗" : ""}
                       </a>

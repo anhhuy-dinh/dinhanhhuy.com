@@ -1,65 +1,24 @@
 // ─── Shared UI primitives ─────────────────────────────────────────────────────
 import React, { ReactNode } from "react";
 
-// Gradient text span (purple → indigo)
+// Gradient text span (violet → indigo) — the single brand signature
 export function GradText({ children }: { children: ReactNode }) {
-  return (
-    <span
-      style={{
-        background: "linear-gradient(135deg,#c4b5fd 0%,#8e6ff7 50%,#4c29c5 100%)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-        display: "inline-block",
-      }}
-    >
-      {children}
-    </span>
-  );
+  return <span className="grad-text">{children}</span>;
 }
 
 // Glassmorphism card wrapper
 export function Card({ children, className = "", style = {} }: { children: ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
-    <div className={`card ${className}`} style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", ...style }}>
+    <div className={`card ${className}`} style={style}>
       {children}
     </div>
   );
 }
 
-// Small uppercase section label
-export function SectionLabel({ text }: { text: string }) {
-  return (
-    <div
-      style={{
-        fontSize: "0.75rem",
-        fontWeight: 600,
-        color: "#8e6ff7",
-        letterSpacing: "0.14em",
-        textTransform: "uppercase",
-        marginBottom: "0.5rem",
-      }}
-    >
-      {text}
-    </div>
-  );
-}
-
-// Pill tag (used for update categories etc.)
+// Pill tag (used for update categories, tech stacks etc.)
 export function Tag({ label }: { label: string }) {
   return (
-    <span
-      style={{
-        background: "rgba(142,111,247,0.1)",
-        color: "#c4b5fd",
-        border: "1px solid rgba(142,111,247,0.2)",
-        borderRadius: 5,
-        padding: "3px 9px",
-        fontSize: "0.72rem",
-        fontWeight: 500,
-        whiteSpace: "nowrap",
-      }}
-    >
+    <span className="whitespace-nowrap rounded bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent-light border border-accent/20">
       {label}
     </span>
   );
@@ -67,26 +26,15 @@ export function Tag({ label }: { label: string }) {
 
 // Badge config per project IP status
 const BADGE_CONFIG = {
-  patent: { bg: "rgba(234,179,8,0.08)",  color: "#fbbf24", border: "rgba(234,179,8,0.22)",  label: "⚖ Patent Pending" },
-  prop:   { bg: "rgba(239,68,68,0.08)",  color: "#f87171", border: "rgba(239,68,68,0.2)",   label: "🔒 Proprietary"    },
-  open:   { bg: "rgba(34,197,94,0.08)",  color: "#4ade80", border: "rgba(34,197,94,0.2)",   label: "⬡ Open Research"  },
+  patent: { className: "bg-amber-400/10 text-amber-400 border-amber-400/20", label: "Patent Pending" },
+  prop:   { className: "bg-red-400/10 text-red-400 border-red-400/20",       label: "Proprietary" },
+  open:   { className: "bg-green-400/10 text-green-400 border-green-400/20", label: "Open Research" },
 };
 
 export function StatusBadge({ type }: { type: "open" | "patent" | "prop" }) {
   const b = BADGE_CONFIG[type];
   return (
-    <span
-      style={{
-        background: b.bg,
-        color: b.color,
-        border: `1px solid ${b.border}`,
-        borderRadius: 5,
-        padding: "3px 9px",
-        fontSize: "0.7rem",
-        fontWeight: 600,
-        whiteSpace: "nowrap",
-      }}
-    >
+    <span className={`whitespace-nowrap rounded border px-2 py-0.5 text-xs font-semibold ${b.className}`}>
       {b.label}
     </span>
   );
@@ -95,43 +43,8 @@ export function StatusBadge({ type }: { type: "open" | "patent" | "prop" }) {
 // Page fade-in wrapper — applied to every page
 export function PageWrapper({ children }: { children: ReactNode }) {
   return (
-    <div
-      className="page-enter"
-      style={{
-        position: "relative",
-        zIndex: 1,
-        minHeight: "100vh",
-        paddingTop: 60,
-      }}
-    >
+    <div className="page-enter relative z-[1] min-h-screen pt-[60px]">
       {children}
-    </div>
-  );
-}
-
-// Fixed radial background bloom — always visible behind content
-export function BgBloom() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        pointerEvents: "none",
-        zIndex: 0,
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          top: -120,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 900,
-          height: 500,
-          background: "radial-gradient(ellipse,rgba(76,41,197,0.25) 0%,rgba(142,111,247,0.08) 40%,transparent 70%)",
-        }}
-      />
     </div>
   );
 }

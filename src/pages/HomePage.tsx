@@ -22,79 +22,28 @@ export default function HomePage({ setPage }: Props) {
     <PageWrapper>
 
       {/* ── HERO ── */}
-      <div
-        style={{
-          position: "relative",
-          minHeight: "calc(100vh - 60px)",
-          display: "flex",
-          alignItems: "center",
-          overflow: "hidden",
-        }}
-      >
+      <div className="relative flex min-h-[calc(100vh-60px)] items-center overflow-hidden">
         {/* Spline scene — absolute right, full bleed */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0, right: 150,
-            width: "55%",
-            height: "100%",
-            zIndex: 1,
-            pointerEvents: "none",
-            transformOrigin: "center center",
-          }}
-        >
+        <div className="pointer-events-none absolute top-0 right-[150px] z-[1] h-full w-[55%]">
           <SplineScene />
         </div>
 
         {/* Left text block */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 3,
-            width: "100%",
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "0 4rem",
-          }}
-        >
-          <div style={{ maxWidth: "48%" }}>
+        <div className="relative z-[3] mx-auto w-full max-w-screen-xl px-16">
+          <div className="max-w-[48%]">
 
             {/* Headline */}
-            <h1
-              style={{
-                fontSize: "clamp(3rem,6vw,5.5rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.03em",
-                margin: "0 0 0.75rem",
-              }}
-            >
+            <h1 className="mb-3 text-hero font-extrabold">
               Hi, I&apos;m <GradText>Huy!</GradText>
             </h1>
 
             {/* Affiliation */}
-            <div
-              style={{
-                fontSize: "1rem",
-                color: "#8e6ff7",
-                fontWeight: 600,
-                marginBottom: "1.75rem",
-              }}
-            >
+            <div className="mb-7 text-base font-semibold text-accent">
               PhD Student at University of Colorado Denver
             </div>
 
             {/* Short bio */}
-            <p
-              style={{
-                fontSize: "1rem",
-                color: "#d4d4d4",
-                lineHeight: 1.8,
-                marginBottom: "2rem",
-                fontWeight: 300,
-                maxWidth: 480,
-              }}
-            >
+            <p className="mb-8 max-w-[480px] text-base font-light leading-[1.8] text-neutral-300">
               My research focuses on embedded AI for healthcare applications,
               developing novel wearable devices that bring real-time clinical
               intelligence to the edge — where sensing, inference, and the
@@ -102,31 +51,11 @@ export default function HomePage({ setPage }: Props) {
             </p>
 
             {/* Research interest pills */}
-            <div
-              style={{
-                display: "flex",
-                gap: "0.75rem",
-                flexWrap: "wrap",
-                marginBottom: "2rem",
-              }}
-            >
+            <div className="mb-8 flex flex-wrap gap-3">
               {RESEARCH_INTERESTS.map(r => (
                 <div
                   key={r.label}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.45rem",
-                    background: "rgba(142,111,247,0.08)",
-                    border: "1px solid rgba(142,111,247,0.22)",
-                    borderRadius: 100,
-                    padding: "7px 16px",
-                    fontSize: "0.78rem",
-                    fontWeight: 600,
-                    color: "#c4b5fd",
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                  }}
+                  className="flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-accent-light"
                 >
                   <span>{r.icon}</span>
                   {r.label}
@@ -135,19 +64,11 @@ export default function HomePage({ setPage }: Props) {
             </div>
 
             {/* CTA buttons */}
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-              <button
-                onClick={() => setPage("Projects")}
-                className="btn btn-grad"
-                style={{ fontSize: "0.95rem", padding: "0.7rem 1.5rem", borderRadius: 12 }}
-              >
+            <div className="flex flex-wrap items-center gap-4">
+              <button onClick={() => setPage("Projects")} className="btn btn-grad">
                 View My Work →
               </button>
-              <button
-                onClick={() => setPage("About")}
-                className="btn btn-ghost"
-                style={{ fontSize: "0.95rem", padding: "0.7rem 1.5rem", borderRadius: 12 }}
-              >
+              <button onClick={() => setPage("About")} className="btn btn-ghost">
                 About Me
               </button>
             </div>
@@ -157,110 +78,38 @@ export default function HomePage({ setPage }: Props) {
       </div>
 
       {/* ── Latest Updates ── */}
-      <div
-        style={{
-          borderTop: "1px solid #404040",
-          background: "rgba(0,0,0,0.2)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "4rem 2rem 5rem",
-          }}
-        >
+      <div className="border-t border-line bg-black/20">
+        <div className="mx-auto max-w-content px-8 pt-16 pb-20">
           {/* Section heading */}
-          <h2
-            style={{
-              fontSize: "clamp(1.8rem,3vw,2.5rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              color: "#fff",
-              marginBottom: "0.4rem",
-            }}
-          >
+          <h2 className="mb-1.5 text-h2 font-extrabold text-white">
             Latest <GradText>Updates.</GradText>
           </h2>
-          <div
-            style={{
-              width: 40,
-              height: 2,
-              background: "linear-gradient(90deg,#8e6ff7,#4c29c5)",
-              borderRadius: 2,
-              marginBottom: "2.5rem",
-            }}
-          />
+          <div className="mb-10 h-0.5 w-10 rounded bg-accent-grad" />
 
           {/* Timeline items */}
           {visibleUpdates.map((u, i) => (
-            <div
-              key={i}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "24px 1fr",
-                gap: "0 1.25rem",
-              }}
-            >
+            <div key={i} className="grid grid-cols-[24px_1fr] gap-x-5">
               {/* Dot + connector */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  paddingTop: 6,
-                }}
-              >
-                <div style={{ position: "relative", width: 12, height: 12, flexShrink: 0 }}>
+              <div className="flex flex-col items-center pt-1.5">
+                <div className="relative h-3 w-3 shrink-0">
                   <div
-                    style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: "50%",
-                      background: "#8e6ff7",
-                      border: "2px solid rgba(142,111,247,0.25)",
-                      boxShadow: i === 0 ? "0 0 10px #8e6ff7" : "none",
-                    }}
+                    className={`h-3 w-3 rounded-full border-2 border-accent/25 bg-accent ${
+                      i === 0 ? "shadow-[0_0_10px_#8e6ff7]" : ""
+                    }`}
                   />
                   {i === 0 && <div className="dot-ping" />}
                 </div>
                 {i < visibleUpdates.length - 1 && (
-                  <div
-                    style={{
-                      flex: 1,
-                      width: 1,
-                      background: "#2a2a2a",
-                      marginTop: 6,
-                    }}
-                  />
+                  <div className="mt-1.5 w-px flex-1 bg-zinc-800" />
                 )}
               </div>
 
               {/* Update content */}
-              <div
-                style={{
-                  paddingBottom: i < visibleUpdates.length - 1 ? "2rem" : 0,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "0.95rem",
-                    fontWeight: 700,
-                    color: "#8e6ff7",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    marginBottom: "0.35rem",
-                  }}
-                >
+              <div className={i < visibleUpdates.length - 1 ? "pb-8" : ""}>
+                <div className="mb-1 text-sm font-bold uppercase tracking-[0.08em] text-accent">
                   {u.date}
                 </div>
-                <div
-                  style={{
-                    fontSize: "0.95rem",
-                    color: "#d4d4d4",
-                    lineHeight: 1.75,
-                  }}
-                >
+                <div className="text-sm leading-[1.75] text-neutral-300">
                   {u.desc.map((seg, j) =>
                     typeof seg === "string" ? (
                       <span key={j}>{seg}</span>
@@ -270,18 +119,12 @@ export default function HomePage({ setPage }: Props) {
                         href={seg.href}
                         target="_blank"
                         rel="noreferrer"
-                        style={{
-                          color: "#8e6ff7",
-                          fontWeight: seg.bold ? 700 : 400,
-                          textDecoration: "none",
-                        }}
-                        onMouseEnter={e => (e.currentTarget.style.textDecoration = "underline")}
-                        onMouseLeave={e => (e.currentTarget.style.textDecoration = "none")}
+                        className={`text-accent no-underline hover:underline ${seg.bold ? "font-bold" : "font-normal"}`}
                       >
                         {seg.text}
                       </a>
                     ) : (
-                      <strong key={j} style={{ color: "#fff", fontWeight: 700 }}>{seg.text}</strong>
+                      <strong key={j} className="font-bold text-white">{seg.text}</strong>
                     )
                   )}
                 </div>
@@ -293,20 +136,7 @@ export default function HomePage({ setPage }: Props) {
           {updates.length > UPDATES_PREVIEW && (
             <button
               onClick={() => setExpanded(prev => !prev)}
-              style={{
-                marginTop: "2rem",
-                background: "none",
-                border: "1px solid #404040",
-                borderRadius: 6,
-                cursor: "pointer",
-                fontSize: "0.78rem",
-                color: "#8e6ff7",
-                padding: "8px 20px",
-                display: "block",
-                transition: "border-color .15s",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = "#8e6ff7")}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = "#404040")}
+              className="mt-8 block cursor-pointer rounded-md border border-line bg-transparent px-5 py-2 text-xs text-accent transition-colors hover:border-accent"
             >
               {expanded ? "Show less ↑" : `Show all ${updates.length} updates ↓`}
             </button>

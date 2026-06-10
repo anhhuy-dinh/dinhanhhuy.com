@@ -5,80 +5,26 @@ import awards from "@/data/awards";
 export default function AwardsPage() {
   return (
     <PageWrapper>
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "60px 2rem",
-        }}
-      >
+      <div className="mx-auto max-w-content px-8 py-[60px]">
         {/* ── Page heading ── */}
-        <h1
-          style={{
-            fontSize: "clamp(2rem,4vw,3rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.03em",
-            color: "#fff",
-            marginBottom: "3rem",
-          }}
-        >
+        <h1 className="mb-12 text-h1 font-extrabold text-white">
           <GradText>Recognition.</GradText>
         </h1>
 
         {/* ── Awards grid ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-          }}
-        >
+        <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
           {awards.map(a => (
-            <div
-              key={a.title}
-              className="card"
-              style={{ padding: "1.75rem" }}
-            >
+            <div key={a.title} className="card p-7">
               {/* Title + year */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontWeight: 700,
-                    fontSize: "1rem",
-                    color: "#fff",
-                  }}
-                >
-                  {a.title}
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#8e6ff7",
-                    fontWeight: 600,
-                    marginLeft: "1rem",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+              <div className="mb-2 flex items-start justify-between">
+                <span className="text-base font-bold text-white">{a.title}</span>
+                <span className="ml-4 whitespace-nowrap text-xs font-semibold text-accent">
                   {a.year}
                 </span>
               </div>
 
               {/* Description */}
-              <p
-                style={{
-                  fontSize: "0.88rem",
-                  color: "#d4d4d4",
-                  lineHeight: 1.7,
-                  margin: 0,
-                }}
-              >
+              <p className="m-0 text-sm leading-[1.7] text-neutral-300">
                 {a.desc}
               </p>
             </div>
