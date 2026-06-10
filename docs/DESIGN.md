@@ -41,18 +41,17 @@ Dark zinc background (#09090b), fixed blurred violet/indigo/fuchsia blobs + SVG 
 - Timelines: dot + 1px connector (HomePage updates, AboutPage education/experience)
 - Hero: text left (max 48%) + absolute Spline 3D scene right (55%, offset right:150)
 
-## Target Direction (agreed 2026-06-10)
+## Target Direction (revised 2026-06-10)
 
-**Refined Minimalism** — unique through restraint and consistency, NOT added decoration. Owner explicitly prefers minimal, unified UI and dislikes visual clutter/mixing.
+**Keep the rich Aurora/Glassmorphism identity — improve execution, don't strip it.**
 
-- Remove the 3 ambient color blobs (keep ≤1 very subtle hero glow or none); reduce/remove noise overlay
-- One effect per element: drop button shine sweep, ping dot, double-layer card hover glow → card hover = subtle border lighten only
-- Gradient reserved for ONE signature detail: the "." brand mark (logo, heading endings, footer); all other accents = flat `#8e6ff7`
-- One border token (unify `#404040` vs `white/5`), one Tag/badge component (one radius, one size, semantic color via text only, no emoji)
-- One shared Timeline component (currently 3 variants)
-- Fixed type scale (5–6 steps, currently ~15 ad-hoc sizes); 3 font weights only (300/600/800); spacing on a 4px scale
-- Optional: one mono font for metadata (dates, tags, labels) — only if it doesn't read as "mixed"
-- Motion: page fade-up + hover transitions only, with `prefers-reduced-motion`
+A "Refined Minimalism" pass (remove blobs, flat buttons, gradient only on the "." mark, reduced effects) was implemented on branch `ui/phase-3-minimalism` and REJECTED by the owner after visual review ("quá xấu, không có đột phá"). Do not revisit that direction.
+
+What the owner actually wants:
+- The gradient/glow/glass look IS the brand — keep blobs, gradient text, glass cards, shine effects
+- "Minimalism/thống nhất" means tidiness: consistent tokens, unified badge/timeline styles, no clutter — not visual restraint
+- They want "đột phá" (visual impact / wow factor) — polish and elevate within the rich aesthetic
+- Any visual direction change must be shown live (branch + dev server) before being adopted
 
 ## Implementation notes (current state)
 - ~95% inline `style={{}}` objects; Tailwind installed but nearly unused (config extends only `violet: #8e6ff7`)

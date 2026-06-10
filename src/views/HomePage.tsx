@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Cpu, Stethoscope, Brain } from "lucide-react";
 import SplineScene from "@/components/SplineScene";
 import { GradText, PageWrapper } from "@/components/ui";
+import { Reveal, staggerContainer, staggerItem } from "@/components/motion";
 import updates from "@/data/updates";
 
 const UPDATES_PREVIEW = 5;
@@ -28,30 +30,35 @@ export default function HomePage() {
           <SplineScene />
         </div>
 
-        {/* Left text block */}
+        {/* Left text block — staggered entrance */}
         <div className="relative z-[3] mx-auto w-full max-w-screen-xl px-6 md:px-16">
-          <div className="md:max-w-[48%]">
+          <motion.div
+            className="md:max-w-[48%]"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
+          >
 
             {/* Headline */}
-            <h1 className="mb-3 text-hero font-extrabold">
+            <motion.h1 variants={staggerItem} className="mb-3 text-hero font-extrabold">
               Hi, I&apos;m <GradText>Huy!</GradText>
-            </h1>
+            </motion.h1>
 
             {/* Affiliation */}
-            <div className="mb-7 text-base font-semibold text-accent">
+            <motion.div variants={staggerItem} className="mb-7 text-base font-semibold text-accent">
               PhD Student at University of Colorado Denver
-            </div>
+            </motion.div>
 
             {/* Short bio */}
-            <p className="mb-8 max-w-[480px] text-base font-light leading-[1.8] text-neutral-300">
+            <motion.p variants={staggerItem} className="mb-8 max-w-[480px] text-base font-light leading-[1.8] text-neutral-300">
               My research focuses on embedded AI for healthcare applications,
               developing novel wearable devices that bring real-time clinical
               intelligence to the edge — where sensing, inference, and the
               human body meet.
-            </p>
+            </motion.p>
 
             {/* Research interest pills */}
-            <div className="mb-8 flex flex-wrap gap-3">
+            <motion.div variants={staggerItem} className="mb-8 flex flex-wrap gap-3">
               {RESEARCH_INTERESTS.map(({ label, Icon }) => (
                 <div
                   key={label}
@@ -61,19 +68,19 @@ export default function HomePage() {
                   {label}
                 </div>
               ))}
-            </div>
+            </motion.div>
 
             {/* CTA buttons */}
-            <div className="flex flex-wrap items-center gap-4">
+            <motion.div variants={staggerItem} className="flex flex-wrap items-center gap-4">
               <Link href="/projects" className="btn btn-grad">
                 View My Work →
               </Link>
               <Link href="/about" className="btn btn-ghost">
                 About Me
               </Link>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -81,14 +88,17 @@ export default function HomePage() {
       <div className="border-t border-line bg-black/20">
         <div className="mx-auto max-w-content px-6 pt-16 pb-20 md:px-8">
           {/* Section heading */}
-          <h2 className="mb-1.5 text-h2 font-extrabold text-white">
-            Latest <GradText>Updates.</GradText>
-          </h2>
-          <div className="mb-10 h-0.5 w-10 rounded bg-accent-grad" />
+          <Reveal>
+            <h2 className="mb-1.5 text-h2 font-extrabold text-white">
+              Latest <GradText>Updates.</GradText>
+            </h2>
+            <div className="mb-10 h-0.5 w-10 rounded bg-accent-grad" />
+          </Reveal>
 
           {/* Timeline items */}
           {visibleUpdates.map((u, i) => (
-            <div key={i} className="grid grid-cols-[24px_1fr] gap-x-5">
+            <Reveal key={i} delay={Math.min(i * 0.06, 0.3)}>
+            <div className="grid grid-cols-[24px_1fr] gap-x-5">
               {/* Dot + connector */}
               <div className="flex flex-col items-center pt-1.5">
                 <div className="relative h-3 w-3 shrink-0">
@@ -130,6 +140,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            </Reveal>
           ))}
 
           {/* Expand / collapse button */}

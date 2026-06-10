@@ -1,5 +1,6 @@
 "use client";
 import { GradText, PageWrapper } from "@/components/ui";
+import { Reveal } from "@/components/motion";
 import awards from "@/data/awards";
 
 export default function AwardsPage() {
@@ -13,8 +14,9 @@ export default function AwardsPage() {
 
         {/* ── Awards grid ── */}
         <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-          {awards.map(a => (
-            <div key={a.title} className="card p-7">
+          {awards.map((a, i) => (
+            <Reveal key={a.title} delay={(i % 2) * 0.08} className="h-full">
+            <div className="card h-full p-7">
               {/* Title + year */}
               <div className="mb-2 flex items-start justify-between">
                 <span className="text-base font-bold text-white">{a.title}</span>
@@ -28,6 +30,7 @@ export default function AwardsPage() {
                 {a.desc}
               </p>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 import { GradText, PageWrapper } from "@/components/ui";
+import { Reveal } from "@/components/motion";
 import publications from "@/data/publications";
 
 // Badge classes per publication status
@@ -22,10 +23,11 @@ export default function PublicationsPage() {
 
         {/* ── Publication list ── */}
         <div className="flex flex-col gap-5">
-          {publications.map((p) => {
+          {publications.map((p, i) => {
             const badge = STATUS_BADGE[p.status] ?? "bg-accent/10 text-accent border-accent/25";
             return (
-              <div key={p.title} className="card px-8 py-7">
+              <Reveal key={p.title} delay={Math.min(i * 0.05, 0.2)}>
+              <div className="card px-8 py-7">
 
                 {/* Status pill + year */}
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
@@ -73,6 +75,7 @@ export default function PublicationsPage() {
                 )}
 
               </div>
+              </Reveal>
             );
           })}
         </div>

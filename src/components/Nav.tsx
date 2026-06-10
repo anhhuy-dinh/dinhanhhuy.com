@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { GradText } from "@/components/ui";
 
@@ -33,7 +34,13 @@ export default function Nav() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <nav className="fixed top-6 left-1/2 z-[9999] w-[95%] max-w-3xl -translate-x-1/2 transition-all duration-300">
+    <motion.nav
+      initial={{ y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-6 left-1/2 z-[9999] w-[95%] max-w-3xl -translate-x-1/2 transition-all duration-300"
+      style={{ x: "-50%" }}
+    >
       <div
         className={`flex items-center justify-between rounded-full border px-6 py-2.5 backdrop-blur-xl transition-[background,border-color,box-shadow] duration-300 ${
           scrolled || open
@@ -96,6 +103,6 @@ export default function Nav() {
           ))}
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 }

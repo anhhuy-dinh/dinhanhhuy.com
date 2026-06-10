@@ -40,10 +40,10 @@ export function StatusBadge({ type }: { type: "open" | "patent" | "prop" }) {
   );
 }
 
-// Page fade-in wrapper — applied to every page
+// Page layout wrapper — entrance animation handled by app/template.tsx
 export function PageWrapper({ children }: { children: ReactNode }) {
   return (
-    <div className="page-enter relative z-[1] min-h-screen pt-[60px]">
+    <div className="relative z-[1] min-h-screen pt-[60px]">
       {children}
     </div>
   );

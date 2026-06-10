@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { GradText, Tag, StatusBadge, PageWrapper } from "@/components/ui";
+import { Reveal, TiltCard } from "@/components/motion";
 import projects from "@/data/projects";
 
 export default function ProjectsPage() {
@@ -17,8 +18,10 @@ export default function ProjectsPage() {
 
         {/* ── Project list ── */}
         <div className="flex flex-col gap-6">
-          {projects.map((p) => (
-            <div key={p.title} className="card flex min-h-[280px] max-md:flex-col">
+          {projects.map((p, i) => (
+            <Reveal key={p.title} delay={Math.min(i * 0.06, 0.18)}>
+            <TiltCard>
+            <div className="card flex min-h-[280px] max-md:flex-col">
 
               {/* Project image */}
               <div className="relative w-[41.67%] shrink-0 overflow-hidden border-r border-line max-md:aspect-[16/10] max-md:w-full max-md:border-r-0 max-md:border-b">
@@ -103,6 +106,8 @@ export default function ProjectsPage() {
               </div>
 
             </div>
+            </TiltCard>
+            </Reveal>
           ))}
         </div>
       </div>
