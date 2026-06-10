@@ -9,17 +9,19 @@ export default function ProjectsPage() {
     <PageWrapper>
       <div className="mx-auto max-w-content px-8 py-[60px]">
         {/* ── Page heading ── */}
-        <h1 className="mb-2 text-h1 font-extrabold text-white">
-          Featured <GradText>Work.</GradText>
-        </h1>
-        <p className="mb-14 text-sm text-neutral-400">
-          Hardware, software, and everything in between.
-        </p>
+        <Reveal y={28}>
+          <h1 className="mb-2 text-h1 font-extrabold text-white">
+            Featured <GradText>Work.</GradText>
+          </h1>
+          <p className="mb-14 text-sm text-neutral-400">
+            Hardware, software, and everything in between.
+          </p>
+        </Reveal>
 
         {/* ── Project list ── */}
         <div className="flex flex-col gap-6">
           {projects.map((p, i) => (
-            <Reveal key={p.title} delay={Math.min(i * 0.06, 0.18)}>
+            <Reveal key={p.title} delay={0.15 + (i < 3 ? i * 0.15 : 0)}>
             <TiltCard>
             <div className="card flex min-h-[280px] max-md:flex-col">
 

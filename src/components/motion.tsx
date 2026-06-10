@@ -9,7 +9,7 @@ const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 export function Reveal({
   children,
   delay = 0,
-  y = 24,
+  y = 48,
   className = "",
 }: {
   children: ReactNode;
@@ -21,10 +21,10 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay, ease: EASE }}
+      initial={reduce ? false : { opacity: 0, y, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.7, delay, ease: EASE }}
     >
       {children}
     </motion.div>
@@ -34,12 +34,12 @@ export function Reveal({
 // Container/item pair for load-time stagger (hero entrance).
 export const staggerContainer = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.16, delayChildren: 0.15 } },
 };
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+  hidden: { opacity: 0, y: 36 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
 };
 
 // Subtle 3D tilt that follows the cursor. Wrap a card with it.
@@ -53,8 +53,8 @@ export function TiltCard({ children, className = "" }: { children: ReactNode; cl
     const rect = e.currentTarget.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    rotateY.set(px * 5);
-    rotateX.set(-py * 5);
+    rotateY.set(px * 10);
+    rotateX.set(-py * 10);
   }
 
   function handleLeave() {
@@ -65,7 +65,8 @@ export function TiltCard({ children, className = "" }: { children: ReactNode; cl
   return (
     <motion.div
       className={className}
-      style={{ rotateX, rotateY, transformPerspective: 1100 }}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      whileHover={{ scale: 1.015 }}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
     >

@@ -35,9 +35,9 @@ export default function Nav() {
 
   return (
     <motion.nav
-      initial={{ y: -24, opacity: 0 }}
+      initial={{ y: -48, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.65, ease: "easeOut" }}
       className="fixed top-6 left-1/2 z-[9999] w-[95%] max-w-3xl -translate-x-1/2 transition-all duration-300"
       style={{ x: "-50%" }}
     >

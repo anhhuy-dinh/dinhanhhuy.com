@@ -25,12 +25,14 @@ export default function AboutPage() {
     <PageWrapper>
       <div className="mx-auto max-w-content px-8 pt-[60px] pb-20">
         {/* ── Page heading ── */}
-        <h1 className="mb-12 text-h1 font-extrabold text-white">
-          About <GradText>me.</GradText>
-        </h1>
+        <Reveal y={28}>
+          <h1 className="mb-12 text-h1 font-extrabold text-white">
+            About <GradText>me.</GradText>
+          </h1>
+        </Reveal>
 
         {/* ── Bio + Quick Facts ── */}
-        <Reveal>
+        <Reveal delay={0.15}>
         <div className="card mb-12 p-8">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* Bio paragraph + social links */}
@@ -98,7 +100,7 @@ export default function AboutPage() {
             const isLast = i === education.length - 1;
             const current = e.period.includes("Present");
             return (
-              <Reveal key={e.degree} delay={Math.min(i * 0.05, 0.15)}>
+              <Reveal key={e.degree} delay={i < 2 ? i * 0.15 : 0}>
               <div className="grid grid-cols-[90px_24px_1fr] gap-x-3 md:grid-cols-[160px_36px_1fr] md:gap-x-4">
                 {/* Left: logo card + period, centered */}
                 <div className={`flex flex-col items-center ${isLast ? "" : "pb-8"}`}>
@@ -158,7 +160,7 @@ export default function AboutPage() {
             const isLast = i === experience.length - 1;
             const current = e.period.includes("Present");
             return (
-              <Reveal key={e.role} delay={Math.min(i * 0.05, 0.15)}>
+              <Reveal key={e.role} delay={i < 2 ? i * 0.15 : 0}>
               <div className="grid grid-cols-[90px_24px_1fr] gap-x-3 md:grid-cols-[160px_36px_1fr] md:gap-x-4">
                 {/* Period label */}
                 <div className={`pt-0.5 text-right text-sm font-medium text-neutral-400 ${isLast ? "" : "pb-8"}`}>
@@ -223,7 +225,7 @@ export default function AboutPage() {
 
           <div className="flex flex-col gap-6">
             {skillsGrouped.map((g, i) => (
-              <Reveal key={g.group} delay={Math.min(i * 0.05, 0.2)}>
+              <Reveal key={g.group} delay={i < 3 ? i * 0.12 : 0}>
               <div>
                 {/* Group label */}
                 <div className="mb-3 border-b border-line pb-2 text-xs font-semibold uppercase tracking-[0.1em] text-neutral-400">

@@ -17,16 +17,18 @@ export default function PublicationsPage() {
     <PageWrapper>
       <div className="mx-auto max-w-content px-8 pt-[60px] pb-20">
         {/* ── Page heading ── */}
-        <h1 className="mb-12 text-h1 font-extrabold text-white">
-          <GradText>Publications.</GradText>
-        </h1>
+        <Reveal y={28}>
+          <h1 className="mb-12 text-h1 font-extrabold text-white">
+            <GradText>Publications.</GradText>
+          </h1>
+        </Reveal>
 
         {/* ── Publication list ── */}
         <div className="flex flex-col gap-5">
           {publications.map((p, i) => {
             const badge = STATUS_BADGE[p.status] ?? "bg-accent/10 text-accent border-accent/25";
             return (
-              <Reveal key={p.title} delay={Math.min(i * 0.05, 0.2)}>
+              <Reveal key={p.title} delay={0.15 + (i < 3 ? i * 0.15 : 0)}>
               <div className="card px-8 py-7">
 
                 {/* Status pill + year */}

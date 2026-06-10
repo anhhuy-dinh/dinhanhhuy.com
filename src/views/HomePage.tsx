@@ -26,9 +26,14 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <div className="relative flex min-h-[calc(100vh-60px)] items-center overflow-hidden">
         {/* Spline scene — absolute right, full bleed (desktop only) */}
-        <div className="pointer-events-none absolute top-0 right-[150px] z-[1] hidden h-full w-[55%] md:block">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, x: 60 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1.1, delay: 0.35, ease: "easeOut" }}
+          className="pointer-events-none absolute top-0 right-[150px] z-[1] hidden h-full w-[55%] md:block"
+        >
           <SplineScene />
-        </div>
+        </motion.div>
 
         {/* Left text block — staggered entrance */}
         <div className="relative z-[3] mx-auto w-full max-w-screen-xl px-6 md:px-16">

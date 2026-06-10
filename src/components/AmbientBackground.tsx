@@ -7,9 +7,9 @@ const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='ht
 export default function AmbientBackground() {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1500], [0, 140]);
-  const y2 = useTransform(scrollY, [0, 1500], [0, -110]);
-  const y3 = useTransform(scrollY, [0, 1500], [0, 80]);
+  const y1 = useTransform(scrollY, [0, 1500], [0, 300]);
+  const y2 = useTransform(scrollY, [0, 1500], [0, -240]);
+  const y3 = useTransform(scrollY, [0, 1500], [0, 180]);
 
   return (
     <>

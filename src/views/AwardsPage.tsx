@@ -8,14 +8,16 @@ export default function AwardsPage() {
     <PageWrapper>
       <div className="mx-auto max-w-content px-8 py-[60px]">
         {/* ── Page heading ── */}
-        <h1 className="mb-12 text-h1 font-extrabold text-white">
-          <GradText>Recognition.</GradText>
-        </h1>
+        <Reveal y={28}>
+          <h1 className="mb-12 text-h1 font-extrabold text-white">
+            <GradText>Recognition.</GradText>
+          </h1>
+        </Reveal>
 
         {/* ── Awards grid ── */}
         <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
           {awards.map((a, i) => (
-            <Reveal key={a.title} delay={(i % 2) * 0.08} className="h-full">
+            <Reveal key={a.title} delay={0.15 + (i < 4 ? i * 0.12 : 0)} className="h-full">
             <div className="card h-full p-7">
               {/* Title + year */}
               <div className="mb-2 flex items-start justify-between">
