@@ -16,8 +16,8 @@ const EXP_BADGE: Record<string, string> = {
 const SOCIALS = [
   { label: "GitHub",         href: "https://github.com/anhhuy-dinh",                               icon: <FiGithub size={15} /> },
   { label: "LinkedIn",       href: "https://www.linkedin.com/in/anh-huy-dinh-534364250/",          icon: <FiLinkedin size={15} /> },
-  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi", icon: <SiGooglescholar size={15} /> },
-  { label: "CV",             href: "/cv.pdf",                                                       icon: <FiFileText size={15} /> },
+  { label: "Scholar",        href: "https://scholar.google.com/citations?user=4biuKawAAAAJ&hl=vi", icon: <SiGooglescholar size={15} /> },
+  { label: "CV",             href: "/cv.pdf",                                                      icon: <FiFileText size={15} /> },
 ];
 
 export default function AboutPage() {
