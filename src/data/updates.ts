@@ -12,7 +12,7 @@ const updates: Update[] = [
     date: "Jun 2026",
     desc: [
       "Submitted our systematic review on ",
-      { text: "exoskeleton evaluation in aging workforces", bold: true },
+      { text: "Exoskeleton Evaluation in Aging Workforces", bold: true },
       " to the ",
       { text: "Applied Ergonomics Journal", bold: true },
       ".",

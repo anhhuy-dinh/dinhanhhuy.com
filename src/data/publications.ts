@@ -37,7 +37,7 @@ const publications: Publication[] = [
     statusColor: "#4ade80",
     abstract:
       "EchoVision proposes a hybrid NPU-CPU deployment strategy combining EfficientViT-SAM and YOLO for real-time assistive navigation on mobile devices. By splitting workloads across the neural processing unit and CPU, the system achieves low-latency scene understanding suitable for visually impaired users in dynamic environments.",
-    links: [],
+    links: [{ label: "View Paper", href: "https://dl.acm.org/doi/epdf/10.1145/3812836.3814756" }],
   },
   {
     title: "OOKPIK - A Collection of Out-of-Context Image-Caption Pairs",
