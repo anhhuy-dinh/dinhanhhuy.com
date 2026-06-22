@@ -9,7 +9,7 @@ import { GradText } from "@/components/ui";
 const NAV_ITEMS = [
   { label: "Home",         href: "/" },
   { label: "About",        href: "/about" },
-  { label: "Projects",     href: "/projects" },
+  // { label: "Projects",     href: "/projects" },
   { label: "Publications", href: "/publications" },
   { label: "Awards",       href: "/awards" },
   // { label: "Contact",   href: "/contact" },
