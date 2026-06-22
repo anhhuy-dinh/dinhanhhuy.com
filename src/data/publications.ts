@@ -29,7 +29,7 @@ const publications: Publication[] = [
   },
   {
     title: "EchoVision: Hybrid NPU-CPU Deployment of EfficientViT-SAM and YOLO for Real-Time Assistive Navigation",
-    authors: "Su Ho Lim, Artemis Shaw, Huy Dinh, Nikolaus Correll, Nam Bui",
+    authors: "Su Ho Lim, Artemis Shaw, Huy Dinh, Nam Bui",
     venue: "The International Workshop on Mobile Computing with Efficient Foundation Models (EIFCOM 2026), co-located with ACM MobiSys 2026",
     venueShort: "ACM MobiSys 2026 (Workshop)",
     year: "2026",
