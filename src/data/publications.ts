@@ -33,7 +33,7 @@ const publications: Publication[] = [
     venue: "The International Workshop on Mobile Computing with Efficient Foundation Models (EIFCOM 2026), co-located with ACM MobiSys 2026",
     venueShort: "ACM MobiSys 2026 (Workshop)",
     year: "2026",
-    status: "Accepted",
+    status: "Published",
     statusColor: "#4ade80",
     abstract:
       "EchoVision proposes a hybrid NPU-CPU deployment strategy combining EfficientViT-SAM and YOLO for real-time assistive navigation on mobile devices. By splitting workloads across the neural processing unit and CPU, the system achieves low-latency scene understanding suitable for visually impaired users in dynamic environments.",
